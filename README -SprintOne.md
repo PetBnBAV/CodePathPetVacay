@@ -35,3 +35,4 @@ Things that need tweaking:
 * Lock navigation drawer when after the item in the list view is clicked on
 * Actual push of the picture to the user table in Parse
 * Giving the user an option to remove/delete pictures just taken/uploaded fomr gallery
+* Code at https://github.com/anubharadwaj/PetVacayWeekOne.git
