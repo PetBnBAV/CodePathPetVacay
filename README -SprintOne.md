@@ -22,9 +22,7 @@ The Profile view has the following : A. User is not logged in
 * [x] At the bottom of the page, User can click on “Log In or Sign Up” which takes them to Login screen
 
 
-Video Walkthrough:
-
-![Video Walkthrough](SprintOne.gif) 
+ ![Video Walkthrough](SprintOne.gif)  
 
 Things that need tweaking:
 *  Log In screen is pending
