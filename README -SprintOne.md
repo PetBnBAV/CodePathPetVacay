@@ -48,7 +48,7 @@ When a user first gets the app and opens it (i.e. they're not logged in), they s
 * [x] As we swipe through the fragments, the corresponding marker on the map is 'highlighted' (i.e. a different color) 
 * [x] Push notification: The summary fragment won't actually have that ugly 'Book' button. That's meant for a separate activity. However, I've added it here to show the push notification. Currently, it pushes to all devices that have the app because we don't have logins setup. (There's a 2nd gif without the ugly button too) 
 
-To do: 
+To do (only for the above, not including sprint 2 here): 
 * Need to color map markers so that the markers corresponding to 'seen' listings have a 3rd color. 
 * Need to setup login so that the push notification only goes to the sitter that was booked. 
 * Need to make the placeholder images on the landing page theme appropriate 
