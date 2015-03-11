@@ -21,10 +21,9 @@ The Profile view has the following : A. User is not logged in
 
 * [x] At the bottom of the page, User can click on “Log In or Sign Up” which takes them to Login screen
 
+ Walkthrough of all user stories:
 
-Video Walkthrough:
-
-![Video Walkthrough](SprintOne.gif) 
+ ![Video Walkthrough](Anu-SprintOne.gif)  
 
 Things that need tweaking:
 *  Log In screen is pending
