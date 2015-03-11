@@ -55,10 +55,10 @@ To do (only for the above, not including sprint 2 here):
 * Need to make the search bar background image also theme appropriate 
 * Currently, the swipeable fragments show 0 reviews for the 1st couple fragments even though they have reviews (need to fix that using listener pattern for asynchronous calls) 
 
-Video walkthrough with push notification (and ugly button) 
+Video walkthrough shows push notification (and ugly button) 
 ![VideoWalkthroughWNotification](VideoWalkthroughWNotification.gif)
 
-Video walkthrough without push notification
+Video walkthrough for everything else
 ![VideoWalkthroughWONotification](VideoWalkthroughWONotification.gif)
 
 Code is here for now: https://github.com/vlaljani/PetBnBCodePathVL
