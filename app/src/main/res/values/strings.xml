@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PetVacay</string>
+
+    <string-array name="profileLoggedOut_array">
+        <item>How it Works</item>
+        <item>Why Host?</item>
+        <item>List Your Space</item>
+        <item>Help</item>
+    </string-array>
+    <string-array name="profileLoggedIn_array">
+        <item>Invite Friends</item>
+        <item>Why Host?</item>
+        <item>List Your Space</item>
+        <item>I am a Pet Owner</item>
+        <item>Help</item>
+    </string-array>
+
+    <string name="AskToLogin">Log In or Sign Up</string>
+    <string name="AskToLogout">Log Out</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="howitworks_fragment">How It Works Fragment</string>
+    <string name="whyhost_fragment">Why HostFragment</string>
+    <string name="listyourspace_fragment">List Your Space Fragment</string>
+    <string name="help_fragment">Help Fragment</string>
+    <string name="tap">Add photos to your listing</string>
+    <string name="title_activity_list_your_space">ListYourSpaceActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_how_it_works">HowItWorksActivity</string>
+    <string name="HSWTitleOne">Welcome to PetVacay One</string>
+    <string name="HSWTitleTwo">Welcome to PetVacay Two</string>
+    <string name="HSWTitleThree">Welcome to PetVacay Three</string>
+    <string name="HSWTitleFour">Welcome to PetVacay Four</string>
+    <string name="HSWTextOne">Safe,affordable and convenient boarding service for your pets One</string>
+    <string name="HSWTextTwo">Safe,affordable and convenient boarding service for your pets Two</string>
+    <string name="HSWTextThree">Safe,affordable and convenient boarding service for your pets Three</string>
+    <string name="HSWTextFour">Safe,affordable and convenient boarding service for your pets Four</string>
+    <string name="title_activity_why_host">WhyHostActivity</string>
+    <string name="WHTitleOne">Welcome to PetVacay One</string>
+    <string name="WHTitleTwo">Welcome to PetVacay Two</string>
+    <string name="WHTitleThree">Welcome to PetVacay Three</string>
+    <string name="WHTextOne">Safe,affordable and convenient boarding service for your pets One</string>
+    <string name="WHTextTwo">Safe,affordable and convenient boarding service for your pets Two</string>
+    <string name="WHTextThree">Safe,affordable and convenient boarding service for your pets Three</string>
+
+
+</resources>
