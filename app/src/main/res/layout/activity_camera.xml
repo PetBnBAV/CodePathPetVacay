@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lightestgrey"
+    tools:context=".MainActivity">
+
+    <include
+        layout="@layout/toolbarforcamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:id="@+id/btnBackBlack"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="10dp"
+        android:onClick="onBack"
+        android:background="@drawable/ic_backinblack"
+        android:shadowColor="#ffffffff"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:id="@+id/ivTakePicture"
+        android:padding="10dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/toolbarforcamera"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/llDragandDrop"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/ic_remove"/>
+
+        <TextView
+            android:layout_width="109dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
+            android:id="@+id/tvRemove"
+            android:text="REMOVE"
+            android:textColor="@color/black"/>
+
+
+        </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tap"
+        android:id="@+id/tvAddPhotos"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:layout_alignTop="@+id/ivTakePicture"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0 Photos"
+        android:id="@+id/tvNumOfPhotos"
+        android:textColor="@color/black"
+        android:layout_marginLeft="10dp"
+        android:layout_alignTop="@+id/btnBackBlack"
+        android:layout_alignLeft="@+id/ivTakePicture"
+        android:layout_alignStart="@+id/ivTakePicture" />
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/ivDirection"
+        android:background="@drawable/ic_arrow"
+        android:layout_above="@+id/ivTakePicture"
+        android:layout_alignRight="@+id/ivTakePicture"
+        android:layout_alignEnd="@+id/ivTakePicture" />
+</RelativeLayout>
