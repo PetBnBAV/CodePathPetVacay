@@ -66,7 +66,6 @@ public class MainActivity extends ActionBarActivity implements
     private ImageView ivFavorites;
     private TextView tvLogInSignUp;
     private String[] mOptionMenu;
-    private DrawerLayout drawer_layout;
     private ViewPager viewPager;
 
     boolean loggedIn = false;
@@ -123,8 +122,6 @@ public class MainActivity extends ActionBarActivity implements
         ivProfile = (ImageView) findViewById(R.id.ivProfile);
         ivMail = (ImageView) findViewById(R.id.ivMail);
         ivFavorites = (ImageView) findViewById(R.id.ivFavorites);
-
-        drawer_layout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 
         mOptionMenu = new String[] { getString(R.string.howitworks_fragment),
@@ -188,12 +185,10 @@ public class MainActivity extends ActionBarActivity implements
 
                 if (mDrawerLayout.isDrawerOpen(Gravity.RIGHT)) {
                     mDrawerLayout.closeDrawer(Gravity.RIGHT);
-                    drawer_layout.setVisibility(View.INVISIBLE);
                     ivProfile.setVisibility(View.VISIBLE);
                 } else {
                     mDrawerLayout.openDrawer(Gravity.RIGHT);
                     ivProfile.setVisibility(View.INVISIBLE);
-                    drawer_layout.setVisibility(View.VISIBLE);
                     mDrawerList.invalidate();
                 }
             }
@@ -277,41 +272,43 @@ public class MainActivity extends ActionBarActivity implements
                     if (object != null) {
 
                         final ParseFile file = (ParseFile) object.get("profile_picture");
-                        file.getDataInBackground(new GetDataCallback() {
+                        if(file != null){
+                            file.getDataInBackground(new GetDataCallback() {
 
 
-                            public void done(byte[] data, ParseException e) {
-                                if (e == null) {
-                                    if (file.getUrl() != null) {
+                                public void done(byte[] data, ParseException e) {
+                                    if (e == null) {
+                                        if (file.getUrl() != null) {
 
 
-                                        //Insert profile picture pertaining to each user
-                                        //Insert profile picture pertaining to each user
-                                        Transformation transformation = new RoundedTransformationBuilder()
-                                                .borderColor(Color.LTGRAY)
-                                                .borderWidthDp(3)
-                                                .cornerRadiusDp(30)
-                                                .oval(true)
-                                                .build();
+                                            //Insert profile picture pertaining to each user
+                                            //Insert profile picture pertaining to each user
+                                            Transformation transformation = new RoundedTransformationBuilder()
+                                                    .borderColor(Color.LTGRAY)
+                                                    .borderWidthDp(3)
+                                                    .cornerRadiusDp(30)
+                                                    .oval(true)
+                                                    .build();
 
 
-                                        Picasso.with(getApplicationContext())
-                                                .load(file.getUrl())
-                                                .fit()
-                                                .transform(transformation)
-                                                .into(ivAppIconImg);
+                                            Picasso.with(getApplicationContext())
+                                                    .load(file.getUrl())
+                                                    .fit()
+                                                    .transform(transformation)
+                                                    .into(ivAppIconImg);
 
 
-                                        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                            ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
+                                        }
+
+                                    } else {
+                                        // something went wrong
+                                        Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                                     }
-
-                                } else {
-                                    // something went wrong
-                                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                        });
+                            });
+                        }
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
@@ -403,9 +400,7 @@ public class MainActivity extends ActionBarActivity implements
     {
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mProfileTasks));
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_profile, R.string.drawer_open,
-                R.string.drawer_close)  {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_profile, R.string.drawer_open,R.string.drawer_close)  {
             public void onDrawerClosed(View view) {
                 ivProfile.setVisibility(View.VISIBLE);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()

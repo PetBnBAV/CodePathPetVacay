@@ -29,6 +29,7 @@
         android:background="@color/vl_white"
         android:paddingLeft="@dimen/textview_hint_padding"
         android:singleLine="true"
+        android:textColor="@color/light_gray"
         android:textColorHint="@color/light_gray"/>
     
 
