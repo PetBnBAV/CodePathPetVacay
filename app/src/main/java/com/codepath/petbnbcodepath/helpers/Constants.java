@@ -32,8 +32,6 @@ public class Constants {
     public static final String objectIdKey = "objectId";
     public static final String ownerIdKey = "ownerId";
 
-    public static final String objectIdKey = "objectIdKey";
-    public static final String ownerIdKey = "ownerIdKey";
 
     public static final String summaryKey = "listingSummary";
     public static final String numReviewsKey = "numReviews";
