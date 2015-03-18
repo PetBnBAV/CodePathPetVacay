@@ -68,6 +68,10 @@
             android:name=".activities.BookingDetailsActivity"
             android:label="@string/title_activity_booking_details" >
         </activity>
+        <activity
+            android:name=".activities.PetOwnerProfileActivity"
+            android:label="@string/title_activity_pet_owner_profile" >
+        </activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -93,7 +97,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.parse.ParsePushBroadcastReceiver"
+            android:name="com.codepath.petbnbcodepath.net.PetVacayBroadcastReceiver"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />

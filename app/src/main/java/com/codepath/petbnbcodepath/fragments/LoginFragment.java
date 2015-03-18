@@ -20,6 +20,8 @@ import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
@@ -141,6 +143,10 @@ public class LoginFragment extends Fragment {
                                 Toast.makeText(getActivity(),
                                         "You are now logged in",
                                         Toast.LENGTH_SHORT).show();
+                                ParseInstallation installation =
+                                                       ParseInstallation.getCurrentInstallation();
+                                installation.put("user", user);
+                                installation.saveInBackground();
                                 listener.onFinish();
                             } else {
                                 Log.e(TAG, "Error: " + e.getMessage());
