@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <com.codepath.gangwal.imageswipe.viewpagers.WrapContentHeightViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/view_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/cover_picture_height"
+        />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/price_background"
+        android:layout_alignBottom="@+id/view_pager"
+        android:layout_marginBottom="50dp"
+        android:id="@+id/linearLayout"
+        android:alpha="0.8"
+        android:padding="10dp"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="$ 90 "
+            android:id="@+id/tvPrice"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:drawableRight="@drawable/ic_ib_bolt"
+            android:paddingRight="2dp"/>
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/ivWishlist"
+        android:src="@drawable/wishlist_heart_unselected"
+        android:alpha="0.9"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/ivSitterImage"
+        android:layout_alignEnd="@+id/ivSitterImage"
+        android:layout_marginTop="43dp" />
+
+    <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:id="@+id/ivSitterImage"
+            android:src="@drawable/sample_profile"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginRight="41dp"
+        android:layout_marginEnd="41dp"
+        android:layout_above="@+id/tvPostSubTitle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+    <TextView
+        android:id="@+id/tvPostTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        android:text="Cozy cabin with a view of the lake"
+        android:layout_below="@+id/view_pager"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingTop="10dp"/>
+    <TextView
+        android:id="@+id/tvPostSubTitle"
+        android:layout_below="@+id/tvPostTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Entire Home - 7 Reviews - Carnelian Bay"
+        android:layout_gravity="left|top"
+        />
+
+</RelativeLayout>

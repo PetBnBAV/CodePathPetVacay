@@ -14,21 +14,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.andexert.calendarlistview.library.DayPickerView;
-import com.andexert.calendarlistview.library.SimpleMonthAdapter;
+
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.ExpandableListAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.fragments.DatePickerDialog;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
+import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.Days;
 import org.joda.time.LocalDate;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -216,11 +220,46 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                     booking.put(Constants.ownerIdKey, currentUser);
 
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayListingTable);
+                    query.include(Constants.sitterIdKey);
                     query.getInBackground(objectId, new GetCallback<ParseObject>() {
                         public void done(ParseObject object, ParseException e) {
+                            final ParseObject returnedObj = object;
                             if (e == null) {
                                 booking.put(Constants.listingIdKey, object);
-                                booking.saveInBackground();
+                                booking.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e2) {
+                                        if (e2 == null) {
+                                            JSONObject obj;
+                                            try {
+                                                obj = new JSONObject();
+                                                obj.put("alert", "You have a new pet request!");
+                                                Log.i(TAG, "object id of curr user here " + ParseUser.getCurrentUser().getObjectId());
+                                                obj.put(Constants.pushCustomDataKey, ParseUser.getCurrentUser().getObjectId());
+                                                Log.i(TAG, "booking id " + booking.getObjectId());
+                                                obj.put("bookingId", booking.getObjectId());
+
+                                                ParsePush push = new ParsePush();
+                                                ParseQuery query = ParseInstallation.getQuery();
+
+
+                                                // Push the notification to Android users
+                                                query.whereEqualTo("user", returnedObj.get(Constants.sitterIdKey));
+                                                //query.whereEqualTo("deviceType", "android");
+                                                push.setQuery(query);
+                                                push.setData(obj);
+                                                push.sendInBackground();
+                                            } catch (JSONException jsonException) {
+
+                                                jsonException.printStackTrace();
+                                            }
+
+                                        }
+                                    }
+                                });
+
+
+
                             } else {
                                 Log.e("TAG", "Error: " + e.getMessage());
 
@@ -234,6 +273,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                     Intent i = new Intent(BookingDetailsActivity.this, LoginSignupActivity.class);
                     startActivity(i);
                 }
+
             }
         });
 

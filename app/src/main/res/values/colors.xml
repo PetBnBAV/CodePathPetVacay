@@ -17,10 +17,11 @@
     <item name="yellow" type="color">#FFEA18</item>
     <item name="grey" type="color">#545454</item>
     <item name="white" type="color">#FFFFFF</item>
+
     <color name="vl_white">#EEEEEE</color>
     <color name="theme_teal">#008080</color>
-    <color name="dark_gray">#41464C</color>
-    <color name="light_gray">#7C7C7C</color>
+    <color name="darkGray">#41464C</color>
+    <color name="lightGray">#7C7C7C</color>
     <color name="vl_red">#ff5252</color>
     <color name="facebook_blue">#3B5893</color>
     <color name="facebook_light_blue">#607AA9</color>
@@ -41,4 +42,24 @@
         <item>@color/darkred</item>
     </integer-array>
 
+    <color name="background_gradient_start">#000000</color>
+    <color name="background_gradient_end">#DDDDDD</color>
+    <color name="fastlane_background">#0096a6</color>
+    <color name="search_opaque">#ffaa3f</color>
+    <color name="detail_background">#0096a6</color>
+    <color name="soft_opaque">#30000000</color>
+    <color name="img_soft_opaque">#30FF0000</color>
+    <color name="img_full_opaque">#00000000</color>
+    <color name="black_opaque">#AA000000</color>
+    <color name="orange_transparent">#AAFADCA7</color>
+    <color name="default_background">#3d3d3d</color>
+
+
+
+    <color name="secondaryTextColor">#82898D</color>
+    <color name="brown">#E8D9B3</color>
+    <color name="gray">#F5F6F5</color>
+    <color name="teal">#008080</color>
+    <color name="dark_gray">#838A8E</color>
+    <color name="light_gray">#EDEEF0</color>
 </resources>

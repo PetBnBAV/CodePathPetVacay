@@ -29,4 +29,11 @@
     <dimen name="expandable_lv_height">150dp</dimen>
 
     <dimen name="lv_header_left_padding">30dp</dimen>
+    <dimen name="pet_owner_profile_name_margin_left">20dp</dimen>
+    <dimen name="pet_owner_profile_name_margin_top">30dp</dimen>
+    <dimen name="pet_owner_profile_name_margin_right">10dp</dimen>
+
+    <dimen name="padding_medium">8dp</dimen>
+    <dimen name="padding_small">2dp</dimen>
+    <dimen name="cover_picture_height">250dp</dimen>
 </resources>

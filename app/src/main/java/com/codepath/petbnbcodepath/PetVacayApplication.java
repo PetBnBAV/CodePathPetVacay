@@ -6,8 +6,10 @@ import android.util.Log;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 /**
@@ -22,15 +24,12 @@ public class PetVacayApplication extends Application {
         /*ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground();*/
-        ParsePush.subscribeInBackground("", new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
-                } else {
-                    Log.e("com.parse.push", "failed to subscribe for push", e);
-                }
-            }
-        });
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+
+        if (ParseUser.getCurrentUser() != null) {
+            installation.put("user", ParseUser.getCurrentUser());
+        }
+
+        installation.saveInBackground();
     }
 }

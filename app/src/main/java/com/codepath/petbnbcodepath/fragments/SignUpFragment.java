@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
+import com.parse.ParsePush;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -221,6 +223,10 @@ public class SignUpFragment extends Fragment {
                     Toast.makeText(getActivity(),
                             "You are now signed up " + ParseUser.getCurrentUser().toString(),
                             Toast.LENGTH_SHORT).show();
+                    ParseInstallation installation =
+                            ParseInstallation.getCurrentInstallation();
+                    installation.put("user", ParseUser.getCurrentUser());
+                    installation.saveInBackground();
                     listener.onFinish();
                 } else {
                     String usernameTakenError = "username " + etEmail.getText().toString() +

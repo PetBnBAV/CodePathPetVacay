@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:id="@+id/ivHouseType"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:padding="15dp"
+        android:src="@drawable/icon_p3_beds"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entire Home"
+        android:id="@+id/tvHouseTypeTitle"
+        android:layout_alignParentTop="true"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:layout_toRightOf="@+id/ivHouseType"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Entire Home"
+        android:id="@+id/tvHouseTypeDescription"
+        android:layout_below="@+id/tvHouseTypeTitle"
+        android:layout_toRightOf="@+id/ivHouseType"
+        android:layout_toEndOf="@+id/ivHouseType"
+        android:paddingLeft="15dp"/>
+
+</RelativeLayout>

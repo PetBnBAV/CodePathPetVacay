@@ -13,10 +13,13 @@
           <State>
             <id />
           </State>
+          <State>
+            <id>Serialization issues</id>
+          </State>
         </expanded-state>
         <selected-state>
           <State>
-            <id>Abstraction issues</id>
+            <id>NonSerializableWithSerialVersionUIDField</id>
           </State>
         </selected-state>
       </profile-state>
@@ -122,6 +125,22 @@
       <Host>localhost</Host>
       <Port>5050</Port>
     </configuration>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
   </component>
 </project>
 
