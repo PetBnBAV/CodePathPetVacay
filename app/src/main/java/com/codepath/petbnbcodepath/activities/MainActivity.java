@@ -9,7 +9,6 @@ import android.graphics.Color;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -38,7 +37,6 @@ import com.google.android.gms.location.LocationServices;
 import com.makeramen.RoundedTransformationBuilder;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
-import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
@@ -94,8 +92,6 @@ public class MainActivity extends ActionBarActivity implements
         setContentView(R.layout.activity_main);
 
         initialize();
-
-        //drawer_layout.setVisibility(View.INVISIBLE);
         setUpListeners();
         setUpNavigationDrawer();
 
@@ -271,66 +267,60 @@ public class MainActivity extends ActionBarActivity implements
 
     public void  getProfilePicture()
     {
-        String url = null;
-         //Bitmap bitmap = null;
-        final ParseQuery<ParseObject> query = ParseQuery.getQuery("PetVacayUser");
-        query.whereEqualTo("first_name", "Anu");
-        query.getFirstInBackground(new GetCallback<ParseObject>() {
-            public void done(ParseObject object, ParseException e) {
-                if (object != null) {
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
 
-                    final ParseFile file = (ParseFile) object.get("profile_picture");
-                    file.getDataInBackground(new GetDataCallback() {
+            final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+            query.whereEqualTo("username",currentUser.getEmail());
+            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                public void done(ParseObject object, ParseException e) {
+                    if (object != null) {
 
-
-                        public void done(byte[] data, ParseException e) {
-                            if (e == null) {
-                                if(file.getUrl() != null) {
+                        final ParseFile file = (ParseFile) object.get("profile_picture");
+                        file.getDataInBackground(new GetDataCallback() {
 
 
-                                    //Insert profile picture pertaining to each user
-                                    //Insert profile picture pertaining to each user
-                                    Transformation transformation = new RoundedTransformationBuilder()
-                                            .borderColor(Color.LTGRAY)
-                                            .borderWidthDp(3)
-                                            .cornerRadiusDp(30)
-                                            .oval(true)
-                                            .build();
+                            public void done(byte[] data, ParseException e) {
+                                if (e == null) {
+                                    if (file.getUrl() != null) {
 
 
-                                    Picasso.with(getApplicationContext())
-                                            .load(file.getUrl())
-                                            .fit()
-                                            .transform(transformation)
-                                            .into(ivAppIconImg);
+                                        //Insert profile picture pertaining to each user
+                                        //Insert profile picture pertaining to each user
+                                        Transformation transformation = new RoundedTransformationBuilder()
+                                                .borderColor(Color.LTGRAY)
+                                                .borderWidthDp(3)
+                                                .cornerRadiusDp(30)
+                                                .oval(true)
+                                                .build();
 
 
-                                    ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                        Picasso.with(getApplicationContext())
+                                                .load(file.getUrl())
+                                                .fit()
+                                                .transform(transformation)
+                                                .into(ivAppIconImg);
 
+
+                                        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+                                    }
+
+                                } else {
+                                    // something went wrong
+                                    Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                                 }
-
-
-                                // bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-                                //use this bitmap as you want
-                                //Toast.makeText(getApplicationContext(), "Got back bitmap", Toast.LENGTH_SHORT).show();
-                                //ivAppIconImg.setImageBitmap(bitmap);
-
-
-
-                            } else {
-                                // something went wrong
-                                Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                             }
-                        }
-                    });
+                        });
 
-                } else {
-                    Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
 
+                    }
                 }
-            }
 
-        });
+            });
+        }
 
     }
 

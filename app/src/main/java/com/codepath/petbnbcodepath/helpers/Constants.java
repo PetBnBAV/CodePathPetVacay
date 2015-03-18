@@ -16,7 +16,7 @@ public class Constants {
     public static final String petVacayListingTable = "PetVacayListing";
     public static final String petVacayReviewTable = "PetVacayReview";
     public static final String petVacayBookingHistoryTable = "PetVacayBookingHistory";
-    public static final int whereWithinMiles = 20;
+    public static final int whereWithinMiles = 200;
     public static final int nearbyQueryLimit = 10;
     public static final int zoom = 10;
 
@@ -25,11 +25,15 @@ public class Constants {
     public static final String sitterIdKey = "sitterId";
     public static final String firstNameKey = "first_name";
     public static final String lastNameKey = "last_name";
+    public static final String userNameKey = "username";
     public static final String coverPictureKey = "cover_picture";
     public static final String listingIdKey = "listingId";
     public static final String reviewerIdKey = "reviewerId";
     public static final String objectIdKey = "objectId";
     public static final String ownerIdKey = "ownerId";
+
+    public static final String objectIdKey = "objectIdKey";
+    public static final String ownerIdKey = "ownerIdKey";
 
     public static final String summaryKey = "listingSummary";
     public static final String numReviewsKey = "numReviews";
