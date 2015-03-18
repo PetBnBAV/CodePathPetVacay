@@ -106,7 +106,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.codepath.petbnbcodepath.net.PetVacayBroadcastReceiver"
+            android:name=".net.PetVacayBroadcastReceiver"
             android:exported="false" >
             <intent-filter>
                 <action android:name="com.parse.push.intent.RECEIVE" />
@@ -133,8 +133,7 @@
             android:name=".activities.DetailsPageActivity"
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/title_activity_details_page"
-            android:logo="@drawable/app_icon_your_company"
-            >
+            android:logo="@drawable/app_icon_your_company" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -146,6 +145,10 @@
         <activity
             android:name=".activities.ListYourSpaceActivity"
             android:label="@string/title_activity_list_your_space" >
+        </activity>
+        <activity
+            android:name=".activities.ManageYourListingActivity"
+            android:label="@string/title_activity_manage_your_listing" >
         </activity>
     </application>
 

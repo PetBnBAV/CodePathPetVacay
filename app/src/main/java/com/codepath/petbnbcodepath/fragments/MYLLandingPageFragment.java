@@ -77,6 +77,8 @@ public class MYLLandingPageFragment extends Fragment {
             }
         });
 
+
+
         etValue.addTextChangedListener(new TextWatcher() {
 
             @Override

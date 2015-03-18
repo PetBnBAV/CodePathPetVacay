@@ -452,7 +452,9 @@ public class MainActivity extends ActionBarActivity implements
                 break;
             case 2:
                 //mFragment = new ListYourSpaceFragment();
-                Intent intentThree = new Intent(MainActivity.this, CameraActivity.class);
+                Intent intentThree = new Intent(MainActivity.this, ListYourSpaceActivity.class);
+//                Intent intentThree = new Intent(MainActivity.this, CameraActivity.class);
+                //TODO Probably need to send the user Id or some handle for current user
                 startActivity(intentThree);
                 break;
 
@@ -546,8 +548,8 @@ public class MainActivity extends ActionBarActivity implements
         tabsStrip.setViewPager(viewPager);
 
         checkIfUserLoggedIn();
-        Toast.makeText(this, "new! " + Double.toString(mCurrentLocation.getLatitude()) + "," +
-                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, "new! " + Double.toString(mCurrentLocation.getLatitude()) + "," +
+//                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
 
         /*landingPageFragment = LandingPageFragment.newInstance(
                 mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
@@ -582,7 +584,7 @@ public class MainActivity extends ActionBarActivity implements
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         Constants.currLatLng = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 
     }
 
@@ -621,7 +623,7 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     public void onEtQuerySubmit(String query) {
-        Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
     }
 
     public void onlvLandingPageItemClick(double latitude, double longitude) {

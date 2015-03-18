@@ -16,6 +16,7 @@
         android:lines="2"
         android:padding="30dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:textAppearance="?android:textAppearanceLarge"/>
     <LinearLayout
         android:orientation="horizontal"
@@ -33,6 +34,7 @@
         android:paddingLeft="@dimen/textview_hint_padding"
         android:singleLine="true"
         android:paddingBottom="10dp"
+        android:textColor="@color/black"
         android:layout_weight="0.78" />
     <ImageView
         android:layout_width="wrap_content"

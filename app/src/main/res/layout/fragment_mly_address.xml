@@ -20,6 +20,7 @@
             android:singleLine="true"
             android:paddingBottom="10dp"
             android:layout_weight="0.78"
+            android:textColor="@=color/dark_gray"
             android:hint="Address" />
         <ImageView
             android:layout_width="wrap_content"
