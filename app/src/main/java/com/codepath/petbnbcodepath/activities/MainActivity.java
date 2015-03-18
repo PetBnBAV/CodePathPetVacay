@@ -3,10 +3,13 @@ package com.codepath.petbnbcodepath.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -25,12 +28,20 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.FragmentPageAdapter;
+import com.codepath.petbnbcodepath.fragments.LandingPageFragment;
+import com.codepath.petbnbcodepath.helpers.Constants;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
 import com.makeramen.RoundedTransformationBuilder;
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -38,7 +49,11 @@ import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements
+                                                    GoogleApiClient.ConnectionCallbacks,
+                                                    LocationListener,
+                                                    GoogleApiClient.OnConnectionFailedListener,
+                                                    LandingPageFragment.OnLandingPageListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -54,10 +69,23 @@ public class MainActivity extends ActionBarActivity {
     private TextView tvLogInSignUp;
     private String[] mOptionMenu;
     private DrawerLayout drawer_layout;
+    private ViewPager viewPager;
 
     boolean loggedIn = false;
 
 
+    private GoogleApiClient mGoogleApiClient;
+
+    private long UPDATE_INTERVAL = 5 * 60000;  /* 60 secs */
+    //private long FASTEST_INTERVAL = 5000; /* 5 secs */
+    private long FASTEST_INTERVAL = 5 * 60000;
+
+
+    /*
+	 * Define a request code to send to Google Play services This code is
+	 * returned in Activity.onActivityResult
+	 */
+    private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
 
     @Override
@@ -72,15 +100,16 @@ public class MainActivity extends ActionBarActivity {
         setUpNavigationDrawer();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
-        viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
+        //ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
+        /*viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
 
-        checkIfUserLoggedIn();
+        checkIfUserLoggedIn();*/
 
 
     }
@@ -111,6 +140,11 @@ public class MainActivity extends ActionBarActivity {
         ivAppIconImg = (ImageView) findViewById(R.id.ivAppIconImg);
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mProfileTasks));
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).build();
     }
 
 
@@ -322,8 +356,10 @@ public class MainActivity extends ActionBarActivity {
 
 
     private void myLogin() {
+        Intent i = new Intent(MainActivity.this, LoginSignupActivity.class);
+        startActivity(i);
 
-        ParseUser.logInInBackground("anuscorps23@gmail.com", "welcome1", new LogInCallback() {
+        /*ParseUser.logInInBackground("anuscorps23@gmail.com", "welcome1", new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (user != null) {
                     Toast.makeText(MainActivity.this, "I am logged in", Toast.LENGTH_LONG).show();
@@ -334,7 +370,7 @@ public class MainActivity extends ActionBarActivity {
                     Toast.makeText(MainActivity.this, "Log in failed", Toast.LENGTH_LONG).show();
                 }
             }
-        });
+        });*/
     }
 
 
@@ -492,6 +528,118 @@ public class MainActivity extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    protected void onStart() {
+        super.onStart();
+        // Connect the client.
+        mGoogleApiClient.connect();
+    }
+
+    protected void onStop() {
+        // Disconnecting the client invalidates it.
+        mGoogleApiClient.disconnect();
+        super.onStop();
+    }
+
+    public void onConnected(Bundle dataBundle) {
+        Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(
+                mGoogleApiClient);
+        Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude()) + "," +
+                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
+        Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
+                mCurrentLocation.getLongitude());
+        viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
+
+        // Give the PagerSlidingTabStrip the ViewPager
+        PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        // Attach the view pager to the tab strip
+        tabsStrip.setViewPager(viewPager);
+
+        checkIfUserLoggedIn();
+        Toast.makeText(this, "new! " + Double.toString(mCurrentLocation.getLatitude()) + "," +
+                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
+
+        /*landingPageFragment = LandingPageFragment.newInstance(
+                mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frag_landing_page, landingPageFragment);
+        ft.commit();*/
+
+        startLocationUpdates();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        if (i == CAUSE_SERVICE_DISCONNECTED) {
+            Toast.makeText(this, "Disconnected. Please re-connect.", Toast.LENGTH_SHORT).show();
+        } else if (i == CAUSE_NETWORK_LOST) {
+            Toast.makeText(this, "Network lost. Please re-connect.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    protected void startLocationUpdates() {
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient,
+                mLocationRequest, this);
+    }
+
+    public void onLocationChanged(Location location) {
+        // Report to the UI that the location was updated
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Constants.currLatLng = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+    }
+
+    /*
+	 * Called by Location Services if the attempt to Location Services fails.
+	 */
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+		/*
+		 * Google Play services can resolve some errors it detects. If the error
+		 * has a resolution, try sending an Intent to start a Google Play
+		 * services activity that can resolve error.
+		 */
+        if (connectionResult.hasResolution()) {
+            try {
+                // Start an Activity that tries to resolve the error
+                connectionResult.startResolutionForResult(this,
+                        CONNECTION_FAILURE_RESOLUTION_REQUEST);
+				/*
+				 * Thrown if Google Play services canceled the original
+				 * PendingIntent
+				 */
+            } catch (IntentSender.SendIntentException e) {
+                // Log the error
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(),
+                    "Sorry. Location services not available to you", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    public void onLoginSignup(View view) {
+        Intent i = new Intent(MainActivity.this, LoginSignupActivity.class);
+        startActivity(i);
+    }
+
+    public void onEtQuerySubmit(String query) {
+        Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+    }
+
+    public void onlvLandingPageItemClick(double latitude, double longitude) {
+        Intent i = new Intent(MainActivity.this, MapActivity.class);
+        i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
+        i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
+        startActivity(i);
     }
 
 }

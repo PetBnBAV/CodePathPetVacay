@@ -156,7 +156,8 @@
         android:id="@+id/ivProfile"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/ic_profile"
+        android:src="@drawable/ic_profile"
+        android:background="@color/white"
         android:clickable="true" />
 
 

@@ -8,6 +8,7 @@ import com.astuetz.PagerSlidingTabStrip.IconTabProvider;
 import com.codepath.petbnbcodepath.fragments.HistoryPageFragment;
 import com.codepath.petbnbcodepath.fragments.LandingPageFragment;
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.helpers.Constants;
 
 /**
  * Created by anuscorps23 on 3/12/15.
@@ -31,12 +32,14 @@ public class FragmentPageAdapter extends FragmentPagerAdapter implements IconTab
     public Fragment getItem(int position) {
 
         if (position == 0) {
-            return LandingPageFragment.newInstance(position + 1);
+            return LandingPageFragment.newInstance(Constants.currLatLng.getLatitude(),
+                                                   Constants.currLatLng.getLongitude());
         } else if (position == 1) {
             return HistoryPageFragment.newInstance(position + 1);
         }
 
-        return LandingPageFragment.newInstance(position + 1);
+        return LandingPageFragment.newInstance(Constants.currLatLng.getLatitude(),
+                                               Constants.currLatLng.getLongitude());
 
     }
 

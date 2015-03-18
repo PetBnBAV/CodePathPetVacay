@@ -1,16 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- This is the fragment  to be displayed for a section associated with a tab -->
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rrLandingPage"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
-        android:id="@+id/tvLandingPageTitle"
-        android:text="Landing"
-        android:textColor="@color/black"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context=".MainActivity">
+
+    <ListView
+        android:id="@+id/lvLandingPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:gravity="center" />
+        android:layout_below="@+id/btnsLoginSignup"></ListView>
+
 </RelativeLayout>

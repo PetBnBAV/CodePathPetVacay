@@ -16,7 +16,17 @@
     <item name="petvacayteal" type="color">#008080</item>
     <item name="yellow" type="color">#FFEA18</item>
     <item name="grey" type="color">#545454</item>
-    <item name="white" type="color">#FFFFFF</item>#
+    <item name="white" type="color">#FFFFFF</item>
+    <color name="vl_white">#EEEEEE</color>
+    <color name="theme_teal">#008080</color>
+    <color name="dark_gray">#41464C</color>
+    <color name="light_gray">#7C7C7C</color>
+    <color name="vl_red">#ff5252</color>
+    <color name="facebook_blue">#3B5893</color>
+    <color name="facebook_light_blue">#607AA9</color>
+    <color name="google_red">#D6483A</color>
+    <color name="google_light_red">#E96A56</color>
+    <color name="bgWhite">#FFFFFF</color>
 
     <integer-array name="androidcolors">
         <item>@color/blue</item>
