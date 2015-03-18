@@ -28,6 +28,8 @@ public class Constants {
     public static final String coverPictureKey = "cover_picture";
     public static final String listingIdKey = "listingId";
     public static final String reviewerIdKey = "reviewerId";
+    public static final String objectIdKey = "objectId";
+    public static final String ownerIdKey = "ownerId";
 
     public static final String summaryKey = "listingSummary";
     public static final String numReviewsKey = "numReviews";
