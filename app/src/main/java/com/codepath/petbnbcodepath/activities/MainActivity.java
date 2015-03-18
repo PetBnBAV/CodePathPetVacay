@@ -262,53 +262,57 @@ public class MainActivity extends ActionBarActivity implements
 
     public void  getProfilePicture()
     {
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
 
             final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-            query.whereEqualTo("username",currentUser.getEmail());
+            query.whereEqualTo("username",currentUser.getUsername());
             query.getFirstInBackground(new GetCallback<ParseObject>() {
                 public void done(ParseObject object, ParseException e) {
-                    if (object != null) {
+                    if (e != null) {
 
-                        final ParseFile file = (ParseFile) object.get("profile_picture");
-                        if(file != null){
-                            file.getDataInBackground(new GetDataCallback() {
+                        if(object.get("profile_picture") != null) {
 
-
-                                public void done(byte[] data, ParseException e) {
-                                    if (e == null) {
-                                        if (file.getUrl() != null) {
+                            final ParseFile file = (ParseFile) object.get("profile_picture");
+                            if (file != null) {
+                                file.getDataInBackground(new GetDataCallback() {
 
 
-                                            //Insert profile picture pertaining to each user
-                                            //Insert profile picture pertaining to each user
-                                            Transformation transformation = new RoundedTransformationBuilder()
-                                                    .borderColor(Color.LTGRAY)
-                                                    .borderWidthDp(3)
-                                                    .cornerRadiusDp(30)
-                                                    .oval(true)
-                                                    .build();
+                                    public void done(byte[] data, ParseException e) {
+                                        if (e == null) {
+                                            if (file.getUrl() != null) {
 
 
-                                            Picasso.with(getApplicationContext())
-                                                    .load(file.getUrl())
-                                                    .fit()
-                                                    .transform(transformation)
-                                                    .into(ivAppIconImg);
+                                                //Insert profile picture pertaining to each user
+                                                //Insert profile picture pertaining to each user
+                                                Transformation transformation = new RoundedTransformationBuilder()
+                                                        .borderColor(Color.LTGRAY)
+                                                        .borderWidthDp(3)
+                                                        .cornerRadiusDp(30)
+                                                        .oval(true)
+                                                        .build();
 
 
-                                            ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                                Picasso.with(getApplicationContext())
+                                                        .load(file.getUrl())
+                                                        .fit()
+                                                        .transform(transformation)
+                                                        .into(ivAppIconImg);
 
+
+                                                ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+
+                                            }
+
+                                        } else {
+                                            // something went wrong
+                                            Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                                         }
-
-                                    } else {
-                                        // something went wrong
-                                        Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
                                     }
-                                }
-                            });
-                        }
+                                });
+                            }
+                       }
 
                     } else {
                         Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();

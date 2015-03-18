@@ -50,8 +50,6 @@ public class CameraActivity extends ActionBarActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbarforcamera);
         setSupportActionBar(toolbar);
-        //toolbar.setTitle("Hello");
-        //toolbar.setTitle(String.valueOf(photosCount) + "Photos");
 
         ivTakePicture = (ImageView) findViewById(R.id.ivTakePicture);
         llDragandDrop = (LinearLayout) findViewById(R.id.llDragandDrop);
@@ -112,11 +110,11 @@ public class CameraActivity extends ActionBarActivity {
     View.OnDragListener DropListener = new View.OnDragListener() {
         @Override
 
-        public boolean onDrag(View layoutview, DragEvent dragevent) {
-            int action = dragevent.getAction();
+        public boolean onDrag(View v, DragEvent event) {
 
+            final View draggedView = (View) event.getLocalState();
 
-            switch (action) {
+            switch (event.getAction()) {
                 case DragEvent.ACTION_DRAG_ENTERED:
                     Log.i("Drag Event","Entered");
                     getSupportActionBar().hide();
@@ -133,13 +131,18 @@ public class CameraActivity extends ActionBarActivity {
 
                 case DragEvent.ACTION_DROP:
                     Log.i("Drag Event","Dropped");
-                    View view = (View) dragevent.getLocalState();
-                    ViewGroup owner = (ViewGroup) view.getParent();
-                    owner.removeView(view);
-                    LinearLayout container = (LinearLayout) layoutview;
-                    container.addView(view);
-                    view.setVisibility(View.VISIBLE);
+
+                    View dropTarget = v;
+
+                    // Get owner of the dragged view and remove the view (if needed)
+                    ViewGroup owner = (ViewGroup) draggedView.getParent();
+
+                    ImageView iv =  (ImageView) owner.getChildAt(2);
+                    iv.setImageResource(0);
+
                     getSupportActionBar().show();
+                    photosCount--;
+                    updatePhotoCount();
 
                     break;
 
@@ -181,14 +184,7 @@ public class CameraActivity extends ActionBarActivity {
             tvAddPhotos.setVisibility(View.INVISIBLE);
             ivDirection.setVisibility(View.INVISIBLE);
             photosCount++;
-            if(photosCount == 1) {
-                tvNumOfPhotos.setText(String.valueOf(photosCount) + " Photo");
-            }
-            else
-            {
-                tvNumOfPhotos.setText(String.valueOf(photosCount) + " Photos");
-            }
-
+            updatePhotoCount();
         }
 
         if (requestCode == RESULT_LAUNCH_CAMERA && resultCode == RESULT_OK && null != data) {
@@ -197,15 +193,29 @@ public class CameraActivity extends ActionBarActivity {
             tvAddPhotos.setVisibility(View.INVISIBLE);
             ivDirection.setVisibility(View.INVISIBLE);
             photosCount++;
-            if(photosCount == 1) {
-                tvNumOfPhotos.setText(String.valueOf(photosCount) + " Photo");
-            }
-            else
-            {
-                tvNumOfPhotos.setText(String.valueOf(photosCount) + " Photos");
-            }
+            updatePhotoCount();
+
 
         }
+    }
+
+
+    public void updatePhotoCount()
+    {
+
+        if(photosCount < 0)
+        {
+            photosCount = 0;
+        }
+
+        if(photosCount == 1) {
+            tvNumOfPhotos.setText(String.valueOf(photosCount) + " Photo");
+        }
+        else
+        {
+            tvNumOfPhotos.setText(String.valueOf(photosCount) + " Photos");
+        }
+
     }
 
     public String getPath(Uri uri) {
