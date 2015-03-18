@@ -625,7 +625,8 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     public void onlvLandingPageItemClick(double latitude, double longitude) {
-        Intent i = new Intent(MainActivity.this, MapActivity.class);
+        Intent i = new Intent(MainActivity.this, PostingActivity.class);
+
         i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
         i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
         startActivity(i);

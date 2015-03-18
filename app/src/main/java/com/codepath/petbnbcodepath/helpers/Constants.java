@@ -54,4 +54,6 @@ public class Constants {
     public static ParseGeoPoint currLatLng;
     public static final String pushCustomDataKey = "userObjectId";
 
+    public static final String firstReview = "firstReview";
+
 }

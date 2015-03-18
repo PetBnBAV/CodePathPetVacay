@@ -134,7 +134,7 @@
             android:icon="@drawable/app_icon_your_company"
             android:label="@string/title_activity_details_page"
             android:logo="@drawable/app_icon_your_company"
-            android:screenOrientation="landscape" >
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

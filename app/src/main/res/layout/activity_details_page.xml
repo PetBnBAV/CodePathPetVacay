@@ -1,18 +1,17 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codepath.gangwal.imageswipe.activities.DetailsPageActivity">
+    tools:context="com.codepath.petbnbcodepath.activities.DetailsPageActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.codepath.gangwal.imageswipe.viewpagers.WrapContentHeightViewPager
+        <com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager
             xmlns:android="http://schemas.android.com/apk/res/android"
             android:id="@+id/view_pager"
             android:layout_width="fill_parent"
             android:layout_height="250dp"
-            >
-        </com.codepath.gangwal.imageswipe.viewpagers.WrapContentHeightViewPager>
+            />
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="wrap_content"

@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.activities.DetailsPageActivity;
+import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
 import com.makeramen.RoundedTransformationBuilder;
@@ -33,13 +34,15 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
         ImageView ivWishlist;
         ImageView ivUserImage;
         TextView tvPostTitle;
+        TextView tvPrice;
         TextView tvPostSubTitle;
+        WrapContentHeightViewPager viewPager;
+
     }
 
     private FragmentManager mFragmentManger;
     Activity mActivity;
     Listing listing;
-    WrapContentHeightViewPager viewPager;
     //TODO Need to check if making viewholder final effect the performance
     ImageView ivWishlist;
 
@@ -58,14 +61,22 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
             viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_post, parent, false);
             convertView.setTag(viewHolder);
-
-            viewPager = (WrapContentHeightViewPager) convertView.findViewById(R.id.view_pager);
+            //View pager need to
+            viewHolder.viewPager = (WrapContentHeightViewPager) convertView.findViewById(R.id.view_pager);
             viewHolder.ivWishlist = (ImageView)convertView.findViewById(R.id.ivWishlist);
             viewHolder.ivSitterImage = (ImageView)convertView.findViewById(R.id.ivSitterImage);
+            viewHolder.tvPrice = (TextView)convertView.findViewById(R.id.tvPrice);
+            viewHolder.tvPostSubTitle = (TextView)convertView.findViewById(R.id.tvPostSubTitle);
+
 
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
+        viewHolder.tvPrice.setText("$ " + currentListing.getCost());
+        //TODO Need to update this
+        String city = (currentListing.getCityState()==null)?"San Francisco":currentListing.getCityState();
+        viewHolder.tvPostSubTitle.setText("Entire Home - "+currentListing.getNumReviews() +" Reviews - " +city);
+
         viewHolder.ivSitterImage.setImageResource(0);
         Transformation transformation = new RoundedTransformationBuilder()
                 .borderColor(mActivity.getResources().getColor(R.color.white))
@@ -75,7 +86,8 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
                 .build();
 
         Picasso.with(getContext())
-                .load(R.drawable.sample_profile)
+                .load(currentListing.getCoverPictureUrl())
+                .placeholder(R.drawable.sample_profile)
                 .fit()
                 .transform(transformation)
                 .into(viewHolder.ivSitterImage);
@@ -93,11 +105,18 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), DetailsPageActivity.class);
+                intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
+                intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
+                intent.putExtra(Constants.coverPictureKey,currentListing.getCoverPictureUrl());
+                intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
+                intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
                 getContext().startActivity(intent);
             }
         });
         ImagePagerAdapter adapter = new ImagePagerAdapter(mActivity);
-        viewPager.setAdapter(adapter);
+        //TODO Need pass Images to adapter
+        adapter.tempCoverPicture = currentListing.getCoverPictureUrl();
+        viewHolder.viewPager.setAdapter(adapter);
         return convertView;
     }
 }
