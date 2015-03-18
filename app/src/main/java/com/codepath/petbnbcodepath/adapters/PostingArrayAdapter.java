@@ -14,7 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.activities.BookingDetailsActivity;
 import com.codepath.petbnbcodepath.activities.DetailsPageActivity;
+import com.codepath.petbnbcodepath.activities.MapActivity;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
@@ -67,7 +69,7 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
             viewHolder.ivSitterImage = (ImageView)convertView.findViewById(R.id.ivSitterImage);
             viewHolder.tvPrice = (TextView)convertView.findViewById(R.id.tvPrice);
             viewHolder.tvPostSubTitle = (TextView)convertView.findViewById(R.id.tvPostSubTitle);
-
+            viewHolder.tvPostTitle = (TextView)convertView.findViewById(R.id.tvPostTitle);
 
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -111,6 +113,32 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
                 intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
                 intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
                 getContext().startActivity(intent);
+            }
+        });
+
+        //TODO Right now for demo we are showing both type of details page. Should not be this in real scenario.
+
+        viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), BookingDetailsActivity.class);
+                i.putExtra(Constants.coverPictureKey, currentListing.getCoverPictureUrl());
+                i.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
+                i.putExtra(Constants.lastNameKey, currentListing.getLast_name());
+                i.putExtra(Constants.numReviewsKey, currentListing.getNumReviews());
+                i.putExtra(Constants.listingCostKey, currentListing.getCost());
+                getContext().startActivity(i);
+            }
+        });
+
+        //TODO need to have a icon on action bar.
+        viewHolder.tvPostSubTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), MapActivity.class);
+                i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
+                i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
+                getContext().startActivity(i);
             }
         });
         ImagePagerAdapter adapter = new ImagePagerAdapter(mActivity);
