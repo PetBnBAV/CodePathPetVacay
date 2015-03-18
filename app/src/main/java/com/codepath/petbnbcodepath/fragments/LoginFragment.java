@@ -141,7 +141,6 @@ public class LoginFragment extends Fragment {
                                 Toast.makeText(getActivity(),
                                         "You are now logged in",
                                         Toast.LENGTH_SHORT).show();
-                                Constants.isLoggedIn = true;
                                 listener.onFinish();
                             } else {
                                 Log.e(TAG, "Error: " + e.getMessage());

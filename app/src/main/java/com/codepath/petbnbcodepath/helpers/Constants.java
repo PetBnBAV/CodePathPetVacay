@@ -15,6 +15,7 @@ public class Constants {
     public static final String petVacayOwnerTable = "PetVacayOwner";
     public static final String petVacayListingTable = "PetVacayListing";
     public static final String petVacayReviewTable = "PetVacayReview";
+    public static final String petVacayBookingHistoryTable = "PetVacayBookingHistory";
     public static final int whereWithinMiles = 20;
     public static final int nearbyQueryLimit = 10;
     public static final int zoom = 10;

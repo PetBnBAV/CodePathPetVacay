@@ -221,7 +221,6 @@ public class SignUpFragment extends Fragment {
                     Toast.makeText(getActivity(),
                             "You are now signed up " + ParseUser.getCurrentUser().toString(),
                             Toast.LENGTH_SHORT).show();
-                    Constants.isLoggedIn = true;
                     listener.onFinish();
                 } else {
                     String usernameTakenError = "username " + etEmail.getText().toString() +
