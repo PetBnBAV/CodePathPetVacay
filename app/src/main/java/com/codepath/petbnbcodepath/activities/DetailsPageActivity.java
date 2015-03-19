@@ -24,6 +24,7 @@ public class DetailsPageActivity extends ActionBarActivity {
     TextView tvSitterName;
     TextView tvReviewCountDetail;
     TextView tvNext;
+    TextView tvPrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,8 @@ public class DetailsPageActivity extends ActionBarActivity {
             if(Integer.parseInt(reviewCount)>0)
                 tvReviewCountDetail.setText(reviewCount + " Reviews");
         }catch (NumberFormatException e){}
-
+        tvPrice = (TextView)findViewById(R.id.tvPrice);
+        tvPrice.setText("$ "+cost);
         tvNext = (TextView)findViewById(R.id.tvNext);
         tvNext.setOnClickListener(new View.OnClickListener() {
                     @Override
