@@ -15,12 +15,12 @@
             android:id="@+id/etSearch"
             android:layout_width="322dp"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="@color/light_gray"
             android:paddingLeft="@dimen/textview_hint_padding"
             android:singleLine="true"
             android:paddingBottom="10dp"
             android:layout_weight="0.78"
-            android:textColor="@=color/dark_gray"
+            android:textColor="@color/dark_gray"
             android:hint="Address" />
         <ImageView
             android:layout_width="wrap_content"

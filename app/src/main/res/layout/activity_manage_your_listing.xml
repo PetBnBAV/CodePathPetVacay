@@ -358,7 +358,6 @@
             android:layout_height="wrap_content"
             android:background="@drawable/button_background"
             android:id="@+id/linearLayout"
-            android:alpha="0.4"
             android:padding="10dp"
             android:layout_marginBottom="15dp"
             android:layout_alignParentLeft="true"
@@ -368,7 +367,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Next"
+                android:text="Start Booking"
                 android:id="@+id/tvNext"
                 android:textColor="#FFFFFF"
                 android:textSize="20dp"

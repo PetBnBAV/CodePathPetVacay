@@ -536,8 +536,8 @@ public class MainActivity extends ActionBarActivity implements
     public void onConnected(Bundle dataBundle) {
         Location mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(
                 mGoogleApiClient);
-        Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude()) + "," +
-                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude()) + "," +
+//                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
         Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
                 mCurrentLocation.getLongitude());
         viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));

@@ -1,8 +1,16 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.codepath.petbnbcodepath.activities.DetailsPageActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.codepath.petbnbcodepath.activities.DetailsPageActivity"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="fill_parent"
+    >
 
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentEnd="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -126,7 +134,8 @@
                 android:layout_height="wrap_content"
                 android:text="Hosted by David"
                 android:id="@+id/tvSitterName"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/dark_gray" />
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
@@ -261,3 +270,30 @@
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_background"
+        android:alpha="1.0"
+        android:padding="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0.50"
+        android:id="@+id/linearLayout3">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Next"
+            android:id="@+id/tvNext"
+            android:textColor="#FFFFFF"
+            android:textSize="20dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="center"
+            android:paddingRight="2dp"/>
+    </LinearLayout>
+</RelativeLayout>

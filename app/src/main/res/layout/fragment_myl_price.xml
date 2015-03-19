@@ -41,6 +41,7 @@
                         android:minLines="1"
                         android:layout_gravity="center_horizontal"
                         android:inputType="phone"
+                        android:background="@color/light_gray"
                         android:digits="1234567890"
                         />
 

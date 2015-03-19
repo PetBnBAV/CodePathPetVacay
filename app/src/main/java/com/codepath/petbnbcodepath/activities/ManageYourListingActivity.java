@@ -73,7 +73,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     private void setupViews() {
         stickyProgressBar = (LinearLayout) findViewById(R.id.stickyProgressBar);
-
+//        String sumbitButtonText  = getResources().getQuantityString(R.string.countdown_unit,3);
         llMYLImage = (LinearLayout) findViewById(R.id.llMYLImage);
         coverImage = (ImageView) findViewById(R.id.coverImage);
         tvPhotoCount = (TextView) findViewById(R.id.tvPhotoCount);

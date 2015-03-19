@@ -1,9 +1,11 @@
 package com.codepath.petbnbcodepath.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +23,7 @@ public class DetailsPageActivity extends ActionBarActivity {
     ImageView ivReviewerImage;
     TextView tvSitterName;
     TextView tvReviewCountDetail;
+    TextView tvNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,25 +31,45 @@ public class DetailsPageActivity extends ActionBarActivity {
         setContentView(R.layout.activity_details_page);
 
 
-        String firstName = getIntent().getStringExtra(Constants.firstNameKey);
-        String lastName = getIntent().getStringExtra(Constants.lastNameKey);
-        String coverPicture = getIntent().getStringExtra(Constants.coverPictureKey);
-        String reviewCount = getIntent().getStringExtra(Constants.reviewerIdKey);
+        final String firstName = getIntent().getStringExtra(Constants.firstNameKey);
+        final String lastName = getIntent().getStringExtra(Constants.lastNameKey);
+        final String coverPicture = getIntent().getStringExtra(Constants.coverPictureKey);
+        final String reviewCount = getIntent().getStringExtra(Constants.reviewerIdKey);
+        final String cost = getIntent().getStringExtra(Constants.listingCostKey);
+
         String firstReview = getIntent().getStringExtra(Constants.firstReview);
-
-
         viewPager = (WrapContentHeightViewPager) findViewById(R.id.view_pager);
         ImagePagerAdapter adapter = new ImagePagerAdapter(this);
         //TODO Need pass Images to adapter
         adapter.tempCoverPicture = coverPicture;
         viewPager.setAdapter(adapter);
         tvSitterName =(TextView)findViewById(R.id.tvSitterName);
-        tvSitterName.setText(firstName + " " + lastName);
+        tvSitterName.setText("Hosted by " + firstName + " " + lastName);
         tvReviewCountDetail = (TextView)findViewById(R.id.tvReviewCountDetail);
         try{
             if(Integer.parseInt(reviewCount)>0)
                 tvReviewCountDetail.setText(reviewCount + " Reviews");
         }catch (NumberFormatException e){}
+
+        tvNext = (TextView)findViewById(R.id.tvNext);
+        tvNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent i = new Intent(DetailsPageActivity.this, BookingDetailsActivity.class);
+                        i.putExtra(Constants.coverPictureKey, coverPicture);
+                        i.putExtra(Constants.firstNameKey, firstName);
+                        i.putExtra(Constants.lastNameKey, lastName);
+                        i.putExtra(Constants.numReviewsKey, reviewCount);
+                        i.putExtra(Constants.listingCostKey, cost);
+                        startActivity(i);
+                    }
+                };
+            }
+
+        });
         ivSitterImage = (ImageView)findViewById(R.id.ivSitterImage);
         ivReviewerImage = (ImageView)findViewById(R.id.ivReviewerImage);
         ivSitterImage.setImageResource(0);

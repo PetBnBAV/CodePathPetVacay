@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
-import com.codepath.petbnbcodepath.activities.BookingDetailsActivity;
 import com.codepath.petbnbcodepath.activities.DetailsPageActivity;
 import com.codepath.petbnbcodepath.activities.MapActivity;
 import com.codepath.petbnbcodepath.helpers.Constants;
@@ -112,6 +111,7 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
                 intent.putExtra(Constants.coverPictureKey,currentListing.getCoverPictureUrl());
                 intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
                 intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
+                intent.putExtra(Constants.listingCostKey, currentListing.getCost());
                 getContext().startActivity(intent);
             }
         });
@@ -121,13 +121,6 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
         viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getContext(), BookingDetailsActivity.class);
-                i.putExtra(Constants.coverPictureKey, currentListing.getCoverPictureUrl());
-                i.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
-                i.putExtra(Constants.lastNameKey, currentListing.getLast_name());
-                i.putExtra(Constants.numReviewsKey, currentListing.getNumReviews());
-                i.putExtra(Constants.listingCostKey, currentListing.getCost());
-                getContext().startActivity(i);
             }
         });
 
