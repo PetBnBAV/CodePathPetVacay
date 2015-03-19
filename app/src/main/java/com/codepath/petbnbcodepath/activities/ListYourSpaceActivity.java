@@ -1,5 +1,6 @@
 package com.codepath.petbnbcodepath.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -110,8 +111,8 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSHomeT
         //Toast.makeText(getApplicationContext(),
                // "Pet Count" + petCount + "\t Size " + petSizeString + "\tType " + petTypeString+"\tPlayground " + playgroundString, Toast.LENGTH_SHORT).show();
 
-//        Intent intent = new Intent(this,ManageYourListingActivity.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this,ManageYourListingActivity.class);
+        startActivity(intent);
 
     }
 }
