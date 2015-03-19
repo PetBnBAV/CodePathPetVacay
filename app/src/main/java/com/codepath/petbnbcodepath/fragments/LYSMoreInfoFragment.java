@@ -2,7 +2,6 @@ package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,7 +54,7 @@ public class LYSMoreInfoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,  ViewGroup parent,  Bundle savedInstanceState) {
         final View view  = inflater.inflate(R.layout.fragment_lsy_moreinfo,parent,false);
 
         tvPetCount =  (TextView)view.findViewById(R.id.tvPetCount);

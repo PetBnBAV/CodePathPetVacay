@@ -2,7 +2,6 @@ package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -60,7 +59,7 @@ public class MYLLandingPageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,  ViewGroup parent,  Bundle savedInstanceState) {
         final View view  = inflater.inflate(R.layout.fragment_myl_title,parent,false);
         setUpViews(view);
         setupListners(view);
