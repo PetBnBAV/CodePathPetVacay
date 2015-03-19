@@ -1,5 +1,6 @@
 package com.codepath.petbnbcodepath.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,10 +17,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.codepath.petbnbcodepath.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
+import com.parse.ParseUser;
 
 
-public class WhyHostFragment extends Fragment {
+public class WhyHostFragment extends Fragment implements FragmentCommunicator{
 
     // Store instance variables
 
@@ -29,6 +32,14 @@ public class WhyHostFragment extends Fragment {
     private ImageView ivWHImage;
     private Button btnWHListYourSpace;
     private Button btnWHBack;
+
+    public FragmentCommunicator communicator;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        communicator = (FragmentCommunicator) activity;
+    }
 
     // newInstance constructor for creating fragment with arguments
     public static WhyHostFragment newInstance(int page) {
@@ -132,6 +143,19 @@ public class WhyHostFragment extends Fragment {
 
             }
         });
+
+        btnWHListYourSpace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if (currentUser != null) {
+                    communicator.listYourSpace();
+
+                } else {
+                    communicator.login();
+                }
+            }
+        });
     }
 
 
@@ -161,6 +185,22 @@ public class WhyHostFragment extends Fragment {
                 btnWHListYourSpace.setBackgroundColor(getResources().getColor(R.color.red));
                 break;
         }
+
+    }
+
+    @Override
+    public void startExploring() {
+
+    }
+
+    @Override
+    public void login() {
+
+
+    }
+    @Override
+    public void listYourSpace() {
+
 
     }
 }

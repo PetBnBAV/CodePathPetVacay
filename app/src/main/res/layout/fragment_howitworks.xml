@@ -46,7 +46,7 @@ android:background="#ffffffff">
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@color/white"
-        android:id="@+id/linearLayout"
+        android:id="@+id/linearLayoutHSW"
         android:dividerPadding="32dp"
         android:showDividers="middle">
 

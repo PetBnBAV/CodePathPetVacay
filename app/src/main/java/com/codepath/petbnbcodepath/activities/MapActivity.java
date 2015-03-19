@@ -1,23 +1,22 @@
 package com.codepath.petbnbcodepath.activities;
 
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.ListingSummaryFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.Fragment;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -90,7 +89,7 @@ public class MapActivity extends ActionBarActivity
                 }
             });
         } else {
-            Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
         }
 
         iconFactoryTeal = new IconGenerator(MapActivity.this);
@@ -229,9 +228,9 @@ public class MapActivity extends ActionBarActivity
                 } else {
                     Log.e("TAG", "Error: " + e.getMessage());
 
-                    Toast.makeText(MapActivity.this,
-                            getResources().getString(R.string.generic_error),
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MapActivity.this,
+                           // getResources().getString(R.string.generic_error),
+                           // Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -244,7 +243,7 @@ public class MapActivity extends ActionBarActivity
         map = googleMap;
         if (map != null) {
             // Map is ready
-            Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
             /*map.setMyLocationEnabled(true);
             map.setOnMapLongClickListener(this);
@@ -257,7 +256,7 @@ public class MapActivity extends ActionBarActivity
 
             connectClient();*/
         } else {
-            Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Error - Map was null!!", Toast.LENGTH_SHORT).show();
         }
         map.setOnMarkerClickListener(this);
     }

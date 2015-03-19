@@ -144,6 +144,9 @@
     <string name="dismiss_error">Dismiss</string>
     <string name="oops">Oops</string>
 
+    <string name="yourbookings">Your Bookings</string>
+    <string name="whenYouBook">When you book, you\'ll see your booking history here</string>
+
 
     <string name="title_activity_swipe_view">SwipeViewActivity</string>
     <string name="title_activity_details_page">DetailsPageActivity</string>

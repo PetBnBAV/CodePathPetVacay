@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/yourbookings"
+        android:text="Nu upcoming bookings"
         android:id="@+id/tvYourBookings"
         android:textColor="@color/lightGray"
         android:layout_alignParentTop="true"
@@ -44,56 +44,5 @@
         android:layout_below="@+id/tvWhenYouBook"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="58dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
-        android:id="@+id/linearLayout2"
-        android:layout_marginTop="46dp"
-        android:layout_below="@+id/btnStartExploring"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Or,"
-        android:textSize="18sp"
-        android:id="@+id/tvOr"
-        android:textColor="@color/lightGray"
-        android:layout_above="@+id/linearLayout2"
-        android:layout_alignLeft="@+id/linearLayout2"
-        android:layout_alignStart="@+id/linearLayout2" />
-
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="log in"
-    android:textSize="18sp"
-    android:layout_marginLeft="5dp"
-    android:id="@+id/tvLogInBookings"
-    android:textColor="@color/petvacayteal"
-    android:layout_above="@+id/linearLayout2"
-    android:layout_toRightOf="@+id/tvOr"
-    android:layout_toEndOf="@+id/tvOr"
-    android:clickable="true"/>
-
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="to see your bookings."
-    android:id="@+id/tvSeeYourBookings"
-    android:textSize="18sp"
-    android:layout_marginLeft="5dp"
-    android:textColor="@color/lightGray"
-    android:layout_above="@+id/linearLayout2"
-    android:layout_toRightOf="@+id/tvLogInBookings"
-    android:layout_toEndOf="@+id/tvLogInBookings" />
-
-    </LinearLayout>
 
 </RelativeLayout>

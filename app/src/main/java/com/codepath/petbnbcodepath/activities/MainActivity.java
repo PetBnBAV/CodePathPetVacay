@@ -22,9 +22,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.codepath.petbnbcodepath.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.FragmentPageAdapter;
 import com.codepath.petbnbcodepath.fragments.LandingPageFragment;
@@ -51,7 +51,8 @@ public class MainActivity extends ActionBarActivity implements
                                                     GoogleApiClient.ConnectionCallbacks,
                                                     LocationListener,
                                                     GoogleApiClient.OnConnectionFailedListener,
-                                                    LandingPageFragment.OnLandingPageListener {
+                                                    LandingPageFragment.OnLandingPageListener,
+                                                    FragmentCommunicator {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -151,11 +152,12 @@ public class MainActivity extends ActionBarActivity implements
 
 
                 if (loggedIn) {
-                    Toast.makeText(MainActivity.this, "Log out", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Log out", Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.closeDrawer(Gravity.RIGHT);
                     logOut();
 
                 } else {
-                    Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
                     myLogin();
                 }
 
@@ -168,7 +170,7 @@ public class MainActivity extends ActionBarActivity implements
             public void onClick(View v) {
 
                 if (!loggedIn) {
-                    Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
                     myLogin();
                 }
 
@@ -179,7 +181,7 @@ public class MainActivity extends ActionBarActivity implements
 
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Profile Clicked", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Profile Clicked", Toast.LENGTH_SHORT).show();
                 ivProfile.setVisibility(View.INVISIBLE);
 
 
@@ -197,7 +199,7 @@ public class MainActivity extends ActionBarActivity implements
         ivMail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Mail clicked", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Mail clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -205,7 +207,7 @@ public class MainActivity extends ActionBarActivity implements
         ivFavorites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Favorites clicked", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(MainActivity.this, "Favorites clicked", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -262,60 +264,54 @@ public class MainActivity extends ActionBarActivity implements
 
     public void  getProfilePicture()
     {
-
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
 
             final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-            query.whereEqualTo("username",currentUser.getUsername());
+            query.whereEqualTo("username",currentUser.getEmail());
             query.getFirstInBackground(new GetCallback<ParseObject>() {
                 public void done(ParseObject object, ParseException e) {
-                    if (e != null) {
+                    if (object != null) {
 
-                        if(object.get("profile_picture") != null) {
-
-                            final ParseFile file = (ParseFile) object.get("profile_picture");
-                            if (file != null) {
-                                file.getDataInBackground(new GetDataCallback() {
+                        final ParseFile file = (ParseFile) object.get("profile_picture");
+                        file.getDataInBackground(new GetDataCallback() {
 
 
-                                    public void done(byte[] data, ParseException e) {
-                                        if (e == null) {
-                                            if (file.getUrl() != null) {
+                            public void done(byte[] data, ParseException e) {
+                                if (e == null) {
+                                    if (file.getUrl() != null) {
 
 
-                                                //Insert profile picture pertaining to each user
-                                                //Insert profile picture pertaining to each user
-                                                Transformation transformation = new RoundedTransformationBuilder()
-                                                        .borderColor(Color.LTGRAY)
-                                                        .borderWidthDp(3)
-                                                        .cornerRadiusDp(30)
-                                                        .oval(true)
-                                                        .build();
+                                        //Insert profile picture pertaining to each user
+                                        //Insert profile picture pertaining to each user
+                                        Transformation transformation = new RoundedTransformationBuilder()
+                                                .borderColor(Color.LTGRAY)
+                                                .borderWidthDp(3)
+                                                .cornerRadiusDp(30)
+                                                .oval(true)
+                                                .build();
 
 
-                                                Picasso.with(getApplicationContext())
-                                                        .load(file.getUrl())
-                                                        .fit()
-                                                        .transform(transformation)
-                                                        .into(ivAppIconImg);
+                                        Picasso.with(getApplicationContext())
+                                                .load(file.getUrl())
+                                                .fit()
+                                                .transform(transformation)
+                                                .into(ivAppIconImg);
 
 
-                                                ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                                        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
-                                            }
-
-                                        } else {
-                                            // something went wrong
-                                            Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
-                                        }
                                     }
-                                });
+
+                                } else {
+                                    // something went wrong
+                                    //Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                       }
+                        });
 
                     } else {
-                        Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -376,7 +372,7 @@ public class MainActivity extends ActionBarActivity implements
         // Setting Positive "Log Out" Btn
         alertDialog.setPositiveButton("LOG OUT",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
                 //Log out
                 ParseUser.logOut();
                 userIsLoggedOut();
@@ -387,7 +383,7 @@ public class MainActivity extends ActionBarActivity implements
         alertDialog.setNegativeButton("CANCEL",new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
             // Write your code here to execute after dialog
-            Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
+           // Toast.makeText(getApplicationContext(), "You clicked on NO", Toast.LENGTH_SHORT).show();
             dialog.cancel();
             }
         });
@@ -452,10 +448,18 @@ public class MainActivity extends ActionBarActivity implements
                 break;
             case 2:
                 //mFragment = new ListYourSpaceFragment();
-                Intent intentThree = new Intent(MainActivity.this, ListYourSpaceActivity.class);
-//                Intent intentThree = new Intent(MainActivity.this, CameraActivity.class);
-                //TODO Probably need to send the user Id or some handle for current user
-                startActivity(intentThree);
+
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if (currentUser != null) {
+                    Intent intentThree = new Intent(MainActivity.this, ListYourSpaceActivity.class);
+                    startActivity(intentThree);
+                }
+                else
+                {
+                    myLogin();
+
+                }
+
                 break;
 
             case 3:
@@ -538,6 +542,7 @@ public class MainActivity extends ActionBarActivity implements
                 mGoogleApiClient);
 //        Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude()) + "," +
 //                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
+
         Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
                 mCurrentLocation.getLongitude());
         viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
@@ -548,8 +553,13 @@ public class MainActivity extends ActionBarActivity implements
         tabsStrip.setViewPager(viewPager);
 
         checkIfUserLoggedIn();
+
+        //Toast.makeText(this, "new! " + Double.toString(mCurrentLocation.getLatitude()) + "," +
+              //  Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
+
 //        Toast.makeText(this, "new! " + Double.toString(mCurrentLocation.getLatitude()) + "," +
 //                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
+
 
         /*landingPageFragment = LandingPageFragment.newInstance(
                 mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
@@ -563,9 +573,9 @@ public class MainActivity extends ActionBarActivity implements
     @Override
     public void onConnectionSuspended(int i) {
         if (i == CAUSE_SERVICE_DISCONNECTED) {
-            Toast.makeText(this, "Disconnected. Please re-connect.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Disconnected. Please re-connect.", Toast.LENGTH_SHORT).show();
         } else if (i == CAUSE_NETWORK_LOST) {
-            Toast.makeText(this, "Network lost. Please re-connect.", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Network lost. Please re-connect.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -584,7 +594,11 @@ public class MainActivity extends ActionBarActivity implements
                 Double.toString(location.getLatitude()) + "," +
                 Double.toString(location.getLongitude());
         Constants.currLatLng = new ParseGeoPoint(location.getLatitude(), location.getLongitude());
+
+       // Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
 //        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
 
     }
 
@@ -612,8 +626,8 @@ public class MainActivity extends ActionBarActivity implements
                 e.printStackTrace();
             }
         } else {
-            Toast.makeText(getApplicationContext(),
-                    "Sorry. Location services not available to you", Toast.LENGTH_LONG).show();
+           // Toast.makeText(getApplicationContext(),
+                   // "Sorry. Location services not available to you", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -623,7 +637,11 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     public void onEtQuerySubmit(String query) {
+
+        //Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+
 //        Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+
     }
 
     public void onlvLandingPageItemClick(double latitude, double longitude) {
@@ -634,4 +652,25 @@ public class MainActivity extends ActionBarActivity implements
         startActivity(i);
     }
 
+    @Override
+    public void startExploring() {
+        // Toast.makeText(getApplicationContext(),"Button Start exploring pressed", Toast.LENGTH_LONG).show();
+        viewPager.setCurrentItem(0,true);
+
+    }
+
+    @Override
+    public void login() {
+        //Toast.makeText(getApplicationContext(),"Buttonlog in pressed", Toast.LENGTH_LONG).show();
+
+        Intent i = new Intent(MainActivity.this, LoginSignupActivity.class);
+        viewPager.setCurrentItem(1,true);
+        startActivity(i);
+
+    }
+
+    @Override
+    public void listYourSpace() {
+
+    }
 }

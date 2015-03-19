@@ -1,12 +1,10 @@
 package com.codepath.petbnbcodepath.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.LYSCityFragment;
@@ -63,8 +61,8 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSHomeT
 //        ft.commit();
 
 
-//        Toast.makeText(getApplicationContext(),
-//                "House Type " + houseTypeTitleList[houseType], Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),
+               // "House Type " + houseTypeTitleList[houseType], Toast.LENGTH_SHORT).show();
         LYSCityFragment lysCityFragment = LYSCityFragment.getInstance(this);
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flLSY,lysCityFragment);
@@ -73,8 +71,8 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSHomeT
 
     @Override
     public void getCityName(String city) {
-//        Toast.makeText(getApplicationContext(),
-//                "City Selected " + city, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),
+               // "City Selected " + city, Toast.LENGTH_SHORT).show();
         LYSMoreInfoFragment lysMoreInfoFragment = LYSMoreInfoFragment.getInstance(this);
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flLSY,lysMoreInfoFragment);
@@ -109,12 +107,11 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSHomeT
             }
             playground = playground/10;
         }
-//        Toast.makeText(getApplicationContext(),
-//                "Pet Count" + petCount + "\t Size " + petSizeString + "\tType " + petTypeString+"\tPlayground " + playgroundString, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(),
+               // "Pet Count" + petCount + "\t Size " + petSizeString + "\tType " + petTypeString+"\tPlayground " + playgroundString, Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this,ManageYourListingActivity.class);
-        //TODO send all the details got till this point
-        startActivity(intent);
+//        Intent intent = new Intent(this,ManageYourListingActivity.class);
+//        startActivity(intent);
 
     }
 }

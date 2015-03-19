@@ -1,12 +1,7 @@
 package com.codepath.petbnbcodepath.activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v4.content.LocalBroadcastManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.helpers.Constants;
@@ -24,9 +18,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 import com.parse.SaveCallback;
-import com.parse.SendCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -103,9 +95,9 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                 } else {
                     Log.e(TAG, "Error: " + e.getMessage());
 
-                    Toast.makeText(PetOwnerProfileActivity.this,
-                            getResources().getString(R.string.generic_error),
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(PetOwnerProfileActivity.this,
+                           // getResources().getString(R.string.generic_error),
+                           // Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -140,9 +132,9 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                         } else {
                             Log.e(TAG, "Error: " + e.getMessage());
 
-                            Toast.makeText(PetOwnerProfileActivity.this,
-                                    getResources().getString(R.string.generic_error),
-                                    Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(PetOwnerProfileActivity.this,
+                                   // getResources().getString(R.string.generic_error),
+                                   // Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
