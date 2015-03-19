@@ -2,13 +2,10 @@ package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Point;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,7 +21,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
-
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.LandingPageAdapter;

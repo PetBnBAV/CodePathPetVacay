@@ -1,5 +1,6 @@
 package com.codepath.petbnbcodepath.fragments;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,11 +15,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.codepath.petbnbcodepath.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
+import com.parse.ParseUser;
 
-public class HowItWorksFragment extends Fragment {
+public class HowItWorksFragment extends Fragment implements FragmentCommunicator {
 
     // Store instance variables
 
@@ -30,8 +34,17 @@ public class HowItWorksFragment extends Fragment {
     private Button btnHSWSignUp;
     private Button btnHSWBack;
     private Button btnHSWSkip;
+    private LinearLayout linearLayoutHSW;
 
     private int[] mImages;
+
+    public FragmentCommunicator communicator;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        communicator = (FragmentCommunicator) activity;
+    }
 
 
 
@@ -68,8 +81,18 @@ public class HowItWorksFragment extends Fragment {
         btnHSWSignUp = (Button) view.findViewById(R.id.btnHSWSignUp);
         btnHSWBack = (Button) view.findViewById(R.id.btnHSWBack);
         btnHSWSkip = (Button) view.findViewById(R.id.btnHSWSkip);
+        btnHSWSignUp = (Button) view.findViewById(R.id.btnHSWSignUp);
+        btnHSWLogIn = (Button) view.findViewById(R.id.btnHSWLogIn);
 
+        linearLayoutHSW = (LinearLayout) view.findViewById(R.id.linearLayoutHSW);
         setupClickListeners();
+
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            linearLayoutHSW.setVisibility(View.INVISIBLE);
+
+        }
 
         setUpPage(pageNumber);
 
@@ -146,6 +169,23 @@ public class HowItWorksFragment extends Fragment {
 
             }
         });
+
+        btnHSWLogIn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            communicator.login();
+        }
+        });
+
+        btnHSWSignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                communicator.login();
+
+            }
+        });
+
+
     }
 
 
@@ -186,6 +226,21 @@ public class HowItWorksFragment extends Fragment {
                 btnHSWSignUp.setBackgroundColor(getResources().getColor(R.color.darkblue));
                 break;
         }
+
+    }
+
+    @Override
+    public void startExploring() {
+
+    }
+
+    @Override
+    public void login() {
+
+    }
+
+    @Override
+    public void listYourSpace() {
 
     }
 }

@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.PostingArrayAdapter;
@@ -62,9 +61,9 @@ public class PostingActivity extends ActionBarActivity {
                 } else {
                     Log.e("TAG", "Error: " + e.getMessage());
 
-                    Toast.makeText(PostingActivity.this,
-                            getResources().getString(R.string.generic_error),
-                            Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(PostingActivity.this,
+                           // getResources().getString(R.string.generic_error),
+                           // Toast.LENGTH_SHORT).show();
                 }
             }
         });

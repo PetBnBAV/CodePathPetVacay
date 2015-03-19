@@ -1,5 +1,6 @@
 package com.codepath.petbnbcodepath.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,11 +8,12 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
+import com.codepath.petbnbcodepath.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.WhyHostFragment;
 
 
-public class WhyHostActivity extends FragmentActivity {
+public class WhyHostActivity extends FragmentActivity implements FragmentCommunicator {
 
     FragmentPagerAdapter adapterViewPager;
 
@@ -25,7 +27,24 @@ public class WhyHostActivity extends FragmentActivity {
         vwpPager.setAdapter(adapterViewPager);
     }
 
+    @Override
+    public void startExploring() {
 
+    }
+
+    @Override
+    public void login() {
+        Intent i = new Intent(WhyHostActivity.this, LoginSignupActivity.class);
+        startActivity(i);
+
+    }
+
+    @Override
+    public void listYourSpace() {
+        Intent intentThree = new Intent(WhyHostActivity.this, ListYourSpaceActivity.class);
+        startActivity(intentThree);
+
+    }
 
 
     public static class MyPgrAdapter extends FragmentPagerAdapter {

@@ -1,8 +1,8 @@
 package com.codepath.petbnbcodepath.activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
@@ -12,13 +12,11 @@ import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.ExpandableListAdapter;
-import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.fragments.DatePickerDialog;
+import com.codepath.petbnbcodepath.helpers.Constants;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseInstallation;
@@ -87,7 +85,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
         LocalDate pickUpDateJoda = new LocalDate(pickUpDate);
         total_nights = Days.daysBetween(dropOffDateJoda, pickUpDateJoda).getDays();
 
-        Toast.makeText(this, "total nights " + total_nights, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, "total nights " + total_nights, Toast.LENGTH_SHORT).show();
 
         String btnDropOffText = fontHtmlBeg + getResources().getString(R.string.drop_off)
                 + fontHtmlEnd + "<br/>" + selDateFontHtmlBeg +
@@ -263,9 +261,9 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                             } else {
                                 Log.e("TAG", "Error: " + e.getMessage());
 
-                                Toast.makeText(BookingDetailsActivity.this,
-                                        getResources().getString(R.string.generic_error),
-                                        Toast.LENGTH_SHORT).show();
+                               // Toast.makeText(BookingDetailsActivity.this,
+                                       // getResources().getString(R.string.generic_error),
+                                       // Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

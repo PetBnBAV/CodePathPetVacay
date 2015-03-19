@@ -49,8 +49,8 @@
         android:layout_below="@+id/tvForgotPwd"
         android:layout_marginTop="@dimen/button_vert_distance"
         android:singleLine="true"
-        android:textColorHint="@color/light_gray"
-        android:textColor="@color/light_gray"
+        android:textColorHint="@color/lightGray"
+        android:textColor="@color/lightGray"
         />
     <EditText
         android:id="@+id/etPwd"
@@ -66,8 +66,8 @@
         android:padding="@dimen/edit_text_padding"
         android:singleLine="true"
         android:password="true"
-        android:textColorHint="@color/light_gray"
-        android:textColor="@color/light_gray"/>
+        android:textColorHint="@color/lightGray"
+        android:textColor="@color/lightGray"/>
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
