@@ -3,7 +3,6 @@ package com.codepath.petbnbcodepath.fragments;
 import android.app.Activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,14 +46,14 @@ public class LYSHomeTypeFragment extends Fragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             final ViewHolder viewHolder;
-            String [] houseTypeTitleList=null;//TODO move to a better place
-            String [] houseTypeDescriptionList={};//TODO move to a better place
+            String [] houseTypeTitleList=null;
+            String [] houseTypeDescriptionList={};
             if (convertView == null) {
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(sActivity).inflate(R.layout.list_lsy_item, parent, false);
-                viewHolder.ivHomeTypeIcon  = (ImageView) convertView.findViewById(R.id.ivHouseType);
-                viewHolder.tvHomeTypeTitle = (TextView)convertView.findViewById(R.id.tvHouseTypeTitle);
-                viewHolder.tvHomeTypeDescription = (TextView) convertView.findViewById(R.id.tvHouseTypeDescription);
+                viewHolder.ivHomeTypeIcon = (ImageView) convertView.findViewById(R.id.ivItemType);
+                viewHolder.tvHomeTypeTitle = (TextView)convertView.findViewById(R.id.tvItemTypeTitle);
+                viewHolder.tvHomeTypeDescription = (TextView) convertView.findViewById(R.id.tvItemTypeDescription);
                 if(houseTypeTitleList==null){
                     houseTypeTitleList =  getResources().getStringArray(R.array.houseTypeTitle);
                     houseTypeDescriptionList = getResources().getStringArray(R.array.houseTypeDescription);
@@ -106,7 +105,7 @@ public class LYSHomeTypeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_lsy_hometype,parent,false);
 
         llvHouseTypeList = (LinearListView) view.findViewById(R.id.llvHouseType);

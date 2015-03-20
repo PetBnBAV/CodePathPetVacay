@@ -18,6 +18,7 @@ import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.MYLAddressFragment;
 import com.codepath.petbnbcodepath.fragments.MYLLandingPageFragment;
 import com.codepath.petbnbcodepath.fragments.MYLPriceFragment;
+import com.codepath.petbnbcodepath.helpers.Constants;
 
 public class ManageYourListingActivity extends ActionBarActivity implements MYLLandingPageFragment.PostListingListner,MYLPriceFragment.PriceListingListner,
         MYLAddressFragment.AddressListingListner{
@@ -58,8 +59,19 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     MYLAddressFragment mylAddress;
 
     //TODO make enums
-    private final int title = 0;
-    private final int summary = 1;
+    private final int titleIndex = 0;
+    private final int summaryIndex = 1;
+
+    int petType,houseType;
+    String city;
+    int petCount, petSize,playground;
+
+    String mTitle,mSummary;
+    String[] coverImages;
+    int mCost;
+    String mAddress;
+
+
 
 
     @Override
@@ -67,6 +79,13 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_your_listing);
         sActivity = this;
+        Intent intent = getIntent();
+        petType = intent.getIntExtra(Constants.petTypeKey,-1);
+        houseType = intent.getIntExtra(Constants.houseTypeKey,-1);
+        city = intent.getStringExtra(Constants.cityKey);
+        petCount = intent.getIntExtra(Constants.petCountKey,-1);
+        petSize = intent.getIntExtra(Constants.petSizeKey,-1);
+        playground =intent.getIntExtra(Constants.playgroundKey,-1);
         setupViews();
         setupViewListeners();
     }
@@ -126,7 +145,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         llMYLTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity,ManageYourListingActivity.max_word_count_summary,title,(String)tvMYLTitle.getText());
+                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity,ManageYourListingActivity.max_word_count_summary,titleIndex,(String)tvMYLTitle.getText());
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.flMYL, mylLandingPage);
                 ft.commit();
@@ -135,7 +154,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         llMYLSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity,ManageYourListingActivity.max_word_count_summary,summary,(String)tvMYLSummary.getText());
+                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity,ManageYourListingActivity.max_word_count_summary,summaryIndex,(String)tvMYLSummary.getText());
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.flMYL, mylLandingPage);
                 ft.commit();
@@ -198,10 +217,12 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         if(fieldType==0){
             cbTitle.setChecked(!value.isEmpty());
             tvMYLTitle.setText(value);
+            mTitle = value;
         }
         else if(fieldType==1){
             cbSummary.setChecked(!value.isEmpty());
             tvMYLSummary.setText(value);
+            mSummary=value;
         }
     }
 
@@ -216,6 +237,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         } catch (NumberFormatException e){
             cbPrice.setChecked(false);
             tvMYLPrice.setText("");
+            mCost = Integer.parseInt(value);
         }
     }
 
@@ -227,6 +249,6 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.commit();
         cbAddress.setChecked(!address.isEmpty());
         tvMYLAddress.setText(address);
-
+        mAddress=address;
     }
 }

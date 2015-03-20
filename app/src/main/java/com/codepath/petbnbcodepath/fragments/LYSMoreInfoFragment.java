@@ -32,7 +32,7 @@ public class LYSMoreInfoFragment extends Fragment {
     }
 
     public interface MoreInfoListner {
-        public void getMoreInfo(int petCount, int petSize, int petType, int playground);
+        public void getMoreInfo(int petCount, int petSize, int playground);
     }
 
 
@@ -138,7 +138,6 @@ public class LYSMoreInfoFragment extends Fragment {
                     petSize = petSize *10 + 2;//ENUMS here
                 if(ibtPetLarge.isSelected())
                     petSize = petSize *10 + 3;//ENUMS here
-                int petType = 0;
                 int playground = 0;
                 if(ibtPlaygroundDeck.isSelected())
                     playground = playground *10 + 1;//ENUMS here
@@ -146,7 +145,7 @@ public class LYSMoreInfoFragment extends Fragment {
                     playground = playground *10 + 2;//ENUMS here
                 if(ibtPlaygroundPark.isSelected())
                     playground = playground *10 + 3;//ENUMS here
-                    mCallback.getMoreInfo(petCount,petSize,petType,playground);
+                    mCallback.getMoreInfo(petCount,petSize,playground);
             }
         });
     }

@@ -166,6 +166,7 @@
         distance from Grand Central Station, theatre area and MSG. Guillermero was excellent host and
         the home was excellent and clean. Overall an excellent experience and I would definitely
         stay here again.</string>
+    <string name="title_lsy_pettype">What type of pet do you want to host?</string>
     <string name="title_lsy_hometype">What type of space do you want to list?</string>
     <string name="title_lsy_city">What city is your house located in?</string>
     <string name="title_lsy_moreinfo">Just a little more about your</string>
@@ -183,22 +184,9 @@
     <string name="myl_address">Set Address</string>
     <string name="myl_addressHint">Only confirmed pet owners can see your address</string>
     <string name="countdown_unit">{0,plural,=0 {Complete profile} one {{0,number,integer} step to list} other {{0,number,integer} steps to list}}</string>>
-    <array name="houseTypeImage">
-        <item>@drawable/icon_entire_place</item>
-        <item>@drawable/icon_private_room</item>
-        <item>@drawable/icon_shared_space</item>
-    </array>
 
-    <string-array name="houseTypeTitle">
-        <item>Studio</item>
-        <item>Apartment</item>
-        <item>House</item>
-    </string-array>
-    <string-array name="houseTypeDescription">
-        <item>Cozy Studio</item>
-        <item>Beautiful Apartment in Community</item>
-        <item>Entire House</item>
-    </string-array>
+
+
 
     <string name="title_activity_sample">SampleActivity</string>
     <string name="city">City</string>
