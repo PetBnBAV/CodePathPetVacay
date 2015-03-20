@@ -56,4 +56,6 @@ public class Constants {
 
     public static final String firstReview = "firstReview";
 
+    public static final String alertKey = "alert";
+
 }

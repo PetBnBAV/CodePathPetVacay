@@ -231,39 +231,38 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                                             JSONObject obj;
                                             try {
                                                 obj = new JSONObject();
-                                                obj.put("alert", "You have a new pet request!");
-                                                Log.i(TAG, "object id of curr user here " + ParseUser.getCurrentUser().getObjectId());
-                                                obj.put(Constants.pushCustomDataKey, ParseUser.getCurrentUser().getObjectId());
-                                                Log.i(TAG, "booking id " + booking.getObjectId());
+                                                obj.put(Constants.alertKey, getResources().
+                                                            getString(R.string.new_pet_request));
+                                                // This is the current user, so upon receiving the
+                                                // notification, the sitter is able to see
+                                                // this user's (i.e. the owner's ) profile
+                                                obj.put(Constants.pushCustomDataKey,
+                                                         ParseUser.getCurrentUser().getObjectId());
+                                                // This is the booking id, because when the pet
+                                                // sitter receives the notification, if she/he
+                                                // accepts, then the booking id's pending tag is
+                                                // set to false. If the sitter declines, the record
+                                                // is deleted.
                                                 obj.put("bookingId", booking.getObjectId());
 
                                                 ParsePush push = new ParsePush();
                                                 ParseQuery query = ParseInstallation.getQuery();
 
 
-                                                // Push the notification to Android users
-                                                query.whereEqualTo("user", returnedObj.get(Constants.sitterIdKey));
-                                                //query.whereEqualTo("deviceType", "android");
+                                                // Push the notification to the sitter
+                                                query.whereEqualTo("user",
+                                                        returnedObj.get(Constants.sitterIdKey));
                                                 push.setQuery(query);
                                                 push.setData(obj);
                                                 push.sendInBackground();
                                             } catch (JSONException jsonException) {
-
-                                                jsonException.printStackTrace();
+                                                Log.e(TAG, "Error: " + jsonException.getMessage());
                                             }
-
                                         }
                                     }
                                 });
-
-
-
                             } else {
-                                Log.e("TAG", "Error: " + e.getMessage());
-
-                               // Toast.makeText(BookingDetailsActivity.this,
-                                       // getResources().getString(R.string.generic_error),
-                                       // Toast.LENGTH_SHORT).show();
+                                Log.e(TAG, "Error: " + e.getMessage());
                             }
                         }
                     });
