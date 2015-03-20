@@ -9,9 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.ExpandableListAdapter;
@@ -25,6 +27,7 @@ import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.parse.SendCallback;
 import com.squareup.picasso.Picasso;
 
 import org.joda.time.Days;
@@ -52,6 +55,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     private Button btnSelDropDates;
     private Button btnSelPickDates;
     private ExpandableListView lvPrice;
+    private EditText etMsgHost;
 
     private String coverPictureUrl;
     private String firstName;
@@ -145,6 +149,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
         btnSelPickDates = (Button) findViewById(R.id.btnSelPickDates);
         btnBook = (Button) findViewById(R.id.btnBook);
         lvPrice = (ExpandableListView) findViewById(R.id.lvPrice);
+        etMsgHost = (EditText) findViewById(R.id.etMsgHost);
 
         btnBook.setEnabled(false);
         btnBook.setAlpha(Constants.btnDisabledAlpha);
@@ -211,10 +216,10 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                 if (currentUser != null) {
 
                     final ParseObject booking = new ParseObject(Constants.petVacayBookingHistoryTable);
-                    booking.put("cost_per_night", cost);
-                    booking.put("startDate", booking_dropOffDate);
-                    booking.put("endDate", booking_pickUpDate);
-                    booking.put("pending", true);
+                    booking.put(Constants.costPerNightKey, cost);
+                    booking.put(Constants.startDateKey, booking_dropOffDate);
+                    booking.put(Constants.endDateKey, booking_pickUpDate);
+                    booking.put(Constants.pendingKey, true);
                     booking.put(Constants.ownerIdKey, currentUser);
 
                     ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayListingTable);
@@ -231,7 +236,8 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                                             JSONObject obj;
                                             try {
                                                 obj = new JSONObject();
-                                                obj.put(Constants.alertKey, getResources().
+                                                obj.put(Constants.alertKey,
+                                                        getResources().
                                                             getString(R.string.new_pet_request));
                                                 // This is the current user, so upon receiving the
                                                 // notification, the sitter is able to see
@@ -243,18 +249,42 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                                                 // accepts, then the booking id's pending tag is
                                                 // set to false. If the sitter declines, the record
                                                 // is deleted.
-                                                obj.put("bookingId", booking.getObjectId());
+                                                obj.put(Constants.bookingIdKey,
+                                                        booking.getObjectId());
+                                                obj.put(Constants.costPerNightKey, cost);
+                                                obj.put(Constants.startDateKey,
+                                                        booking_dropOffDate.toString());
+                                                obj.put(Constants.endDateKey,
+                                                        booking_pickUpDate.toString());
+                                                if (etMsgHost.getText().toString().equals("")) {
+                                                    obj.put(Constants.msgKey, null);
+                                                } else {
+                                                    obj.put(Constants.msgKey,
+                                                            etMsgHost.getText().toString());
+                                                }
+                                                obj.put(Constants.whoamiKey, Constants.petOwnerKey);
 
                                                 ParsePush push = new ParsePush();
                                                 ParseQuery query = ParseInstallation.getQuery();
 
 
                                                 // Push the notification to the sitter
-                                                query.whereEqualTo("user",
+                                                query.whereEqualTo(Constants.userKey,
                                                         returnedObj.get(Constants.sitterIdKey));
                                                 push.setQuery(query);
                                                 push.setData(obj);
-                                                push.sendInBackground();
+                                                push.sendInBackground(new SendCallback() {
+                                                    @Override
+                                                    public void done(ParseException e) {
+                                                        if (e == null) {
+                                                            Toast.makeText(BookingDetailsActivity.this,
+                                                                    getResources().getString(R.string.booking_request_submitted),
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        } else {
+                                                            Log.i(TAG, "Error: " + e.getMessage());
+                                                        }
+                                                    }
+                                                });
                                             } catch (JSONException jsonException) {
                                                 Log.e(TAG, "Error: " + jsonException.getMessage());
                                             }

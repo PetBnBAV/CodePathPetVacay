@@ -41,8 +41,8 @@
         android:padding="@dimen/edit_text_padding"
         android:layout_below="@+id/tvLogin"
         android:layout_marginTop="@dimen/button_vert_distance"
-        android:textColorHint="@color/lightGray"
-        android:textColor="@color/lightGray"
+        android:textColorHint="@color/light_gray"
+        android:textColor="@color/light_gray"
         android:singleLine="true"
         />
     <EditText
@@ -58,8 +58,8 @@
         android:layout_below="@+id/etEmail"
         android:padding="@dimen/edit_text_padding"
         android:password="true"
-        android:textColor="@color/lightGray"
-        android:textColorHint="@color/lightGray"
+        android:textColor="@color/light_gray"
+        android:textColorHint="@color/light_gray"
         android:singleLine="true"/>
     <EditText
         android:id="@+id/etFirstName"
@@ -73,8 +73,8 @@
         android:hint="@string/firstName"
         android:layout_below="@+id/etPwd"
         android:padding="@dimen/edit_text_padding"
-        android:textColorHint="@color/lightGray"
-        android:textColor="@color/lightGray"
+        android:textColorHint="@color/light_gray"
+        android:textColor="@color/light_gray"
         android:singleLine="true"/>
     <EditText
         android:id="@+id/etLastName"
@@ -88,8 +88,8 @@
         android:hint="@string/lastName"
         android:layout_below="@+id/etFirstName"
         android:padding="@dimen/edit_text_padding"
-        android:textColorHint="@color/lightGray"
-        android:textColor="@color/lightGray"
+        android:textColorHint="@color/light_gray"
+        android:textColor="@color/light_gray"
         android:singleLine="true"/>
     <Button
         android:id="@+id/btnSignUp"

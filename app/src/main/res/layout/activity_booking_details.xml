@@ -142,6 +142,7 @@
             <ExpandableListView
                 android:id="@+id/lvPrice"
                 android:layout_width="match_parent"
+                android:groupIndicator="@drawable/cost_selector"
                 android:layout_height="@dimen/expandable_lv_height"
                 android:isScrollContainer="false"
                 android:layout_marginLeft="@dimen/login_button_padding"
@@ -149,6 +150,7 @@
                 android:layout_marginStart="@dimen/login_button_padding"
                 android:layout_marginEnd="@dimen/login_button_padding"
                 android:layout_marginBottom="@dimen/book_det_dates_margin_bottom"
+
                 />
             <TextView
                 android:id="@+id/tvOnlyCharge"
@@ -199,6 +201,8 @@
                 android:gravity="top"
                 android:nextFocusUp="@id/tvPrice"
                 android:nextFocusLeft="@id/tvPrice"
+                android:textColor="@color/dark_gray"
+                android:textColorHint="@color/light_gray"
                 />
         </LinearLayout>
 

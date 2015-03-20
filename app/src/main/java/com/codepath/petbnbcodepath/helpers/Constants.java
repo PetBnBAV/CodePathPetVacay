@@ -57,5 +57,15 @@ public class Constants {
     public static final String firstReview = "firstReview";
 
     public static final String alertKey = "alert";
+    public static final String userKey = "user";
+    public static final String bookingIdKey = "bookingId";
+    public static final String costPerNightKey = "cost_per_night";
+    public static final String startDateKey = "startDate";
+    public static final String endDateKey = "endDate";
+    public static final String pendingKey = "pending";
+    public static final String msgKey = "message";
+    public static final String whoamiKey = "whoami";
+    public static final String petOwnerKey = "petOwner";
+    public static final String petSitterKey = "petSitter";
 
 }

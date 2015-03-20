@@ -17,11 +17,12 @@
     <item name="yellow" type="color">#FFEA18</item>
     <item name="grey" type="color">#545454</item>
     <item name="white" type="color">#FFFFFF</item>
+    <color name="lightGray">#7C7C7C</color>
 
     <color name="vl_white">#EEEEEE</color>
     <color name="theme_teal">#008080</color>
-    <color name="darkGray">#41464C</color>
-    <color name="lightGray">#7C7C7C</color>
+    <color name="dark_gray">#41464C</color>
+    <color name="light_gray">#7C7C7C</color>
     <color name="vl_red">#ff5252</color>
     <color name="facebook_blue">#3B5893</color>
     <color name="facebook_light_blue">#607AA9</color>
@@ -60,6 +61,6 @@
     <color name="brown">#E8D9B3</color>
     <color name="gray">#F5F6F5</color>
     <color name="teal">#008080</color>
-    <color name="dark_gray">#838A8E</color>
-    <color name="light_gray">#EDEEF0</color>
+    <color name="gg_dark_gray">#838A8E</color>
+    <color name="gg_light_gray">#EDEEF0</color>
 </resources>

@@ -127,7 +127,7 @@ public class LoginFragment extends Fragment {
     }
 
     public void onLogin() {
-        String email = etEmail.getText().toString();
+        String email = etEmail.getText().toString().toLowerCase();
         if (! email.matches(Constants.emailRegex)) {
             Toast.makeText(getActivity(),
                     getResources().getString(R.string.checkEmail),

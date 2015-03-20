@@ -209,9 +209,9 @@ public class SignUpFragment extends Fragment {
 
     public void onSignUp() {
         ParseUser user = new ParseUser();
-        user.setUsername(etEmail.getText().toString());
+        user.setUsername(etEmail.getText().toString().toLowerCase());
         user.setPassword(etPwd.getText().toString());
-        user.setEmail(etEmail.getText().toString());
+        user.setEmail(etEmail.getText().toString().toLowerCase());
 
         // other fields can be set just like with ParseObject
         user.put(Constants.firstNameKey, etFirstName.getText().toString());
