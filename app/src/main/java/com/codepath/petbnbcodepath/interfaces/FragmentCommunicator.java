@@ -1,4 +1,4 @@
-package com.codepath.petbnbcodepath;
+package com.codepath.petbnbcodepath.interfaces;
 
 /**
  * Created by anuscorps23 on 3/18/15.

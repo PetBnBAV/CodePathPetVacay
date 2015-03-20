@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.codepath.petbnbcodepath.FragmentCommunicator;
+import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
 import com.parse.ParseUser;
 

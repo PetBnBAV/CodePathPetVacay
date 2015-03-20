@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/RemoveCurrentPhoto"
+        android:id="@+id/tvRemoveCurrentPhoto"
+        android:padding="10dp"
+        android:textColor="@color/lightGray"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/TakePhoto"
+        android:id="@+id/tvTakePhoto"
+        android:padding="10dp"
+        android:textColor="@color/lightGray"
+        android:clickable="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/ChoosefromLibrary"
+        android:id="@+id/tvChooseFromLibrary"
+        android:padding="10dp"
+        android:textColor="@color/lightGray"
+        android:clickable="true" />
+</LinearLayout>
