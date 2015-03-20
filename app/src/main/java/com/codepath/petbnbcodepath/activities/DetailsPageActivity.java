@@ -35,8 +35,8 @@ public class DetailsPageActivity extends ActionBarActivity {
         final String firstName = getIntent().getStringExtra(Constants.firstNameKey);
         final String lastName = getIntent().getStringExtra(Constants.lastNameKey);
         final String coverPicture = getIntent().getStringExtra(Constants.coverPictureKey);
-        final String reviewCount = getIntent().getStringExtra(Constants.reviewerIdKey);
-        final int cost = getIntent().getIntExtra(Constants.listingCostKey,0);
+        final int reviewCount = getIntent().getIntExtra(Constants.reviewerIdKey, 0);
+        final int cost = getIntent().getIntExtra(Constants.listingCostKey, 0);
         final String objectId = getIntent().getStringExtra(Constants.objectIdKey);
 
 
@@ -51,8 +51,9 @@ public class DetailsPageActivity extends ActionBarActivity {
         tvSitterName.setText("Hosted by " + firstName + " " + lastName);
         tvReviewCountDetail = (TextView)findViewById(R.id.tvReviewCountDetail);
         try{
-            if(Integer.parseInt(reviewCount)>0)
-                tvReviewCountDetail.setText(reviewCount + " Reviews");
+            if(reviewCount > 0)
+                tvReviewCountDetail.setText(reviewCount + " "
+                        + getResources().getString(R.string.reviews));
         }catch (NumberFormatException e){}
         tvPrice = (TextView)findViewById(R.id.tvPrice);
         tvPrice.setText("$ "+cost);

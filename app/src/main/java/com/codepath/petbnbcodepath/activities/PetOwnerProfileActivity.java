@@ -18,6 +18,7 @@ import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.json.JSONException;
@@ -36,6 +37,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
 
     private String objectId;
     private String bookingId;
+    private ParseUser petOwnerUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                     Log.i(TAG, "goes here");
                     tvFirstName.setText(object.getString(Constants.firstNameKey));
                     tvLastName.setText(object.getString(Constants.lastNameKey));
+                    petOwnerUser = (ParseUser) object;
                 } else {
                     Log.e(TAG, "Error: " + e.getMessage());
 
@@ -116,14 +119,29 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                                 @Override
                                 public void done(ParseException e2) {
                                     if (e2 == null) {
-                                        ParsePush push = new ParsePush();
-                                        ParseQuery query = ParseInstallation.getQuery();
+                                        JSONObject obj;
+                                        try {
 
-                                        Log.i(TAG, "return push " + objectId);
-                                        query.whereEqualTo("user", objectId);
-                                        push.setQuery(query);
-                                        push.setMessage("Your booking has been accepted!");
-                                        push.sendInBackground();
+                                            obj = new JSONObject();
+                                            obj.put("alert", "Your booking has been accepted!");
+                                            Log.i(TAG, "object id of curr user here " + ParseUser.getCurrentUser().getObjectId());
+                                            obj.put(Constants.pushCustomDataKey, ParseUser.getCurrentUser().getObjectId());
+
+                                            ParsePush push = new ParsePush();
+                                            ParseQuery query = ParseInstallation.getQuery();
+
+
+                                            // Push the notification to Android users
+                                            Log.i(TAG, "user obj id " + objectId);
+                                            query.whereEqualTo("user", petOwnerUser);
+                                            //query.whereEqualTo("deviceType", "android");
+                                            push.setQuery(query);
+                                            push.setData(obj);
+                                            push.sendInBackground();
+                                        } catch (JSONException jsonException) {
+
+                                            jsonException.printStackTrace();
+                                        }
                                     } else {
                                         Log.e(TAG, "Error: " + e2.getMessage());
                                     }
