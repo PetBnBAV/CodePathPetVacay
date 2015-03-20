@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,6 +67,8 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
     private ImageView ivMsgOpen;
 
     private ExpandableListView lvPrice;
+
+    private LinearLayout llBtnAcceptDecline;
 
 
     // This is the id of the pet owner who made the request
@@ -158,12 +161,15 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
 
         lvPrice = (ExpandableListView) findViewById(R.id.lvPrice);
 
+        llBtnAcceptDecline = (LinearLayout) findViewById(R.id.llBtnAcceptDecline);
+
         if (whoami.equals(Constants.petSitterKey)) {
             ivMsgOpen.setVisibility(View.GONE);
             tvMsgFrom.setVisibility(View.GONE);
             tvMessage.setVisibility(View.GONE);
             btnDecline.setVisibility(View.GONE);
             btnAccept.setVisibility(View.GONE);
+            llBtnAcceptDecline.setVisibility(View.GONE);
         }
 
         if (whoami.equals(Constants.petOwnerKey) && message == null) {
