@@ -112,6 +112,7 @@ public class PostingArrayAdapter extends ArrayAdapter<Listing> {
                 intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
                 intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
                 intent.putExtra(Constants.listingCostKey, currentListing.getCost());
+                intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
                 getContext().startActivity(intent);
             }
         });

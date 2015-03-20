@@ -37,6 +37,9 @@ public class DetailsPageActivity extends ActionBarActivity {
         final String coverPicture = getIntent().getStringExtra(Constants.coverPictureKey);
         final String reviewCount = getIntent().getStringExtra(Constants.reviewerIdKey);
         final int cost = getIntent().getIntExtra(Constants.listingCostKey,0);
+        final String objectId = getIntent().getStringExtra(Constants.objectIdKey);
+
+
 
         String firstReview = getIntent().getStringExtra(Constants.firstReview);
         viewPager = (WrapContentHeightViewPager) findViewById(R.id.view_pager);
@@ -63,6 +66,7 @@ public class DetailsPageActivity extends ActionBarActivity {
                         i.putExtra(Constants.lastNameKey, lastName);
                         i.putExtra(Constants.numReviewsKey, reviewCount);
                         i.putExtra(Constants.listingCostKey, cost);
+                        i.putExtra(Constants.objectIdKey, objectId);
                         startActivity(i);
             }
 
