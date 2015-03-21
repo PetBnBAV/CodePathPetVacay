@@ -87,7 +87,7 @@
     <string name="user_exists_err_msg">That email address is already in use.</string>
     <string name="OK">OK</string>
     <string name="alert_image_content_description">Alert Image</string>
-    <string name="title_activity_booking_details">BookingDetailsActivity</string>
+    <string name="title_activity_booking_details">Booking details</string>
     <string name="price">Price</string>
     <string name="dates">Dates</string>
     <string name="req_to_book">Book Now!</string>
