@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.helpers.Utils;
 
 import java.util.StringTokenizer;
 
@@ -26,6 +28,7 @@ public class MYLLandingPageFragment extends Fragment {
     private EditText etValue;
     private TextView tvWordCount;
     private ImageView ivHint;
+    private TextView tvDone;
     private static int sMaxCount,sFieldType;
     private static String  sValue;
     public static MYLLandingPageFragment getInstance(Activity activity, int maxCount,int fieldType, String value){
@@ -38,6 +41,7 @@ public class MYLLandingPageFragment extends Fragment {
 
     public interface PostListingListner {
         public void postListing(int fieldType, String value);
+        public void setToolbarForFragment();
     }
 
 
@@ -75,6 +79,13 @@ public class MYLLandingPageFragment extends Fragment {
                 mCallback.postListing(sFieldType,String.valueOf(etValue.getText()));
             }
         });
+        tvDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.postListing(sFieldType,String.valueOf(etValue.getText()));
+                Utils.hideKeyboard(getActivity());
+            }
+        });
 
 
 
@@ -94,7 +105,7 @@ public class MYLLandingPageFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 StringTokenizer st = new StringTokenizer(String.valueOf(etValue.getText()).trim());
                 int wordsLeft = sMaxCount - st.countTokens();
-                tvWordCount.setText(getString(R.string.wordCount,wordsLeft));
+                tvWordCount.setText(Html.fromHtml(getString(R.string.wordCount, wordsLeft)));
             }
         });
     }
@@ -105,7 +116,8 @@ public class MYLLandingPageFragment extends Fragment {
         tvWordCount = (TextView)view.findViewById(R.id.tvWordCount);
         tvWordCount.setText(getString(R.string.wordCount,sMaxCount));
         ivHint = (ImageView)view.findViewById(R.id.ivHint);
-
+        mCallback.setToolbarForFragment();
+        tvDone = (TextView) getActivity().findViewById(R.id.tvToolbarTitle);
         if(sFieldType==0) {
             tvTitle.setText(R.string.myl_title);
             etValue.setHint(R.string.myl_titleHint);

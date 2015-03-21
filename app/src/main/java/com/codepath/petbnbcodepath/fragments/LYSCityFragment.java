@@ -1,6 +1,7 @@
 package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,17 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.PlacesAutoCompleteAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -34,6 +38,7 @@ public class LYSCityFragment extends Fragment {
     private CitySelectListner mCallback;
     private AutoCompleteTextView etSearch;
     private TextView tvStickyButton;
+    private ImageView ivCurrentLocation;
     private boolean stickyButtonEnabled = false;
     private float ALPHA_BUTTON_DISABLED = (float) 0.4;
     private float ALPHA_BUTTON_ENABLED = (float) 1.0;
@@ -51,6 +56,7 @@ public class LYSCityFragment extends Fragment {
 
     public interface CitySelectListner {
         public void getCityName(String city);
+        public void setToolbar(String title, String secondaryTitle);
     }
 
     //@Override
@@ -75,14 +81,13 @@ public class LYSCityFragment extends Fragment {
             fm.beginTransaction().replace(R.id.map_container, mapFragment).commit();
         }
 
-        final double latitude = 37.3541;//TODO need to get it from city name or current location.
-        final double longitude = -121.955;
+        final LatLng currentLocation = Utils.getCurrentLatLng(getActivity());
         if (mapFragment != null) {
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(GoogleMap map) {
                     loadMap(map);
-                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude)
+                    map.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation
                             , Constants.zoom));
                 }
             });
@@ -104,15 +109,18 @@ public class LYSCityFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_lsy_city,parent,false);
+        mCallback.setToolbar(getActivity().getResources().getString(R.string.property_type),"");
 
         etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
         etSearch.setAdapter(new PlacesAutoCompleteAdapter(sActivity, R.layout.list_item));
         tvStickyButton = (TextView) view.findViewById(R.id.tvNext);
+        ivCurrentLocation = (ImageView) view.findViewById(R.id.ivCurrentLocation);
         setupViewListeners();
         return view;
 
@@ -123,6 +131,9 @@ public class LYSCityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 query = (String) parent.getItemAtPosition(position);
+                InputMethodManager in = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                in.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(),
+                        InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
 
@@ -138,6 +149,16 @@ public class LYSCityFragment extends Fragment {
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
+
+
+        ivCurrentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String city = Utils.getCurrentCityName(getActivity());
+                etSearch.setText("");
+                etSearch.setText(city);
+            }
         });
 
         tvStickyButton.setOnClickListener(new View.OnClickListener() {

@@ -39,4 +39,6 @@ dependencies {
     compile 'com.google.maps.android:android-maps-utils:0.3.+'
     compile 'com.github.traex.calendarlistview:library:1.2.2'
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
+    compile 'com.github.frankiesardo:auto-parcel:0.3'
+
 }

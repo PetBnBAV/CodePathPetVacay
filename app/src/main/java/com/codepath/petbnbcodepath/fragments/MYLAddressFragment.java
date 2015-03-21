@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.PlacesAutoCompleteAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -41,7 +42,7 @@ public class MYLAddressFragment extends Fragment {
     private float ALPHA_BUTTON_DISABLED = (float) 0.4;
     private float ALPHA_BUTTON_ENABLED = (float) 1.0;
     String query ="";
-
+    private TextView tvDone;
 
     private GoogleMap map;
     private SupportMapFragment mapFragment;
@@ -54,6 +55,7 @@ public class MYLAddressFragment extends Fragment {
 
     public interface AddressListingListner {
         public void addressListing(String value);
+        public void setToolbarForFragment();
     }
 
 
@@ -124,11 +126,21 @@ public class MYLAddressFragment extends Fragment {
     }
 
     private void setupListners(View view) {
-        //TODO Once Done button is there,make this as dialog
-        tvStickyButton.setOnClickListener(new View.OnClickListener() {
+        //TODO Instead of going to parent activity, we should have a new layout wehre user
+        //can specify address more precisely
+        tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mCallback.addressListing(String.valueOf(tvAddress.getText()));
+                Utils.hideKeyboard(getActivity());
+            }
+        });
+        ivCurrentLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String location = Utils.getCurrentLocationString(getActivity());
+                tvAddress.setText("");
+                tvAddress.setText(location);
             }
         });
 
@@ -169,7 +181,9 @@ public class MYLAddressFragment extends Fragment {
         tvAddress = (AutoCompleteTextView)view.findViewById(R.id.etSearch);
         tvAddress.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
 
+        mCallback.setToolbarForFragment();
         tvStickyButton = (TextView)view.findViewById(R.id.tvNext);
         ivCurrentLocation = (ImageView)view.findViewById(R.id.ivCurrentLocation);
+        tvDone = (TextView) getActivity().findViewById(R.id.tvToolbarTitle);
     }
 }

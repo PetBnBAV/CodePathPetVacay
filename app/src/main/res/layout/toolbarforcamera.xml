@@ -7,5 +7,4 @@
     android:minHeight="?android:actionBarSize"
     app:theme="@style/RtlOverlay.Widget.AppCompat.ActionButton.Overflow"
     android:background="@color/white">
-
 </android.support.v7.widget.Toolbar>

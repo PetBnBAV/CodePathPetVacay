@@ -1,7 +1,6 @@
 package com.codepath.petbnbcodepath.helpers;
 
 import com.parse.ParseGeoPoint;
-import com.parse.ParseUser;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -67,5 +66,29 @@ public class Constants {
     public static final String whoamiKey = "whoami";
     public static final String petOwnerKey = "petOwner";
     public static final String petSitterKey = "petSitter";
+    public static final String titleKey = "title";
+    public static final String hasPetsKey = "hasPets";
+    public static final String petTypeKey= "petType";
+    public static final String homeTypeKey= "homeType";
+    public static final String latlngKey = "latlng";
+    public static final String costKey = "cost";
+
+    public enum PET_TYPE {
+        DOG(0), CAT(1), BOTH(2);
+        private int value;
+        public int getValue(){
+            return value;
+        }
+        private PET_TYPE(int value) {
+            this.value = value;
+        }
+    };
+    public static final String houseTypeKey = "house_type";
+    public static final String cityKey = "city";
+    public static final String petCountKey = "pet_count";
+    public static final String petSizeKey = "pet_size";
+    public static final String playgroundKey = "play_ground";
+    public static final double defaultLatitude = 37.3541;
+    public static final double defaultLongitude = -121.955;
 
 }

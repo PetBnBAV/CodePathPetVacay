@@ -8,14 +8,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_lsy_hometype"
+        android:text="@string/title_lsy_moreinfo"
         android:id="@+id/tvPageDescription"
         android:layout_marginTop="49dp"
         android:lines="2"
         android:padding="30dp"
         android:gravity="center"
         android:textAppearance="?android:textAppearanceLarge"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/gg_dark_gray"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -55,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/icon_minus"
                 android:padding="10dp"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:background="@null"/>
 
@@ -62,7 +63,8 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
-                android:padding="20dp"
+                android:layout_marginBottom="@dimen/lys_separator_margin"
+                android:layout_marginTop="@dimen/lys_separator_margin"
                 />
             <TextView
                 android:id="@+id/tvPetCount"
@@ -78,7 +80,8 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
-                android:padding="10dp"
+                android:layout_marginBottom="@dimen/lys_separator_margin"
+                android:layout_marginTop="@dimen/lys_separator_margin"
                 />
             <ImageButton
                 android:id="@+id/ivPlus"
@@ -87,6 +90,7 @@
                 android:src="@drawable/icon_plus"
                 android:padding="10dp"
                 android:layout_weight="1"
+                android:layout_gravity="center_vertical"
                 android:background="@null"/>
         </LinearLayout>
 
@@ -125,7 +129,8 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
-                android:padding="10dp"
+                android:layout_marginBottom="@dimen/lys_separator_margin"
+                android:layout_marginTop="@dimen/lys_separator_margin"
                 />
             <ImageButton
                 android:id="@+id/ivPetSizeMedium"
@@ -139,7 +144,8 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
-                android:padding="10dp"
+                android:layout_marginBottom="@dimen/lys_separator_margin"
+                android:layout_marginTop="@dimen/lys_separator_margin"
                 />
             <ImageButton
                 android:id="@+id/ivPetSizeLarge"
@@ -186,9 +192,8 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
-                android:padding="10dp"
-                android:layout_weight="0"
-
+                android:layout_marginBottom="@dimen/lys_separator_margin"
+                android:layout_marginTop="@dimen/lys_separator_margin"
                 />
             <ImageButton
                 android:id="@+id/ivPlaygroundBackyard"
@@ -205,7 +210,8 @@
                 android:layout_width="1dp"
                 android:layout_height="fill_parent"
                 android:background="@android:color/darker_gray"
-                android:padding="10dp"
+                android:layout_marginBottom="@dimen/lys_separator_margin"
+                android:layout_marginTop="@dimen/lys_separator_margin"
                 />
             <ImageButton
                 android:id="@+id/ivPlaygroundPark"

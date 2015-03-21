@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_lsy_hometype"
+        android:text="@string/title_lsy_pettype"
         android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -16,7 +16,7 @@
         android:lines="2"
         android:padding="30dp"
         android:gravity="center"
-        android:textColor="@color/gg_dark_gray"
+        android:textColor="@color/gg_light_gray"
         android:textAppearance="?android:textAppearanceLarge"/>
 
     <com.linearlistview.LinearListView

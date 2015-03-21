@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="petTypeTitle">
+        <item>Dog</item>
+        <item>Cat</item>
+        <item>Dog &amp; Cat</item>
+    </string-array>
+    <string-array name="petTypeDescription">
+        <item>Friendly dog</item>
+        <item>Cute cat</item>
+        <item>Both type of pets</item>
+    </string-array>
+    <string-array name="houseTypeTitle">
+        <item>Studio</item>
+        <item>Apartment</item>
+        <item>House</item>
+    </string-array>
+    <string-array name="houseTypeDescription">
+        <item>Cozy Studio</item>
+        <item>Beautiful Apartment in Community</item>
+        <item>Entire House</item>
+    </string-array>
+
+    <array name="houseTypeImage">
+        <item>@drawable/icon_entire_place</item>
+        <item>@drawable/icon_private_room</item>
+        <item>@drawable/icon_shared_space</item>
+    </array>
+</resources>
