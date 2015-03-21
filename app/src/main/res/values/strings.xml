@@ -116,6 +116,10 @@
     <string name="message_from">Here\'s a message from</string>
     <string name="exclamation">!</string>
     <string name="booking_request_decline">is unable to host your pet! Find another lovely home for your pet on PetVacay!</string>
+
+    <string name="RemoveCurrentPhoto">Remove Current Photo</string>
+    <string name="TakePhoto">Take Photo</string>
+    <string name="ChoosefromLibrary">Choose from Library</string>
     <string name="notification_submitted">has been notified!</string>
 
     <!-- Gaurav's strings -->

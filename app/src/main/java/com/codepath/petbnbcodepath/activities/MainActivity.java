@@ -5,10 +5,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.location.Location;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -22,9 +27,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.codepath.petbnbcodepath.FragmentCommunicator;
+import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragment;
+import com.codepath.petbnbcodepath.interfaces.FragmentCameraCommunicator;
+import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.FragmentPageAdapter;
 import com.codepath.petbnbcodepath.fragments.LandingPageFragment;
@@ -35,13 +43,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.makeramen.RoundedTransformationBuilder;
-import com.parse.GetCallback;
-import com.parse.GetDataCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -52,7 +55,8 @@ public class MainActivity extends ActionBarActivity implements
                                                     LocationListener,
                                                     GoogleApiClient.OnConnectionFailedListener,
                                                     LandingPageFragment.OnLandingPageListener,
-                                                    FragmentCommunicator {
+                                                    FragmentCommunicator,
+                                                    FragmentCameraCommunicator{
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -78,6 +82,9 @@ public class MainActivity extends ActionBarActivity implements
     //private long FASTEST_INTERVAL = 5000; /* 5 secs */
     private long FASTEST_INTERVAL = 5 * 60000;
 
+    final int RESULT_TAKE_PHOTO = 40;
+    final int RESULT_CHOOSE_FROM_LIBRARY = 50;
+
 
     /*
 	 * Define a request code to send to Google Play services This code is
@@ -96,7 +103,6 @@ public class MainActivity extends ActionBarActivity implements
         setUpNavigationDrawer();
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        //ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         /*viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
 
@@ -170,8 +176,15 @@ public class MainActivity extends ActionBarActivity implements
             public void onClick(View v) {
 
                 if (!loggedIn) {
-                    //Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
                     myLogin();
+                }
+                else {
+
+                    Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
+                    FragmentManager fm = getSupportFragmentManager();
+                    ChangeProfilePictureFragment changeProfilePictureFragment = ChangeProfilePictureFragment.newInstance();
+                    changeProfilePictureFragment.show(fm, "Set Profile Picture  Dialog");
                 }
 
             }
@@ -262,63 +275,63 @@ public class MainActivity extends ActionBarActivity implements
 
 
 
-    public void  getProfilePicture()
-    {
+    public void  getProfilePicture() {
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
 
-            final ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
-            query.whereEqualTo("username",currentUser.getEmail());
-            query.getFirstInBackground(new GetCallback<ParseObject>() {
-                public void done(ParseObject object, ParseException e) {
-                    if (object != null) {
+            if (currentUser.get("profile_picture") != null) {
 
-                        final ParseFile file = (ParseFile) object.get("profile_picture");
-                        file.getDataInBackground(new GetDataCallback() {
+                ParseFile file = (ParseFile) currentUser.get("profile_picture");
 
+                if (file.getUrl() != null) {
 
-                            public void done(byte[] data, ParseException e) {
-                                if (e == null) {
-                                    if (file.getUrl() != null) {
-
-
-                                        //Insert profile picture pertaining to each user
-                                        //Insert profile picture pertaining to each user
-                                        Transformation transformation = new RoundedTransformationBuilder()
-                                                .borderColor(Color.LTGRAY)
-                                                .borderWidthDp(3)
-                                                .cornerRadiusDp(30)
-                                                .oval(true)
-                                                .build();
+                    //Insert profile picture pertaining to each user
+                    Transformation transformation = new RoundedTransformationBuilder()
+                            .borderColor(Color.LTGRAY)
+                            .borderWidthDp(3)
+                            .cornerRadiusDp(30)
+                            .oval(true)
+                            .build();
 
 
-                                        Picasso.with(getApplicationContext())
-                                                .load(file.getUrl())
-                                                .fit()
-                                                .transform(transformation)
-                                                .into(ivAppIconImg);
+                    Picasso.with(getApplicationContext())
+                            .load(file.getUrl())
+                            .fit()
+                            .transform(transformation)
+                            .into(ivAppIconImg);
 
 
-                                        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
-
-                                    }
-
-                                } else {
-                                    // something went wrong
-                                    //Toast.makeText(getApplicationContext(), "Something went wrong!", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-
-                    } else {
-                        //Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
-
-                    }
+                    ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
                 }
+            }
 
-            });
+            else
+            {
+                ivAppIconImg.setImageResource(R.drawable.ic_user);
+            }
         }
+    }
 
+    public void setPhoto(String picturePath)
+    {
+        //Insert profile picture pertaining to each user
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderColor(Color.LTGRAY)
+                .borderWidthDp(3)
+                .cornerRadiusDp(30)
+                .oval(true)
+                .build();
+
+
+        Picasso.with(getApplicationContext())
+                .load(picturePath)
+                .fit()
+                .transform(transformation)
+                .into(ivAppIconImg);
+
+
+        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     }
 
 
@@ -376,6 +389,9 @@ public class MainActivity extends ActionBarActivity implements
                 //Log out
                 ParseUser.logOut();
                 userIsLoggedOut();
+
+
+
             }
         });
 
@@ -388,8 +404,10 @@ public class MainActivity extends ActionBarActivity implements
             }
         });
 
+
         // Showing Alert Dialog
         alertDialog.show();
+
 
     }
 
@@ -672,5 +690,72 @@ public class MainActivity extends ActionBarActivity implements
     @Override
     public void listYourSpace() {
 
+    }
+
+    @Override
+    public void onRemoveCurrentPhoto() {
+        Toast.makeText(MainActivity.this, "Remove Current Photo", Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onTakePhoto() {
+        Toast.makeText(MainActivity.this, "Take Photo", Toast.LENGTH_SHORT).show();
+        launchCamera();
+
+    }
+
+    @Override
+    public void onChooseFromLibrary() {
+        Toast.makeText(MainActivity.this, "Choose From Library", Toast.LENGTH_SHORT).show();
+        launchGallery();
+    }
+
+
+    public void launchCamera() {
+        Intent intent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, RESULT_TAKE_PHOTO);
+    }
+
+
+
+    public void launchGallery() {
+        Intent i = new Intent(
+                Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(i, RESULT_CHOOSE_FROM_LIBRARY);
+    }
+
+
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getContentResolver().query(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == RESULT_CHOOSE_FROM_LIBRARY&& resultCode == RESULT_OK && null != data) {
+            Uri selectedImageUri = data.getData();
+            String selectedImagePath = getPath(selectedImageUri);
+            System.out.println("Image Path : " + selectedImagePath);
+
+            //ivAppIconImg.setImageURI(null);
+            ivAppIconImg.setImageResource(R.drawable.ic_user);
+
+        }
+
+        if (requestCode == RESULT_TAKE_PHOTO && resultCode == RESULT_OK && null != data) {
+            Bitmap bp = (Bitmap) data.getExtras().get("data");
+            ivAppIconImg.setImageBitmap(bp);
+
+
+        }
     }
 }

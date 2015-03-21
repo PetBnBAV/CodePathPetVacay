@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.codepath.petbnbcodepath.FragmentCommunicator;
+import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.WhyHostFragment;
 
