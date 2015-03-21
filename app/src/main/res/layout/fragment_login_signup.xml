@@ -107,8 +107,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/dark_gray"
-        android:alpha="0.20"
+        android:gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/login_terms_margin"
+        android:layout_marginStart="@dimen/login_terms_margin"
+        android:layout_marginRight="@dimen/login_terms_margin"
+        android:layout_marginEnd="@dimen/login_terms_margin"
         />
 
 </RelativeLayout>

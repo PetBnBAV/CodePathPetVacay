@@ -15,7 +15,7 @@
     <dimen name="showMoreDist">20dp</dimen>
     <dimen name="btn_corner_radius">25dp</dimen>
     <dimen name="btn_horizontal_dist">12dp</dimen>
-    <dimen name="logo_vert_dist">50dp</dimen>
+    <dimen name="logo_vert_dist">100dp</dimen>
     <dimen name="edit_text_padding">10dp</dimen>
     <dimen name="listing_summary_height">120dp</dimen>
     <dimen name="only_charge_margin">50dp</dimen>
@@ -42,5 +42,7 @@
     <dimen name="cover_picture_height">250dp</dimen>
     <dimen name="lys_separator_margin">15dp</dimen>
     <dimen name="gg_default_margin">15dp</dimen>
+
+    <dimen name="login_terms_margin">25dp</dimen>
 
 </resources>
