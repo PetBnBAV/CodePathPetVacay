@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.andexert.calendarlistview.library.DayPickerView;
 import com.andexert.calendarlistview.library.SimpleMonthAdapter;
@@ -79,11 +80,13 @@ public class DatePickerDialog extends DialogFragment implements
     @Override
     public void onDayOfMonthSelected(int year, int month, int day)
     {
-        getDialog().setTitle(getResources().getString(R.string.sel_pickup_date));
-        Log.e("Day Selected", day + " / " + month + " / " + year);
+
         num_dates_selected++;
         if (num_dates_selected == 1) {
+            getDialog().setTitle(getResources().getString(R.string.sel_pickup_date));
             drop_date = new Date(year, month, day);
+            Toast.makeText(getActivity(), getResources().getString(R.string.sel_pickup_date),
+                    Toast.LENGTH_SHORT).show();
         }
         if (num_dates_selected == 2) {
             pick_date = new Date(year, month, day);

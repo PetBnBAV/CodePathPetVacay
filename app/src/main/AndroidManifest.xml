@@ -76,6 +76,11 @@
         <activity
             android:name=".activities.BookingDetailsActivity"
             android:label="@string/title_activity_booking_details" >
+            android:parentActivityName=".activities.DetailsPageActivity" >
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".activities.DetailsPageActivity" />
         </activity>
         <activity
             android:name=".activities.PetOwnerProfileActivity"

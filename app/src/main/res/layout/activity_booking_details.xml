@@ -7,6 +7,16 @@
     android:background="@color/bgWhite"
     tools:context="com.codepath.petbnbcodepath.activities.BookingDetailsActivity">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/vl_white"
+        android:title="@string/title_activity_booking_details"
+        >
+    </android.support.v7.widget.Toolbar>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="@dimen/zero_height"
@@ -16,7 +26,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:focusableInTouchMode="true">
+            android:focusableInTouchMode="true"
+            android:clickable="true">
 
             <RelativeLayout
                 android:id="@+id/rlListingSummary"
@@ -142,7 +153,6 @@
             <ExpandableListView
                 android:id="@+id/lvPrice"
                 android:layout_width="match_parent"
-                android:groupIndicator="@drawable/cost_selector"
                 android:layout_height="@dimen/expandable_lv_height"
                 android:isScrollContainer="false"
                 android:layout_marginLeft="@dimen/login_button_padding"
@@ -150,7 +160,6 @@
                 android:layout_marginStart="@dimen/login_button_padding"
                 android:layout_marginEnd="@dimen/login_button_padding"
                 android:layout_marginBottom="@dimen/book_det_dates_margin_bottom"
-
                 />
             <TextView
                 android:id="@+id/tvOnlyCharge"
