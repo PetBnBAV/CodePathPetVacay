@@ -277,6 +277,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     @Override
     public void postListing(int fieldType,String value) {
+        setDefaultToolbar();
         FragmentTransaction  ft1 = getSupportFragmentManager().beginTransaction();
         ft1.hide(mylLandingPage);
         ft1.commit();
@@ -294,6 +295,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     @Override
     public void postListing(String value) {
+        setDefaultToolbar();
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.hide(mylPriceFragment);
         ft1.commit();
@@ -309,6 +311,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     @Override
     public void addressListing(String address) {
+        setDefaultToolbar();
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.hide(mylAddress);
         ft1.commit();
