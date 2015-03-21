@@ -40,5 +40,6 @@ dependencies {
     compile 'com.github.traex.calendarlistview:library:1.2.2'
     compile 'com.github.frankiesardo:linearlistview:1.0.1@aar'
     compile 'com.github.frankiesardo:auto-parcel:0.3'
+    compile 'com.makeramen:roundedimageview:2.0.0'
 
 }

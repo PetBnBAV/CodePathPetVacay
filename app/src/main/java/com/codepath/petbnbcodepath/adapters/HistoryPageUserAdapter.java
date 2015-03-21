@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.models.Listing;
-import com.makeramen.RoundedTransformationBuilder;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 

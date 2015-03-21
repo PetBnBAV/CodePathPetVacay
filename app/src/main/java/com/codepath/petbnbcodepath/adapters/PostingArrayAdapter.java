@@ -19,7 +19,7 @@ import com.codepath.petbnbcodepath.activities.MapActivity;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
-import com.makeramen.RoundedTransformationBuilder;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 

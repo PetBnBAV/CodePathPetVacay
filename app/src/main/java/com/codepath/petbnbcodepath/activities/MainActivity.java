@@ -30,24 +30,35 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragment;
-import com.codepath.petbnbcodepath.interfaces.FragmentCameraCommunicator;
-import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.FragmentPageAdapter;
+import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentNoPP;
+import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentWithPP;
 import com.codepath.petbnbcodepath.fragments.LandingPageFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.interfaces.FragmentCameraCommunicator;
+import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.makeramen.RoundedTransformationBuilder;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 
 
 public class MainActivity extends ActionBarActivity implements
@@ -74,6 +85,8 @@ public class MainActivity extends ActionBarActivity implements
     private ViewPager viewPager;
 
     boolean loggedIn = false;
+    boolean useLocalPP = false;
+    boolean userHasPP = false;
 
 
     private GoogleApiClient mGoogleApiClient;
@@ -84,6 +97,7 @@ public class MainActivity extends ActionBarActivity implements
 
     final int RESULT_TAKE_PHOTO = 40;
     final int RESULT_CHOOSE_FROM_LIBRARY = 50;
+
 
 
     /*
@@ -183,8 +197,18 @@ public class MainActivity extends ActionBarActivity implements
 
                     Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
                     FragmentManager fm = getSupportFragmentManager();
-                    ChangeProfilePictureFragment changeProfilePictureFragment = ChangeProfilePictureFragment.newInstance();
-                    changeProfilePictureFragment.show(fm, "Set Profile Picture  Dialog");
+
+                    if(userHasPP) {
+                        ChangeProfilePictureFragmentWithPP changeProfilePictureFragmentWithPP = ChangeProfilePictureFragmentWithPP.newInstance();
+                        changeProfilePictureFragmentWithPP.show(fm, "Set Profile Picture  Dialog");
+                    }
+
+                    else
+                    {
+                        ChangeProfilePictureFragmentNoPP changeProfilePictureFragmentNoPP = ChangeProfilePictureFragmentNoPP.newInstance();
+                        changeProfilePictureFragmentNoPP.show(fm, "Set Profile Picture  Dialog");
+
+                    }
                 }
 
             }
@@ -267,7 +291,7 @@ public class MainActivity extends ActionBarActivity implements
         tvLogInSignUp.setText("");
         tvLogInSignUp.setText(R.string.AskToLogout);
 
-         getProfilePicture();
+        getProfilePicture();
 
         loggedIn = true;
 
@@ -277,61 +301,60 @@ public class MainActivity extends ActionBarActivity implements
 
     public void  getProfilePicture() {
 
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
+       if(!useLocalPP) {
 
-            if (currentUser.get("profile_picture") != null) {
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser != null) {
 
-                ParseFile file = (ParseFile) currentUser.get("profile_picture");
+                if (currentUser.get("profile_picture") != null) {
 
-                if (file.getUrl() != null) {
+                    ParseFile file = (ParseFile) currentUser.get("profile_picture");
 
-                    //Insert profile picture pertaining to each user
-                    Transformation transformation = new RoundedTransformationBuilder()
-                            .borderColor(Color.LTGRAY)
-                            .borderWidthDp(3)
-                            .cornerRadiusDp(30)
-                            .oval(true)
-                            .build();
+                    if (file.getUrl() != null) {
+
+                        Toast.makeText(MainActivity.this, "User has profile picture", Toast.LENGTH_LONG).show();
+
+                        userHasPP = true;
+
+                       //Insert profile picture pertaining to each user
+                        Transformation transformation = new RoundedTransformationBuilder()
+                                .borderColor(Color.LTGRAY)
+                                .borderWidthDp(3)
+                                .cornerRadiusDp(30)
+                                .oval(true)
+                                .build();
 
 
-                    Picasso.with(getApplicationContext())
-                            .load(file.getUrl())
-                            .fit()
-                            .transform(transformation)
-                            .into(ivAppIconImg);
+                       Picasso.with(getApplicationContext())
+                                .load(file.getUrl())
+                                .placeholder(R.drawable.ic_user)
+                                .fit()
+                                .transform(transformation)
+                                .into(ivAppIconImg);
+
+                        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                    } else {
+
+                        Transformation transformation = new RoundedTransformationBuilder()
+                                .borderColor(Color.LTGRAY)
+                                .borderWidthDp(3)
+                                .cornerRadiusDp(30)
+                                .oval(true)
+                                .build();
+
+                        Picasso.with(getApplicationContext())
+                                .load(R.drawable.ic_user)
+                                .into(ivAppIconImg);
 
 
-                    ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+                        userHasPP = false;
+                    }
                 }
             }
-
-            else
-            {
-                ivAppIconImg.setImageResource(R.drawable.ic_user);
-            }
         }
-    }
-
-    public void setPhoto(String picturePath)
-    {
-        //Insert profile picture pertaining to each user
-        Transformation transformation = new RoundedTransformationBuilder()
-                .borderColor(Color.LTGRAY)
-                .borderWidthDp(3)
-                .cornerRadiusDp(30)
-                .oval(true)
-                .build();
-
-
-        Picasso.with(getApplicationContext())
-                .load(picturePath)
-                .fit()
-                .transform(transformation)
-                .into(ivAppIconImg);
-
-
-        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
     }
 
 
@@ -696,6 +719,45 @@ public class MainActivity extends ActionBarActivity implements
     public void onRemoveCurrentPhoto() {
         Toast.makeText(MainActivity.this, "Remove Current Photo", Toast.LENGTH_SHORT).show();
 
+        userHasPP = false;
+
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderColor(Color.LTGRAY)
+                .borderWidthDp(3)
+                .cornerRadiusDp(30)
+                .oval(true)
+                .build();
+
+        Picasso.with(getApplicationContext())
+                .load(R.drawable.ic_user)
+                .into(ivAppIconImg);
+
+
+        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser.getObjectId();
+
+        // Retrieve the object by id
+        query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseObject>() {
+            public void done(ParseObject user_info, ParseException e) {
+                if (e == null) {
+                    user_info.remove("profile_picture");
+                    user_info.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
+                           // getProfilePicture();
+
+                        }
+                    });
+                }
+            }
+        });
+
     }
 
     @Override
@@ -741,21 +803,169 @@ public class MainActivity extends ActionBarActivity implements
         super.onActivityResult(requestCode, resultCode, data);
 
 
+        // FROM LIBRARY
         if (requestCode == RESULT_CHOOSE_FROM_LIBRARY&& resultCode == RESULT_OK && null != data) {
             Uri selectedImageUri = data.getData();
             String selectedImagePath = getPath(selectedImageUri);
-            System.out.println("Image Path : " + selectedImagePath);
 
-            //ivAppIconImg.setImageURI(null);
-            ivAppIconImg.setImageResource(R.drawable.ic_user);
+            useLocalPP = true;
+            userHasPP = true;
 
+            //Insert profile picture pertaining to each user
+            Transformation transformation = new RoundedTransformationBuilder()
+                    .borderColor(Color.LTGRAY)
+                    .borderWidthDp(3)
+                    .cornerRadiusDp(30)
+                    .oval(true)
+                    .build();
+
+
+            Picasso.with(getApplicationContext())
+                    .load(selectedImageUri)
+                    .fit()
+                    .transform(transformation)
+                    .into(ivAppIconImg);
+
+            ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            //ivAppIconImg.setImageURI(selectedImageUri);
+
+            byte[] photo = new byte[0];
+            try {
+                photo = readBytesFromURI(selectedImageUri);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            final ParseFile file = new ParseFile("ABFrmLibrary.jpg", photo);
+            file.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+
+                    // Retrieve the object by id
+                    query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseObject>() {
+                        public void done(ParseObject user_info, ParseException e) {
+                            if (e == null) {
+                                user_info.put("profile_picture", file);
+                                user_info.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
+                                        //getProfilePicture();
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
         }
 
+
+
+        // FROM CAMERA
         if (requestCode == RESULT_TAKE_PHOTO && resultCode == RESULT_OK && null != data) {
             Bitmap bp = (Bitmap) data.getExtras().get("data");
-            ivAppIconImg.setImageBitmap(bp);
 
+            useLocalPP = true;
+            userHasPP = true;
+
+            String path = MediaStore.Images.Media.insertImage(getApplicationContext().getContentResolver(), bp,null , null);
+
+
+            //Insert profile picture pertaining to each user
+           Transformation transformation = new RoundedTransformationBuilder()
+                    .borderColor(Color.LTGRAY)
+                    .borderWidthDp(3)
+                    .cornerRadiusDp(30)
+                    .oval(true)
+                    .build();
+
+
+            Picasso.with(getApplicationContext())
+                    .load(Uri.parse(path))
+                    .fit()
+                    .transform(transformation)
+                    .into(ivAppIconImg);
+
+            ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+
+            //ivAppIconImg.setImageBitmap(bp);
+
+
+            byte[] picture = new byte[0];
+            picture = bitmapToByteArray(bp);
+
+            final ParseFile fileFromCamera = new ParseFile("ABFrmCamera.jpg", picture);
+            fileFromCamera.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
+
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+
+                    // Retrieve the object by id
+                    query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseObject>() {
+                        public void done(ParseObject user_info_camera, ParseException e) {
+                            if (e == null) {
+                                user_info_camera.put("profile_picture", fileFromCamera);
+                                user_info_camera.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
+                                        //getProfilePicture();
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                }
+            });
 
         }
+
+
     }
+
+
+
+    public byte[] readBytesFromURI(Uri uri) throws IOException {
+        // this dynamically extends to take the bytes you read
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+
+        // this is storage overwritten on each iteration with bytes
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        // we need to know how may bytes were read to write them to the byteBuffer
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+
+        // and then we can return your byte array.
+        return byteBuffer.toByteArray();
+    }
+
+
+
+    public static byte[] bitmapToByteArray(Bitmap bm) {
+        // Create the buffer with the correct size
+        int iBytes = bm.getWidth() * bm.getHeight() * 4;
+        ByteBuffer buffer = ByteBuffer.allocate(iBytes);
+
+        // Log.e("DBG", buffer.remaining()+""); -- Returns a correct number based on dimensions
+        // Copy to buffer and then into byte array
+        bm.copyPixelsToBuffer(buffer);
+        // Log.e("DBG", buffer.remaining()+""); -- Returns 0
+        return buffer.array();
+    }
+
 }
