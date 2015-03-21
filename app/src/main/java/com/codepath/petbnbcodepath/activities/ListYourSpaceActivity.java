@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.LYSCityFragment;
@@ -21,12 +24,18 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
 
     int petType,houseType;
     String city;
+    Toolbar toolbar;
+    TextView tvToolbatTitle;
+    TextView tvToolbarSecondaryTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_your_space);
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tvToolbatTitle = (TextView) findViewById(R.id.tvToolbarTitle);
+        tvToolbarSecondaryTitle = (TextView) findViewById(R.id.tvToolbarSecondaryTitle);
+        setSupportActionBar(toolbar);
         if(savedInstanceState==null) {
             LYSPetTypeFragment lysPetTypeFragment = LYSPetTypeFragment.getInstance(this);
             ft = getSupportFragmentManager().beginTransaction();
@@ -49,12 +58,6 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -65,6 +68,15 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flLSY,lysHomeTypeFragment);
         ft.commit();
+    }
+
+    @Override
+    public void setToolbar(String title, String secondaryTitle) {
+        tvToolbatTitle.setText(title);
+        if(secondaryTitle.isEmpty())
+            tvToolbarSecondaryTitle.setVisibility(View.INVISIBLE);
+        else
+            tvToolbarSecondaryTitle.setText(secondaryTitle);
     }
 
     @Override
@@ -145,4 +157,8 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
 
     }
 
+    public void onPrevious(View view) {
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
+    }
 }

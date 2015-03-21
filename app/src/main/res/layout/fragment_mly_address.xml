@@ -9,18 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView"
+        android:background="@color/white"
         android:id="@+id/llSearch"
         android:weightSum="1">
         <AutoCompleteTextView
             android:id="@+id/etSearch"
             android:layout_width="322dp"
             android:layout_height="wrap_content"
-            android:background="@color/light_gray"
             android:paddingLeft="@dimen/textview_hint_padding"
             android:singleLine="true"
             android:paddingBottom="10dp"
             android:layout_weight="0.78"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/gg_dark_gray"
+            android:textColorHint="@color/gg_light_gray"
             android:hint="Address" />
         <ImageView
             android:layout_width="wrap_content"
@@ -28,11 +29,11 @@
             android:id="@+id/ivCurrentLocation"
             android:src="@drawable/icon_location"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            />
     </LinearLayout>
     <LinearLayout
         android:orientation="vertical"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:id="@+id/map_container"

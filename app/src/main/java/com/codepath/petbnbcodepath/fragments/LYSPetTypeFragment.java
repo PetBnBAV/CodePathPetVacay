@@ -33,6 +33,8 @@ public class LYSPetTypeFragment extends Fragment {
 
     public interface PetTypeSelectListner {
         public void getPetType(int petType);
+        public void setToolbar(String title, String secondaryTitle);
+
     }
 
     private class ViewHolder{
@@ -105,6 +107,7 @@ public class LYSPetTypeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCallback.setToolbar(getActivity().getResources().getString(R.string.list_your_space_title),"");
     }
 
     @Override

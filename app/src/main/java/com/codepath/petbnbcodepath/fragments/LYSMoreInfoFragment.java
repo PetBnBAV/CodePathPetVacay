@@ -33,6 +33,7 @@ public class LYSMoreInfoFragment extends Fragment {
 
     public interface MoreInfoListner {
         public void getMoreInfo(int petCount, int petSize, int playground);
+        public void setToolbar(String title, String secondaryTitle);
     }
 
 
@@ -56,6 +57,7 @@ public class LYSMoreInfoFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,  ViewGroup parent,  Bundle savedInstanceState) {
         final View view  = inflater.inflate(R.layout.fragment_lsy_moreinfo,parent,false);
+        mCallback.setToolbar(getActivity().getResources().getString(R.string.more_info),"");
 
         tvPetCount =  (TextView)view.findViewById(R.id.tvPetCount);
         final TextView tvPetCount1 = (TextView)view.findViewById(R.id.tvPetCount);

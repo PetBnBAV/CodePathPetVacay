@@ -40,6 +40,7 @@ public class GoogleMapAutoCompleteClient {
         sb.append("&sensor=false");
         sb.append("&input=" + input);
 
+
         client.get(sb.toString(), null, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

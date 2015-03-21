@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +20,12 @@ import com.codepath.petbnbcodepath.fragments.MYLAddressFragment;
 import com.codepath.petbnbcodepath.fragments.MYLLandingPageFragment;
 import com.codepath.petbnbcodepath.fragments.MYLPriceFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class ManageYourListingActivity extends ActionBarActivity implements MYLLandingPageFragment.PostListingListner,MYLPriceFragment.PriceListingListner,
         MYLAddressFragment.AddressListingListner{
@@ -58,6 +65,10 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     MYLPriceFragment mylPriceFragment;
     MYLAddressFragment mylAddress;
 
+    Toolbar toolbar;
+    TextView tvToolbatTitle;
+    TextView tvToolbarSecondaryTitle;
+
     //TODO make enums
     private final int titleIndex = 0;
     private final int summaryIndex = 1;
@@ -71,6 +82,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     int mCost;
     String mAddress;
 
+    ParseUser currentUser = ParseUser.getCurrentUser();
 
 
 
@@ -78,6 +90,10 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manage_your_listing);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        tvToolbatTitle = (TextView) findViewById(R.id.tvToolbarTitle);
+        tvToolbarSecondaryTitle = (TextView) findViewById(R.id.tvToolbarSecondaryTitle);
+        setSupportActionBar(toolbar);
         sActivity = this;
         Intent intent = getIntent();
         petType = intent.getIntExtra(Constants.petTypeKey,-1);
@@ -116,7 +132,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         cbAddress = (CheckBox) findViewById(R.id.cbAddress);
 
         tvOptionalDetails = (TextView) findViewById(R.id.optionalDetails);
-        tvStickyButton = (TextView) findViewById(R.id.tvNext);
+        tvStickyButton = (TextView) findViewById(R.id.tvPost);
     }
     View.OnClickListener mListener = new View.OnClickListener() {
         @Override
@@ -183,6 +199,44 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
                 ft.commit();
             }
         });
+
+
+
+        tvStickyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if (currentUser != null) {
+                    final ParseObject posting = new ParseObject(Constants.petVacayListingTable);
+                    posting.put(Constants.costKey, mCost);
+                    posting.put(Constants.titleKey, mTitle);
+                    posting.put(Constants.descriptionKey, mSummary);
+                    posting.put(Constants.hasPetsKey, true);//TODO need to update the table or UI
+                    posting.put(Constants.petTypeKey, petType);
+                    posting.put(Constants.homeTypeKey, houseType);
+                    //TODO need to update petSize, playground, city
+                    ParseGeoPoint geoPoint = Utils.getLocationFromAddress(ManageYourListingActivity.this, mAddress);
+                    posting.put(Constants.latlngKey, geoPoint);
+                    posting.put(Constants.sitterIdKey, currentUser);
+                    posting.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e2) {
+                            if (e2 == null) {
+                                Toast.makeText(ManageYourListingActivity.this, "Posted a posting with title " + mTitle, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+        tvToolbarSecondaryTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                TODO goto preview page of Details View.
+            }
+        });
+
     }
 
 
@@ -209,8 +263,20 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     }
 
     @Override
+    public void setToolbarForFragment() {
+        tvToolbatTitle.setText(R.string.done_title);
+        tvToolbatTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.icon_checkmark_photo,0,0,0);
+        tvToolbarSecondaryTitle.setVisibility(View.INVISIBLE);
+    }
+
+    public void setDefaultToolbar() {
+        tvToolbatTitle.setText(R.string.list_your_space_title);
+        tvToolbatTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_back,0,0,0);
+        tvToolbarSecondaryTitle.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void postListing(int fieldType,String value) {
-        Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
         FragmentTransaction  ft1 = getSupportFragmentManager().beginTransaction();
         ft1.hide(mylLandingPage);
         ft1.commit();
@@ -233,17 +299,16 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.commit();
         try {
             cbPrice.setChecked(Integer.parseInt(value)>0);
+            mCost = Integer.parseInt(value);
             tvMYLPrice.setText(value);
         } catch (NumberFormatException e){
             cbPrice.setChecked(false);
             tvMYLPrice.setText("");
-            mCost = Integer.parseInt(value);
         }
     }
 
     @Override
     public void addressListing(String address) {
-        Toast.makeText(this, address,Toast.LENGTH_SHORT).show();
         FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
         ft1.hide(mylAddress);
         ft1.commit();

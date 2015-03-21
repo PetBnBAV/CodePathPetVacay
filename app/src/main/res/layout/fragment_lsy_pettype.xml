@@ -16,7 +16,7 @@
         android:lines="2"
         android:padding="30dp"
         android:gravity="center"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/gg_light_gray"
         android:textAppearance="?android:textAppearanceLarge"/>
 
     <com.linearlistview.LinearListView

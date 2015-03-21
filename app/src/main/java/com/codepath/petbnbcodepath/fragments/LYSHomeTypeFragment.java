@@ -32,6 +32,7 @@ public class LYSHomeTypeFragment extends Fragment {
 
     public interface HomeTypeSelectListner {
         public void getHomeType(int houseType);
+        public void setToolbar(String title, String secondaryTitle);
     }
 
     private class ViewHolder{
@@ -102,6 +103,7 @@ public class LYSHomeTypeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mCallback.setToolbar(getActivity().getResources().getString(R.string.property_type),"");
     }
 
     @Override
