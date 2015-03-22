@@ -254,7 +254,7 @@ public class MapActivity extends ActionBarActivity
 
                 if (position < -1) { // [-Infinity,-1)
                     // This page is way off-screen to the left.
-                    page.setAlpha(0);
+                    page.setAlpha(1);
 
                 }
 
@@ -266,7 +266,7 @@ public class MapActivity extends ActionBarActivity
 
                 } else { // (1,+Infinity]
                     // This page is way off-screen to the right.
-                    page.setAlpha(0);
+                    page.setAlpha(1);
                 }
             }
         });

@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context="com.codepath.petbnbcodepath.LoginSignupActivity">
 
-    <ImageView
+    <com.flaviofaria.kenburnsview.KenBurnsView
         android:id="@+id/ivBg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
