@@ -56,41 +56,49 @@ public class Utils {
         return new LatLng(latitude,longitude);
     }
 
-    static public String getCurrentCityName(Context context){
-        Geocoder gcd = new Geocoder(context, Locale.getDefault());
-        String city= "";
 
-        LatLng latLng = getCurrentLatLng(context);
-        List<Address> addresses = null;
-        try {
-            addresses = gcd.getFromLocation(latLng.latitude, latLng.longitude, 1);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(context,"Sorry, Not able to get current city name, please type it.",Toast.LENGTH_SHORT).show();
-        }
-        if (addresses.size() > 0) {
-            Address address = addresses.get(0);
-            String cityName[]={"","",""};
-            int idx=0;
-            if(address.getLocality()!=null)
-                cityName[idx++] = address.getLocality();
-            if(address.getAdminArea()!=null)
-                cityName[idx++] = address.getAdminArea();
-            if(address.getCountryCode()!=null)
-                cityName[idx++] = address.getCountryCode();
+    static public String getCityName(Context context, double latitude, double longitude){
+        {
+            Geocoder gcd = new Geocoder(context, Locale.getDefault());
+            String city= "";
 
-            StringBuilder sb = new StringBuilder();
-            for (String n : cityName) {
-                if (sb.length() > 0) sb.append(", ");
-                sb.append(n);
+            LatLng latLng = getCurrentLatLng(context);
+            List<Address> addresses = null;
+            try {
+                addresses = gcd.getFromLocation(latitude, longitude, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(context,"Sorry, Not able to get current city name, please type it.",Toast.LENGTH_SHORT).show();
             }
-            return sb.toString();
-        }
-        else {
-            Toast.makeText(context, "Sorry, Not able to get current city name, please type it.", Toast.LENGTH_SHORT).show();
-        }
-        return city;
+            if (addresses.size() > 0) {
+                Address address = addresses.get(0);
+                String cityName[]={"","",""};
+                int idx=0;
+                if(address.getLocality()!=null)
+                    cityName[idx++] = address.getLocality();
+                if(address.getAdminArea()!=null)
+                    cityName[idx++] = address.getAdminArea();
+                if(address.getCountryCode()!=null)
+                    cityName[idx++] = address.getCountryCode();
 
+                StringBuilder sb = new StringBuilder();
+                for (String n : cityName) {
+                    if (sb.length() > 0) sb.append(", ");
+                    sb.append(n);
+                }
+                return sb.toString();
+            }
+            else {
+                Toast.makeText(context, "Sorry, Not able to get current city name, please type it.", Toast.LENGTH_SHORT).show();
+            }
+            return city;
+
+        }
+
+    }
+    static public String getCurrentCityName(Context context){
+        LatLng latLng = getCurrentLatLng(context);
+        return getCityName(context,latLng.latitude, latLng.longitude);
     }
 
     static public String getCurrentLocationString(Context context){

@@ -47,7 +47,7 @@ import java.util.List;
 
 
 public class MapActivity extends ActionBarActivity
-                         implements GoogleMap.OnMarkerClickListener {
+        implements GoogleMap.OnMarkerClickListener {
 
     private static final String TAG = "MAPACTIVITY";
 
@@ -352,7 +352,7 @@ public class MapActivity extends ActionBarActivity
         map = googleMap;
         if (map != null) {
             // Map is ready
-           // Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Map Fragment was loaded properly!", Toast.LENGTH_SHORT).show();
 
             /*map.setMyLocationEnabled(true);
             map.setOnMapLongClickListener(this);

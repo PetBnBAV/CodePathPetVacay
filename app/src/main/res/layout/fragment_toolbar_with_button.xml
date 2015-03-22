@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.Toolbar
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/toolbar"
+            android:minHeight="?android:actionBarSize"
+            app:theme="@style/RtlOverlay.Widget.AppCompat.ActionButton.Overflow"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+
+        <ImageButton
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="20dp"
+            android:layout_height="15dp"
+            android:id="@+id/btnBackBlack"
+            android:onClick="onPrevious"
+            android:layout_marginLeft="10dp"
+            android:src="@drawable/ic_backinblack"
+            android:background="@android:color/transparent"
+            android:shadowColor="#ffffffff"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:id="@+id/tvToolbarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="City Name"
+            android:textColor="@color/black"
+            android:layout_marginLeft="25dp"
+            android:ellipsize="end"
+            android:layout_alignBottom="@+id/btnBackBlack"
+            android:layout_toEndOf="@+id/btnBackBlack"
+            android:maxLines="1"
+            android:textStyle="bold"
+            />
+
+
+        <ImageButton
+            android:id="@+id/btSecondaryAction"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:visibility="visible"
+            android:src="@drawable/ic_menu_mapmode"
+            android:onClick="onSecondaryButtonClicked"
+            android:gravity="right"
+            android:layout_marginRight="@dimen/padding_medium"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+</LinearLayout>

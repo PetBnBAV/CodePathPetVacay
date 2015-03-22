@@ -72,6 +72,7 @@ public class Constants {
     public static final String homeTypeKey= "homeType";
     public static final String latlngKey = "latlng";
     public static final String costKey = "cost";
+    public static String locationStrKey = "locationStr";
 
     public enum PET_TYPE {
         DOG(0), CAT(1), BOTH(2);
@@ -92,6 +93,5 @@ public class Constants {
     public static final double defaultLongitude = -121.955;
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
-
-    public static final String locationStrKey = "locationStr";
+    public static final String SECONADRY_ICON = "secondaryIconResource";
 }

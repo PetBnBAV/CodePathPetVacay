@@ -3,7 +3,6 @@ package com.codepath.petbnbcodepath.fragments;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.text.Editable;
@@ -112,9 +111,9 @@ public class LYSCityFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_lsy_city,parent,false);
-        mCallback.setToolbar(getActivity().getResources().getString(R.string.property_type),"");
+        mCallback.setToolbar(getActivity().getResources().getString(R.string.city),"");
 
         etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
         etSearch.setAdapter(new PlacesAutoCompleteAdapter(sActivity, R.layout.list_item));

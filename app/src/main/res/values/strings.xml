@@ -176,8 +176,8 @@
         stay here again.</string>
     <string name="title_lsy_pettype">What type of pet do you want to host?</string>
     <string name="title_lsy_hometype">What type of space do you want to list?</string>
-    <string name="title_lsy_city">What city is your house located in?</string>
-    <string name="title_lsy_moreinfo">Just a little more info about your pet</string>
+    <string name="title_lsy_city">What city is your place located in?</string>
+    <string name="title_lsy_moreinfo">Just a little more info about your place</string>
     <string name="title_pet_count">Number of pets in House</string>
     <string name="title_pet_type">Pet Type</string>
     <string name="title_pet_size">Pet Size</string>

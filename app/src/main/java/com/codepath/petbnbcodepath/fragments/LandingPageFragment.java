@@ -2,12 +2,8 @@ package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Point;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.Display;
@@ -32,6 +28,7 @@ import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +47,8 @@ public class LandingPageFragment extends Fragment {
     private ParseGeoPoint currLatLng;
 
     private OnLandingPageListener listener;
+
+    Activity mActivity;
 
     public static LandingPageFragment newInstance(Double latitude, Double longitude) {
         Log.i(TAG, "goes here " + latitude + " " + longitude);
@@ -71,6 +70,7 @@ public class LandingPageFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
+        mActivity = activity;
         if (activity instanceof OnLandingPageListener) {
             listener = (OnLandingPageListener) activity;
         } else {
@@ -82,8 +82,8 @@ public class LandingPageFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_landing_page, container, false);
 
         setupViews(view, inflater);
@@ -111,18 +111,23 @@ public class LandingPageFragment extends Fragment {
         etSearch = (AutoCompleteTextView) landingPageView.findViewById(R.id.etSearch);
         etSearch.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
 
-        Drawable headerDrawable = getResources().getDrawable(R.drawable.landingpagebg);
-        int currWidth = headerDrawable.getIntrinsicWidth();
-        int currHeight = headerDrawable.getIntrinsicHeight();
-        int origAspectRatio = currWidth / currHeight;
-        int targetHeight = targetWidth / origAspectRatio;
+//        Drawable headerDrawable = getResources().getDrawable(R.drawable.landingpagebg);
+//        int currWidth = headerDrawable.getIntrinsicWidth();
+//        int currHeight = headerDrawable.getIntrinsicHeight();
+//        int origAspectRatio = currWidth / currHeight;
+//        int targetHeight = targetWidth / origAspectRatio;
+//
+//        // Load a bitmap from the drawable folder
+//        Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.landingpagebg);
+//        // Resize the bitmap to 150x100 (width x height)
+//        Bitmap bMapScaled = Bitmap.createScaledBitmap(bMap, targetWidth, targetHeight, true);
+//        // Loads the resized Bitmap into an ImageView
+//        ivBg.setImageBitmap(bMapScaled);
 
-        // Load a bitmap from the drawable folder
-        Bitmap bMap = BitmapFactory.decodeResource(getResources(), R.drawable.landingpagebg);
-        // Resize the bitmap to 150x100 (width x height)
-        Bitmap bMapScaled = Bitmap.createScaledBitmap(bMap, targetWidth, targetHeight, true);
-        // Loads the resized Bitmap into an ImageView
-        ivBg.setImageBitmap(bMapScaled);
+        Picasso.with(getActivity())
+                .load(R.drawable.landingpagebg)
+                .fit()
+                .into(ivBg);
 
         lvLandingPage = (ListView) view.findViewById(R.id.lvLandingPage);
         lvLandingPage.addHeaderView(landingPageView, null, false);
@@ -134,7 +139,6 @@ public class LandingPageFragment extends Fragment {
                                        getArguments().getDouble(Constants.longitude));
 
         setupViewListeners();
-
         getPetVacayListingData();
     }
 

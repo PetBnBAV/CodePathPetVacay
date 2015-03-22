@@ -2,7 +2,6 @@ package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,12 +18,12 @@ import com.codepath.petbnbcodepath.helpers.Utils;
  */
 public class MYLPriceFragment extends Fragment {
 
-    private PriceListingListner mCallback;
+    private PriceListingListener mCallback;
     private EditText etValue;
     private TextView tvSuggestedPrice;
     private ImageView ivHint;
     private static int  sPrice;
-    private static int suggestedPrice =92;
+    private static int suggestedPrice =35;
     private TextView tvDone;
 
     public static MYLPriceFragment getInstance(Activity activity, int price){
@@ -33,7 +32,7 @@ public class MYLPriceFragment extends Fragment {
         return frag;
     }
 
-    public interface PriceListingListner {
+    public interface PriceListingListener {
         public void postListing(String value);
         public void setToolbarForFragment();
     }
@@ -44,10 +43,10 @@ public class MYLPriceFragment extends Fragment {
         super.onAttach(activity);
 
         try {
-            mCallback = (PriceListingListner) activity;
+            mCallback = (PriceListingListener) activity;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
-                    + " must implement PriceListingListner");
+                    + " must implement PriceListingListener");
         }
     }
 
@@ -57,7 +56,7 @@ public class MYLPriceFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         final View view  = inflater.inflate(R.layout.fragment_myl_price,parent,false);
         setUpViews(view);
         setupListners(view);

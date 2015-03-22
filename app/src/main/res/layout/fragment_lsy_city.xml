@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_lsy_hometype"
+        android:text="@string/title_lsy_city"
         android:id="@+id/textView"
         android:layout_marginTop="61dp"
         android:lines="2"
@@ -31,6 +31,7 @@
             android:layout_width="322dp"
             android:layout_height="wrap_content"
             android:hint="@string/city"
+            android:textColorHint="@color/gg_text_light_gray"
             android:background="@color/white"
             android:paddingLeft="@dimen/textview_hint_padding"
             android:singleLine="true"
