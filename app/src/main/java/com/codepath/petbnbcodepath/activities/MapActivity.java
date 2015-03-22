@@ -232,6 +232,22 @@ public class MapActivity extends ActionBarActivity
         });
     }
 
+    public void goToDetailView(View view) {
+        Log.i(TAG, "goes here at least");
+        int position = vpPager.getCurrentItem();
+        Listing currentListing = nearbyListings.get(position);
+
+        Intent intent = new Intent(MapActivity.this, DetailsPageActivity.class);
+        intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
+        intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
+        intent.putExtra(Constants.coverPictureKey,currentListing.getCoverPictureUrl());
+        intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
+        intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
+        intent.putExtra(Constants.listingCostKey, currentListing.getCost());
+        intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
+        startActivity(intent);
+    }
+
     @Override
     public boolean onMarkerClick(final Marker marker) {
 
@@ -305,6 +321,11 @@ public class MapActivity extends ActionBarActivity
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+
+        if (id == R.id.aiReturnToListing) {
+            Intent i = new Intent(MapActivity.this, MainActivity.class);
+            startActivity(i);
         }
 
         return super.onOptionsItemSelected(item);

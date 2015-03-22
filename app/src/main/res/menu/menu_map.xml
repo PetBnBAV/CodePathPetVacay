@@ -4,4 +4,12 @@
     tools:context="com.codepath.petbnbcodepath.MapActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/aiReturnToListing"
+        android:icon="@mipmap/ic_detail_view"
+        app:showAsAction="always"
+        android:title="@string/return_to_listings"
+        android:orderInCategory="6">
+    </item>
 </menu>
