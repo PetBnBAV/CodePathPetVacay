@@ -393,9 +393,9 @@ public class MapActivity extends ActionBarActivity
         }
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        /*if (id == R.id.action_settings) {
             return true;
-        }
+        }*/
 
         if (id == R.id.aiReturnToListing) {
             Intent i = new Intent(MapActivity.this, MainActivity.class);
