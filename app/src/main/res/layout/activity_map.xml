@@ -4,6 +4,14 @@
     tools:context="com.codepath.petbnbcodepath.MapActivity"
     android:orientation="vertical">
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:minHeight="?attr/actionBarSize"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/vl_white"
+        >
+    </android.support.v7.widget.Toolbar>
     <fragment
         android:id="@+id/map"
         class="com.google.android.gms.maps.SupportMapFragment"

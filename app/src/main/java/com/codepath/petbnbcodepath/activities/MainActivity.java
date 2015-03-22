@@ -676,6 +676,11 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     public void onEtQuerySubmit(String query) {
+        Intent i = new Intent(MainActivity.this, MapActivity.class);
+        i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
+        i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
+        i.putExtra(Constants.locationStrKey, query);
+        startActivity(i);
 
         //Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
 

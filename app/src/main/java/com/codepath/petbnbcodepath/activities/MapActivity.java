@@ -1,6 +1,7 @@
 package com.codepath.petbnbcodepath.activities;
 
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,10 +9,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.ListingSummaryFragment;
@@ -53,21 +58,39 @@ public class MapActivity extends ActionBarActivity
     private IconGenerator iconFactoryRed;
 
 
-    public void onBtnDetsClick(String coverPictureUrl, String firstName, String lastName,
-                               int numReviews, int cost ) {
-        Intent i = new Intent(MapActivity.this, BookingDetailsActivity.class);
-        i.putExtra(Constants.coverPictureKey, coverPictureUrl);
-        i.putExtra(Constants.firstNameKey, firstName);
-        i.putExtra(Constants.lastNameKey, lastName);
-        i.putExtra(Constants.numReviewsKey, numReviews);
-        i.putExtra(Constants.listingCostKey, cost);
-        startActivity(i);
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+
+        String fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.dark_gray)
+                + "\">";
+        String fontHtmlEnd = "</font>";
+
+        // Setting tool bar as action bar because we have no action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getIntent().getStringExtra(Constants.locationStrKey) != null) {
+            getSupportActionBar().setTitle(Html.fromHtml(fontHtmlBeg +
+                    getIntent().getStringExtra(Constants.locationStrKey) +
+                    fontHtmlEnd));
+        } else {
+            getSupportActionBar().setTitle(Html.fromHtml(fontHtmlBeg +
+                    getResources().getString(R.string.title_activity_map) +
+                    fontHtmlEnd));
+        }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        for(int i = 0; i < toolbar.getChildCount(); i++) {
+            final View v = toolbar.getChildAt(i);
+
+            // Changing the color of back button (or open drawer button).
+            if (v instanceof ImageButton) {
+                //Action Bar back button
+                ((ImageButton) v).getDrawable().setColorFilter(
+                        getResources().getColor(R.color.dark_gray), PorterDuff.Mode.MULTIPLY);
+            }
+        }
 
         vpPager = (ViewPager) findViewById(R.id.vpPager);
 
@@ -89,7 +112,7 @@ public class MapActivity extends ActionBarActivity
                 }
             });
         } else {
-            //Toast.makeText(this, "Error - Map Fragment was null!!", Toast.LENGTH_SHORT).show();
+            Log.e(TAG, "Error - Map Fragment was null!!");
         }
 
         iconFactoryTeal = new IconGenerator(MapActivity.this);
@@ -141,9 +164,14 @@ public class MapActivity extends ActionBarActivity
         vpPager.setAdapter(listingSummaryAdapter);
         vpPager.setOnPageChangeListener(new OnPageChangeListener() {
 
-            // This method will be invoked when a new page becomes selected.
+            // This method will be invoked when a new fragment/listing becomes selected.
             @Override
             public void onPageSelected(int position) {
+
+                // Get the things needed from the listing to make its marker - because once
+                // selected we need to make a marker which is the same as the old marker but
+                // highlighted, remove the old marker, and put the new one to give the
+                // highlighting effect from teal to red
                 int currListCost = nearbyListings.get(position).getCost();
                 double currListLat = nearbyListings.get(position).getLatLng().getLatitude();
                 double currListLong = nearbyListings.get(position).getLatLng().getLongitude();
@@ -157,6 +185,9 @@ public class MapActivity extends ActionBarActivity
                 markers.get(position).remove();
                 markers.set(position, map.addMarker(newMarker));
 
+                // Once we're at a fragment, we need to make sure that the previously selected
+                // fragment's marker is reset. Since we could've reached this marker only
+                // through one of the possible 2 adjacent ones, we reset both of those regardless
                 if (position < nearbyListings.size() - 1) {
                     currListCost = nearbyListings.get(position + 1).getCost();
                     currListLat = nearbyListings.get(position + 1).getLatLng().getLatitude();
@@ -214,7 +245,7 @@ public class MapActivity extends ActionBarActivity
     }
 
     private void getNearbyListings(double latitude, double longitude) {
-        String sitterIdKey = "sitterId";
+        String sitterIdKey = Constants.sitterIdKey;
         ParseGeoPoint currPoint = new ParseGeoPoint(latitude, longitude);
         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayListingTable);
         query.whereWithinMiles(Constants.listingLatlngKey, currPoint, Constants.whereWithinMiles);
@@ -222,15 +253,10 @@ public class MapActivity extends ActionBarActivity
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> listingList, ParseException e) {
                 if (e == null) {
-                    Log.d(TAG, "Retrieved " + listingList.size() + " listings");
                     nearbyListings.addAll(Listing.fromParseObjectList(listingList));
                     onNearbyListingsLoaded();
                 } else {
                     Log.e("TAG", "Error: " + e.getMessage());
-
-                    //Toast.makeText(MapActivity.this,
-                           // getResources().getString(R.string.generic_error),
-                           // Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -284,13 +310,6 @@ public class MapActivity extends ActionBarActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void onSendPush(View view) {
-        ParsePush push = new ParsePush();
-        push.setChannel("");
-        push.setMessage("You have a new pet!");
-        push.sendInBackground();
-    }
-
     public static class MyListingSummaryAdapter extends FragmentPagerAdapter {
         private int NUM_ITEMS;
         private ArrayList<Listing> nearbyListings;
@@ -312,7 +331,6 @@ public class MapActivity extends ActionBarActivity
         // Returns the fragment to display for that page
         @Override
         public Fragment getItem(int position) {
-            Log.i(TAG, "frag adapter : " + position);
             return ListingSummaryFragment.newInstance(this.nearbyListings.get(position));
 
         }

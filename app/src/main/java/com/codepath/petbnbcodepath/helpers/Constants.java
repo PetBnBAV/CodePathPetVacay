@@ -92,4 +92,6 @@ public class Constants {
     public static final double defaultLongitude = -121.955;
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
+
+    public static final String locationStrKey = "locationStr";
 }
