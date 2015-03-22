@@ -3,7 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.codepath.petbnbcodepath.LoginActivity"
-    android:background="@color/bgWhite">
+    android:background="@color/bgWhite"
+    android:clickable="true">
+
+
 
     <ImageView
         android:id="@+id/ivBg"
@@ -43,14 +46,15 @@
         android:layout_marginStart="@dimen/login_button_padding"
         android:layout_marginRight="@dimen/login_button_padding"
         android:layout_marginEnd="@dimen/login_button_padding"
-        android:background="@color/teal"
+        android:background="@color/vl_white"
         android:hint="@string/email_address"
         android:padding="@dimen/edit_text_padding"
         android:layout_below="@+id/tvForgotPwd"
         android:layout_marginTop="@dimen/button_vert_distance"
         android:singleLine="true"
         android:textColorHint="@color/light_gray"
-        android:textColor="@color/light_gray"
+        android:textColor="@color/dark_gray"
+        android:textCursorDrawable="@null"
         />
     <EditText
         android:id="@+id/etPwd"
@@ -60,14 +64,15 @@
         android:layout_marginStart="@dimen/login_button_padding"
         android:layout_marginRight="@dimen/login_button_padding"
         android:layout_marginEnd="@dimen/login_button_padding"
-        android:background="@color/teal"
+        android:background="@color/vl_white"
         android:hint="@string/password"
         android:layout_below="@+id/etEmail"
         android:padding="@dimen/edit_text_padding"
         android:singleLine="true"
         android:password="true"
         android:textColorHint="@color/light_gray"
-        android:textColor="@color/light_gray"/>
+        android:textColor="@color/dark_gray"
+        android:textCursorDrawable="@null"/>
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"

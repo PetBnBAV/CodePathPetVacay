@@ -21,7 +21,7 @@ import com.codepath.petbnbcodepath.models.Listing;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
 import com.dexafree.materialList.controller.IMaterialListAdapter;
 import com.dexafree.materialList.model.Card;
-import com.makeramen.RoundedTransformationBuilder;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -154,7 +154,6 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
             }
         });
 
-        //TODO Right now for demo we are showing both type of details page. Should not be this in real scenario.
         viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

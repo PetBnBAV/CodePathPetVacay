@@ -56,7 +56,9 @@
     <string name="facebook">Facebook</string>
     <string name="google">Google</string>
     <string name="login">Log In</string>
+    <string name="or">or</string>
     <string name="signup">Sign Up</string>
+    <string name="with_email">with Email</string>
     <string name="showMore">Show More</string>
     <string name="bySigningUp">By signing up, I agree to PetVacay\'s</string>
     <string name="petVacay">petvacay</string>
@@ -75,7 +77,9 @@
         <item name="guestRefund">Guest Refund Policy</item>
         <item name="hostGuarantee">Host Guarantee Terms</item>
     </string-array>
-
+    <string name="comma">,</string>
+    <string name="full_stop">.</string>
+    <string name="and">and</string>
     <string name="title_activity_map">MapActivity</string>
     <string name="ellipsis" msgid="7899829516048813237">"…"</string>
     <string name="title_activity_login_signup">LoginSignupActivity</string>
@@ -87,7 +91,7 @@
     <string name="user_exists_err_msg">That email address is already in use.</string>
     <string name="OK">OK</string>
     <string name="alert_image_content_description">Alert Image</string>
-    <string name="title_activity_booking_details">BookingDetailsActivity</string>
+    <string name="title_activity_booking_details">Booking details</string>
     <string name="price">Price</string>
     <string name="dates">Dates</string>
     <string name="req_to_book">Book Now!</string>
@@ -208,4 +212,5 @@
     <string name="more_info">More Info</string>
 
 
+    <string name="pick_proper_date">Please choose a pick up date that\'s after drop off date! Please re-select!</string>
 </resources>

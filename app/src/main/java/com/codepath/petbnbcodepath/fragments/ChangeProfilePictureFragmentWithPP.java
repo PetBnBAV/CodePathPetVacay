@@ -14,11 +14,12 @@ import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.interfaces.FragmentCameraCommunicator;
 
 
-public class ChangeProfilePictureFragment extends DialogFragment implements FragmentCameraCommunicator {
+public class ChangeProfilePictureFragmentWithPP extends DialogFragment implements FragmentCameraCommunicator {
 
     TextView tvRemoveCurrentPhoto;
     TextView tvTakePhoto;
     TextView tvChooseFromLibrary;
+
 
 
     public FragmentCameraCommunicator camera_communicator;
@@ -29,7 +30,7 @@ public class ChangeProfilePictureFragment extends DialogFragment implements Frag
         camera_communicator = (FragmentCameraCommunicator) activity;
     }
 
-    public ChangeProfilePictureFragment() {
+    public ChangeProfilePictureFragmentWithPP() {
         // Required empty public constructor
 
     }
@@ -42,7 +43,7 @@ public class ChangeProfilePictureFragment extends DialogFragment implements Frag
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.white)));
 
 
-        View view = inflater.inflate(R.layout.fragment_change_profile_picture, null);
+        View view = inflater.inflate(R.layout.fragment_change_profile_picture_has_pp, null);
 
 
         initializeViews(view);
@@ -89,8 +90,8 @@ public class ChangeProfilePictureFragment extends DialogFragment implements Frag
         });
     }
 
-    public static ChangeProfilePictureFragment newInstance() {
-        ChangeProfilePictureFragment frag = new ChangeProfilePictureFragment();
+    public static ChangeProfilePictureFragmentWithPP newInstance() {
+        ChangeProfilePictureFragmentWithPP frag = new ChangeProfilePictureFragmentWithPP();
         return frag;
     }
 

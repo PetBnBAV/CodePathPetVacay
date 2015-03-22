@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.codepath.petbnbcodepath.SignupActivity"
-    android:background="@color/bgWhite">
+    android:background="@color/bgWhite"
+    android:clickable="true">
 
     <ImageView
         android:id="@+id/ivBg"
@@ -44,6 +45,7 @@
         android:textColorHint="@color/light_gray"
         android:textColor="@color/light_gray"
         android:singleLine="true"
+        android:textCursorDrawable="@null"
         />
     <EditText
         android:id="@+id/etPwd"
@@ -60,7 +62,8 @@
         android:password="true"
         android:textColor="@color/light_gray"
         android:textColorHint="@color/light_gray"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:textCursorDrawable="@null"/>
     <EditText
         android:id="@+id/etFirstName"
         android:layout_width="match_parent"
@@ -75,7 +78,8 @@
         android:padding="@dimen/edit_text_padding"
         android:textColorHint="@color/light_gray"
         android:textColor="@color/light_gray"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:textCursorDrawable="@null"/>
     <EditText
         android:id="@+id/etLastName"
         android:layout_width="match_parent"
@@ -90,7 +94,8 @@
         android:padding="@dimen/edit_text_padding"
         android:textColorHint="@color/light_gray"
         android:textColor="@color/light_gray"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:textCursorDrawable="@null"/>
     <Button
         android:id="@+id/btnSignUp"
         android:layout_width="match_parent"

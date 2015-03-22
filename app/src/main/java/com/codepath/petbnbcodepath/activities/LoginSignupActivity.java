@@ -2,9 +2,12 @@ package com.codepath.petbnbcodepath.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -20,28 +23,43 @@ public class LoginSignupActivity extends ActionBarActivity
                                             LoginFragment.OnSignUpLinkClickedListener,
                                             SignUpFragment.OnLoginLinkClickedListener {
 
+    private Toolbar toolbar;
+    private String fontHtmlBeg;
+    private String fontHtmlEnd = "</font>";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_signup);
+
+        fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.bgWhite) + "\">";
+
+
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupViews();
     }
 
     public void onLogin() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the container with the new fragment
-        ft.add(R.id.frag_login_signup, new LoginFragment());
-        // Execute the changes specified
+        ft.replace(R.id.frag_login_signup, new LoginFragment());
+        ft.addToBackStack("login_frag");
         ft.commit();
+        getSupportActionBar().setTitle(Html.fromHtml(fontHtmlBeg
+                + getResources().getString(R.string.login) + " "
+                + getResources().getString(R.string.with_email) + fontHtmlEnd));
     }
 
     public void onSignUp() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the container with the new fragment
-        ft.add(R.id.frag_login_signup, new SignUpFragment());
-        // Execute the changes specified
+        ft.replace(R.id.frag_login_signup, new SignUpFragment());
+        ft.addToBackStack("signup_frag");
         ft.commit();
+        getSupportActionBar().setTitle(Html.fromHtml(fontHtmlBeg
+                + getResources().getString(R.string.signup) + " "
+                + getResources().getString(R.string.with_email) +
+                fontHtmlEnd));
     }
 
     public void onFinish() {
@@ -80,11 +98,12 @@ public class LoginSignupActivity extends ActionBarActivity
 
     private void setupViews() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        // Replace the container with the new fragment
         ft.add(R.id.frag_login_signup, new LoginSignUpFragment());
         ft.addToBackStack("login_signup_frag");
-        // Execute the changes specified
         ft.commit();
+        getSupportActionBar().setTitle(Html.fromHtml(fontHtmlBeg + getResources().getString(R.string.login) + " "
+                + getResources().getString(R.string.or) + " "
+                + getResources().getString(R.string.signup) + fontHtmlEnd));
     }
 
     @Override
@@ -107,5 +126,15 @@ public class LoginSignupActivity extends ActionBarActivity
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            fragmentManager.popBackStack();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

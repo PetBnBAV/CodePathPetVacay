@@ -1,16 +1,25 @@
 package com.codepath.petbnbcodepath.activities;
 
+import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,14 +56,19 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     private static final String TAG = "BOOKINGDETAILACTIVITY";
 
     private ImageView ivCoverPicture;
+
     private TextView tvSummary;
     private TextView tvNumReviews;
     private TextView tvCost;
     private TextView tvSayHello;
     private TextView tvSayHelloSub;
+
     private Button btnSelDropDates;
     private Button btnSelPickDates;
+    private Button btnBook;
+
     private ExpandableListView lvPrice;
+
     private EditText etMsgHost;
 
     private String coverPictureUrl;
@@ -69,7 +83,6 @@ public class BookingDetailsActivity extends ActionBarActivity implements
 
     private String fontHtmlBeg;
     private String fontHtmlEnd = "</font>";
-
     private String selDateFontHtmlBeg;
     private String selDateFontHtmlEnd = "</font>";
 
@@ -82,15 +95,15 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     private Date booking_dropOffDate;
     private Date booking_pickUpDate;
 
-    private Button btnBook;
-
     public void onDatesSelected(Date dropOffDate, Date pickUpDate) {
+
+        // To be able to use Joda's days between library, we need to convert the dates from
+        // java.util.Date to LocaleDate
         LocalDate dropOffDateJoda = new LocalDate(dropOffDate);
         LocalDate pickUpDateJoda = new LocalDate(pickUpDate);
         total_nights = Days.daysBetween(dropOffDateJoda, pickUpDateJoda).getDays();
 
-        //Toast.makeText(this, "total nights " + total_nights, Toast.LENGTH_SHORT).show();
-
+        // + 1 to print the correct month because indexing starts at 0 internally
         String btnDropOffText = fontHtmlBeg + getResources().getString(R.string.drop_off)
                 + fontHtmlEnd + "<br/>" + selDateFontHtmlBeg +
                 dropOffDate.getDate() + "/"
@@ -108,6 +121,8 @@ public class BookingDetailsActivity extends ActionBarActivity implements
 
         booking_dropOffDate = dropOffDate;
         booking_pickUpDate = pickUpDate;
+
+        // Once the dates are selected the booking button can be enabled
         btnBook.setEnabled(true);
         btnBook.setAlpha(Constants.btnEnabledAlpha);
     }
@@ -117,6 +132,29 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_booking_details);
+        fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.theme_teal) + "\">";
+        selDateFontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.dark_gray)
+                + "\">";
+
+        // Setting tool bar as action bar because we have no action bar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(Html.fromHtml(selDateFontHtmlBeg +
+                getResources().getString(R.string.title_activity_booking_details) +
+                selDateFontHtmlEnd));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        for(int i = 0; i < toolbar.getChildCount(); i++) {
+            final View v = toolbar.getChildAt(i);
+
+            // Changing the color of back button (or open drawer button).
+            if (v instanceof ImageButton) {
+                //Action Bar back button
+                ((ImageButton) v).getDrawable().setColorFilter(
+                        getResources().getColor(R.color.dark_gray), PorterDuff.Mode.MULTIPLY);
+            }
+        }
+
 
         coverPictureUrl = getIntent().getStringExtra(Constants.coverPictureKey);
         firstName = getIntent().getStringExtra(Constants.firstNameKey);
@@ -127,17 +165,10 @@ public class BookingDetailsActivity extends ActionBarActivity implements
 
         datePickerDialog = DatePickerDialog.newInstance();
 
-        fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.theme_teal) + "\">";
-        selDateFontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.dark_gray)
-                + "\">";
-
-
-
         setupViews();
     }
 
     private void setupViews() {
-
 
         ivCoverPicture = (ImageView) findViewById(R.id.ivCoverPicture);
         tvSummary = (TextView) findViewById(R.id.tvSummary);
@@ -151,6 +182,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
         lvPrice = (ExpandableListView) findViewById(R.id.lvPrice);
         etMsgHost = (EditText) findViewById(R.id.etMsgHost);
 
+        // Button to book is disabled till dates are selected
         btnBook.setEnabled(false);
         btnBook.setAlpha(Constants.btnDisabledAlpha);
 
@@ -168,33 +200,40 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                            + getResources().getString(R.string.say_hello_2));
         tvSayHelloSub.setText(getResources().getString(R.string.say_hello_det_1) + " " + firstName
                            + " " + getResources().getString(R.string.say_hello_det_2));
-
         String btnDropOffText = fontHtmlBeg + getResources().getString(R.string.drop_off)
                                 + fontHtmlEnd + "<br/>" + selDateFontHtmlBeg +
                                 getResources().getString(R.string.sel_date) + selDateFontHtmlEnd;
-
         String btnPickUpText = fontHtmlBeg + getResources().getString(R.string.pick_up)
                 + fontHtmlEnd + "<br/>" + selDateFontHtmlBeg +
                 getResources().getString(R.string.sel_date) + selDateFontHtmlEnd;
-
         btnSelPickDates.setText(Html.fromHtml(btnPickUpText));
         btnSelDropDates.setText(Html.fromHtml(btnDropOffText));
 
         listDataHeader = new ArrayList<String>();
         listDataChild = new HashMap<String, List<String>>();
-
         listAdapter = new ExpandableListAdapter(this, listDataHeader, listDataChild);
-
         // setting list adapter
         lvPrice.setAdapter(listAdapter);
+        lvPrice.setGroupIndicator(getResources().getDrawable(R.mipmap.arrow_down_vl));
         prepareListData();
 
 
         setupViewListeners();
-
     }
 
     private void setupViewListeners() {
+        lvPrice.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                lvPrice.setGroupIndicator(getResources().getDrawable(R.mipmap.arrow_up_vl));
+            }
+        });
+        lvPrice.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                lvPrice.setGroupIndicator(getResources().getDrawable(R.mipmap.arrow_down_vl));
+            }
+        });
         btnSelDropDates.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,6 +245,29 @@ public class BookingDetailsActivity extends ActionBarActivity implements
             @Override
             public void onClick(View v) {
                 datePickerDialog.show(getSupportFragmentManager(), TAG);
+            }
+        });
+
+        etMsgHost.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getSystemService(
+                                                                     Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(etMsgHost.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        });
+
+        etMsgHost.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager in  =(InputMethodManager)getSystemService(
+                                                                     Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
             }
         });
 
@@ -262,11 +324,12 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                                                     obj.put(Constants.msgKey,
                                                             etMsgHost.getText().toString());
                                                 }
+                                                // This acts as a switch in showing/hiding
+                                                // the accept/decline buttons etc
                                                 obj.put(Constants.whoamiKey, Constants.petOwnerKey);
 
                                                 ParsePush push = new ParsePush();
                                                 ParseQuery query = ParseInstallation.getQuery();
-
 
                                                 // Push the notification to the sitter
                                                 query.whereEqualTo(Constants.userKey,
@@ -312,13 +375,10 @@ public class BookingDetailsActivity extends ActionBarActivity implements
         service_charge = (int) Math.round(Constants.service_charge_percentage * cost * total_nights);
         int total_cost = (cost * total_nights) + service_charge;
 
-
-
         // Adding child data
         listDataHeader.clear();
         listDataChild.clear();
         listDataHeader.add(String.valueOf(total_cost));
-
 
         // Adding child data
         List<String> cost_division = new ArrayList<String>();
