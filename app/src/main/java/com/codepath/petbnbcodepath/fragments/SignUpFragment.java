@@ -7,9 +7,11 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -192,6 +194,98 @@ public class SignUpFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
+            }
+        });
+
+        etEmail.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(etEmail.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        });
+
+        etPwd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(etPwd.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        });
+
+        etFirstName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(etFirstName.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        });
+
+        etLastName.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) {
+                    InputMethodManager in = (InputMethodManager) getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(etLastName.getApplicationWindowToken(),
+                            InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+                return false;
+            }
+        });
+
+        etLastName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus && !etEmail.hasFocus() && !etPwd.hasFocus() && !etFirstName.hasFocus()) {
+                    InputMethodManager in  =(InputMethodManager)getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+        etFirstName.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus && !etEmail.hasFocus() && !etPwd.hasFocus() && !etLastName.hasFocus()) {
+                    InputMethodManager in  =(InputMethodManager)getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+        etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus && !etLastName.hasFocus() && !etPwd.hasFocus() && !etFirstName.hasFocus()) {
+                    InputMethodManager in  =(InputMethodManager)getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
+
+        etPwd.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus && !etEmail.hasFocus() && !etLastName.hasFocus() && !etFirstName.hasFocus()) {
+                    InputMethodManager in  =(InputMethodManager)getActivity().getSystemService(
+                            Activity.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
             }
         });
 
