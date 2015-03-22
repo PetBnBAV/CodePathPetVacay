@@ -7,6 +7,7 @@ import com.codepath.petbnbcodepath.net.GoogleMapReverseGeoCodingClient;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -26,25 +27,35 @@ public class Listing {
 
     // Stores the actual latitude, longitude because that's what we pass around
     private ParseGeoPoint latLng;
+
     private String title;
     // Stores the result of the reverse geocoding - currently just the city and state
+
     private String cityState;
     private String first_name;
     private String last_name;
     private String coverPictureUrl;
-
-    public String getObjectId() {
-        return objectId;
-    }
-
+    private String description;
     private String objectId;
 
     private int cost;
     private int numReviews;
+    private int homeType;
+    private int petType;
+    private boolean hasPets;
 
     private Review firstReview;
 
     private GoogleMapReverseGeoCodingClient client;
+
+
+    public void setNumReviews(int numReviews) {
+        this.numReviews = numReviews;
+    }
+
+    public String getObjectId() {
+        return objectId;
+    }
 
     public String getTitle(){
         return title;
@@ -93,7 +104,7 @@ public class Listing {
     public static Listing fromParseObject(ParseObject listing) {
         final Listing currListing = new Listing();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayReviewTable);
+        /*ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayReviewTable);
         query.whereEqualTo(Constants.listingIdKey, listing);
         query.countInBackground(new CountCallback() {
             public void done(int count, ParseException e) {
@@ -103,48 +114,37 @@ public class Listing {
                     Log.i(TAG, "Error: " + e.getMessage());
                 }
             }
-        });
+        });*/
 
-        // This query gets the first review for this particular listener
-        ParseQuery<ParseObject> query1 = ParseQuery.getQuery(Constants.petVacayReviewTable);
-        query1.whereEqualTo(Constants.listingIdKey, listing);
-        query1.include(Constants.reviewerIdKey);
-        query1.getFirstInBackground(new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject parseObject, ParseException e) {
-                if (parseObject == null) {
-                    Log.d(TAG, "Error: " + e.toString());
-                } else {
-                    currListing.firstReview = new Review();
-                    currListing.firstReview.setReview_description(parseObject.
-                            getString(Constants.descriptionKey));
-                    currListing.firstReview.setReviewer_first_name(parseObject.
-                            getParseObject(Constants.reviewerIdKey).getString(Constants.firstNameKey));
-                }
-
-            }
-        });
-        currListing.title = listing.getString(Constants.titleKey);
-        currListing.cost = listing.getInt(Constants.listingCostKey);
         currListing.latLng = listing.getParseGeoPoint(Constants.listingLatlngKey);
-        currListing.client = new GoogleMapReverseGeoCodingClient();
-        currListing.client.getCity(currListing.latLng);
+        currListing.description = listing.getString(Constants.descriptionKey);
+        currListing.cost = listing.getInt(Constants.listingCostKey);
+        currListing.homeType = listing.getInt(Constants.homeTypeKey);
+        currListing.petType = listing.getInt(Constants.petTypeKey);
+        currListing.hasPets = listing.getBoolean(Constants.hasPetsKey);
+        currListing.title = listing.getString(Constants.titleKey);
+
+        /*currListing.client = new GoogleMapReverseGeoCodingClient();
+        currListing.client.getCity(currListing.latLng);*/
         currListing.objectId = listing.getObjectId();
 
         // listener pattern because the reverse geocoding call that returns the city is an
         // asynchronous call. So we set the city only when a value is returned
-        currListing.client.setCityListener(new GoogleMapReverseGeoCodingClient.GeoCodingListener() {
+        /*currListing.client.setCityListener(new GoogleMapReverseGeoCodingClient.GeoCodingListener() {
             @Override
             public void onCityLoaded(String city) {
                 currListing.cityState = city;
 
             }
-        });
+        });*/
 
         ParseObject sitter = listing.getParseObject(Constants.sitterIdKey);
         currListing.first_name = sitter.getString(Constants.firstNameKey);
         currListing.last_name = sitter.getString(Constants.lastNameKey);
-        currListing.coverPictureUrl = sitter.getParseFile(Constants.coverPictureKey).getUrl();
+        ParseFile coverPictureFile = sitter.getParseFile(Constants.coverPictureKey);
+        if (coverPictureFile != null) {
+            currListing.coverPictureUrl = sitter.getParseFile(Constants.coverPictureKey).getUrl();
+        }
         return currListing;
     }
 }

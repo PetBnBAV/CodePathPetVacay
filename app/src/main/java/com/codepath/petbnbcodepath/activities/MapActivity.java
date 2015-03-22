@@ -31,6 +31,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.ui.IconGenerator;
+import com.parse.CountCallback;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -125,6 +126,13 @@ public class MapActivity extends ActionBarActivity
         iconFactoryRed.setContentPadding(0, 0, 0, 0);
         iconFactoryRed.setTextAppearance(MapActivity.this, R.style.CodeFont);
 
+    }
+
+    public void onReviewCountAdded() {
+        listingSummaryAdapter = new MyListingSummaryAdapter(getSupportFragmentManager(),
+                nearbyListings.size(),
+                nearbyListings);
+        listingSummaryAdapter.notifyDataSetChanged();
     }
 
     public void onNearbyListingsLoaded() {
@@ -269,6 +277,21 @@ public class MapActivity extends ActionBarActivity
             public void done(List<ParseObject> listingList, ParseException e) {
                 if (e == null) {
                     nearbyListings.addAll(Listing.fromParseObjectList(listingList));
+                    for (int i = 0; i < listingList.size(); i++) {
+                        final int pos = i;
+                        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayReviewTable);
+                        query.whereEqualTo(Constants.listingIdKey, listingList.get(i));
+                        query.countInBackground(new CountCallback() {
+                            public void done(int count, ParseException e) {
+                                if (e == null) {
+                                    nearbyListings.get(pos).setNumReviews(count);
+                                    onReviewCountAdded();
+                                } else {
+                                    Log.i(TAG, "Error: " + e.getMessage());
+                                }
+                            }
+                        });
+                    }
                     onNearbyListingsLoaded();
                 } else {
                     Log.e("TAG", "Error: " + e.getMessage());
