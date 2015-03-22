@@ -233,7 +233,6 @@ public class MapActivity extends ActionBarActivity
     }
 
     public void goToDetailView(View view) {
-        Log.i(TAG, "goes here at least");
         int position = vpPager.getCurrentItem();
         Listing currentListing = nearbyListings.get(position);
 

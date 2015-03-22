@@ -10,6 +10,6 @@
         android:icon="@mipmap/ic_detail_view"
         app:showAsAction="always"
         android:title="@string/return_to_listings"
-        android:orderInCategory="6">
+        >
     </item>
 </menu>
