@@ -185,6 +185,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
 
         // setting list adapter
         lvPrice.setAdapter(listAdapter);
+        lvPrice.setGroupIndicator(getResources().getDrawable(R.mipmap.arrow_down_vl));
         prepareListData();
 
 
@@ -241,6 +242,18 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
             tvMessage.setText(message);
         }
 
+        lvPrice.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int groupPosition) {
+                lvPrice.setGroupIndicator(getResources().getDrawable(R.mipmap.arrow_up_vl));
+            }
+        });
+        lvPrice.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int groupPosition) {
+                lvPrice.setGroupIndicator(getResources().getDrawable(R.mipmap.arrow_down_vl));
+            }
+        });
 
 
         btnAccept.setOnClickListener(new View.OnClickListener() {

@@ -14,6 +14,9 @@ import com.andexert.calendarlistview.library.SimpleMonthAdapter;
 
 import com.codepath.petbnbcodepath.R;
 
+import org.joda.time.Days;
+import org.joda.time.LocalDate;
+
 import java.util.Date;
 
 /**
@@ -90,9 +93,19 @@ public class DatePickerDialog extends DialogFragment implements
         }
         if (num_dates_selected == 2) {
             pick_date = new Date(year, month, day);
-            listener.onDatesSelected(drop_date, pick_date);
-            num_dates_selected = 0;
-            dismiss();
+            LocalDate dropOffDateJoda = new LocalDate(drop_date);
+            LocalDate pickUpDateJoda = new LocalDate(pick_date);
+            int total_nights = Days.daysBetween(dropOffDateJoda, pickUpDateJoda).getDays();
+            if (total_nights < 1) {
+                Toast.makeText(getActivity(), getResources().getString(R.string.pick_proper_date),
+                               Toast.LENGTH_SHORT).show();
+                num_dates_selected = 0;
+                getDialog().setTitle(getResources().getString(R.string.sel_drop_date));
+            } else {
+                listener.onDatesSelected(drop_date, pick_date);
+                num_dates_selected = 0;
+                dismiss();
+            }
         }
 
     }

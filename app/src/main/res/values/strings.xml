@@ -212,4 +212,5 @@
     <string name="more_info">More Info</string>
 
 
+    <string name="pick_proper_date">Please choose a pick up date that\'s after drop off date! Please re-select!</string>
 </resources>
