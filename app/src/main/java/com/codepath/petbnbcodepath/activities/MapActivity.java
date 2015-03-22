@@ -133,19 +133,13 @@ public class MapActivity extends ActionBarActivity
 
     }
 
-    /*@Override
+    @Override
     protected void onPause() {
         // Whenever this activity is paused (i.e. looses focus because another activity is started etc)
         // Override how this activity is animated out of view
         // The new activity is kept still and this activity is pushed out to the left
         overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
         super.onPause();
-    }*/
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
     }
 
     public void onReviewCountAdded() {
@@ -303,6 +297,7 @@ public class MapActivity extends ActionBarActivity
         intent.putExtra(Constants.listingCostKey, currentListing.getCost());
         intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
         startActivity(intent);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
     }
 
     @Override
