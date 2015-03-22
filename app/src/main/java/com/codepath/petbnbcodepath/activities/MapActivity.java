@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBarActivity;
@@ -64,6 +65,7 @@ public class MapActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_map);
 
         String fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.dark_gray)
@@ -83,6 +85,7 @@ public class MapActivity extends ActionBarActivity
                     fontHtmlEnd));
         }
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setShowHideAnimationEnabled(false);
 
         for(int i = 0; i < toolbar.getChildCount(); i++) {
             final View v = toolbar.getChildAt(i);
@@ -128,6 +131,21 @@ public class MapActivity extends ActionBarActivity
         iconFactoryRed.setContentPadding(0, 0, 0, 0);
         iconFactoryRed.setTextAppearance(MapActivity.this, R.style.CodeFont);
 
+    }
+
+    /*@Override
+    protected void onPause() {
+        // Whenever this activity is paused (i.e. looses focus because another activity is started etc)
+        // Override how this activity is animated out of view
+        // The new activity is kept still and this activity is pushed out to the left
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+        super.onPause();
+    }*/
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
     }
 
     public void onReviewCountAdded() {
@@ -372,6 +390,13 @@ public class MapActivity extends ActionBarActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == android.R.id.home) {
+            Intent intent = NavUtils.getParentActivityIntent(this);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            NavUtils.navigateUpTo(this, intent);
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+        }
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
@@ -380,6 +405,7 @@ public class MapActivity extends ActionBarActivity
         if (id == R.id.aiReturnToListing) {
             Intent i = new Intent(MapActivity.this, MainActivity.class);
             startActivity(i);
+            //overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
         }
 
         return super.onOptionsItemSelected(item);

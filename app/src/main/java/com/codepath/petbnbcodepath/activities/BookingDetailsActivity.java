@@ -131,6 +131,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_booking_details);
         fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.theme_teal) + "\">";
         selDateFontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.dark_gray)
@@ -166,6 +167,15 @@ public class BookingDetailsActivity extends ActionBarActivity implements
         datePickerDialog = DatePickerDialog.newInstance();
 
         setupViews();
+    }
+
+    @Override
+    protected void onPause() {
+        // Whenever this activity is paused (i.e. looses focus because another activity is started etc)
+        // Override how this activity is animated out of view
+        // The new activity is kept still and this activity is pushed out to the left
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+        super.onPause();
     }
 
     private void setupViews() {

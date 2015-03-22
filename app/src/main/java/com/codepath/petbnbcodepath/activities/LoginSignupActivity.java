@@ -30,6 +30,7 @@ public class LoginSignupActivity extends ActionBarActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_login_signup);
 
         fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.bgWhite) + "\">";

@@ -29,6 +29,7 @@ public class DetailsPageActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_details_page);
 
 
@@ -94,6 +95,14 @@ public class DetailsPageActivity extends ActionBarActivity {
                 .into(ivReviewerImage);
     }
 
+    @Override
+    protected void onPause() {
+        // Whenever this activity is paused (i.e. looses focus because another activity is started etc)
+        // Override how this activity is animated out of view
+        // The new activity is kept still and this activity is pushed out to the left
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+        super.onPause();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
