@@ -58,7 +58,6 @@ import com.squareup.picasso.Transformation;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.ByteBuffer;
 
 
 public class MainActivity extends ActionBarActivity implements
@@ -83,6 +82,7 @@ public class MainActivity extends ActionBarActivity implements
     private TextView tvLogInSignUp;
     private String[] mOptionMenu;
     private ViewPager viewPager;
+
 
     boolean loggedIn = false;
     boolean useLocalPP = false;
@@ -301,47 +301,45 @@ public class MainActivity extends ActionBarActivity implements
 
     public void  getProfilePicture() {
 
-       if(!useLocalPP) {
-
             ParseUser currentUser = ParseUser.getCurrentUser();
             if (currentUser != null) {
 
-                if (currentUser.get("profile_picture") != null) {
+                if (!useLocalPP) {
 
-                    ParseFile file = (ParseFile) currentUser.get("profile_picture");
+                    if (currentUser.get("profile_picture") != null) {
 
-                    if (file.getUrl() != null) {
+                        ParseFile file = (ParseFile) currentUser.get("profile_picture");
 
-                        Toast.makeText(MainActivity.this, "User has profile picture", Toast.LENGTH_LONG).show();
+                        if (file.getUrl() != null) {
 
-                        userHasPP = true;
+                            Toast.makeText(MainActivity.this, "User has profile picture", Toast.LENGTH_LONG).show();
 
-                       //Insert profile picture pertaining to each user
-                        Transformation transformation = new RoundedTransformationBuilder()
-                                .borderColor(Color.LTGRAY)
-                                .borderWidthDp(3)
-                                .cornerRadiusDp(30)
-                                .oval(true)
-                                .build();
+                            userHasPP = true;
+
+                            //Insert profile picture pertaining to each user
+                            Transformation transformation = new RoundedTransformationBuilder()
+                                    .borderColor(Color.LTGRAY)
+                                    .borderWidthDp(3)
+                                    .cornerRadiusDp(30)
+                                    .oval(true)
+                                    .build();
 
 
-                       Picasso.with(getApplicationContext())
-                                .load(file.getUrl())
-                                .placeholder(R.drawable.ic_user)
-                                .fit()
-                                .transform(transformation)
-                                .into(ivAppIconImg);
+                            Picasso.with(getApplicationContext())
+                                    .load(file.getUrl())
+                                    .placeholder(R.drawable.ic_user)
+                                    .transform(transformation)
+                                    .fit()
+                                    .into(ivAppIconImg);
 
-                        ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
+                            ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-                    } else {
+                        }
+                }
 
-                        Transformation transformation = new RoundedTransformationBuilder()
-                                .borderColor(Color.LTGRAY)
-                                .borderWidthDp(3)
-                                .cornerRadiusDp(30)
-                                .oval(true)
-                                .build();
+                    else {
+
+                        Toast.makeText(MainActivity.this, "User has NO  profile picture", Toast.LENGTH_LONG).show();
 
                         Picasso.with(getApplicationContext())
                                 .load(R.drawable.ic_user)
@@ -354,7 +352,7 @@ public class MainActivity extends ActionBarActivity implements
                     }
                 }
             }
-        }
+
     }
 
 
@@ -721,13 +719,6 @@ public class MainActivity extends ActionBarActivity implements
 
         userHasPP = false;
 
-        Transformation transformation = new RoundedTransformationBuilder()
-                .borderColor(Color.LTGRAY)
-                .borderWidthDp(3)
-                .cornerRadiusDp(30)
-                .oval(true)
-                .build();
-
         Picasso.with(getApplicationContext())
                 .load(R.drawable.ic_user)
                 .into(ivAppIconImg);
@@ -846,22 +837,25 @@ public class MainActivity extends ActionBarActivity implements
 
                     ParseUser currentUser = ParseUser.getCurrentUser();
 
-                    // Retrieve the object by id
-                    query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseObject>() {
-                        public void done(ParseObject user_info, ParseException e) {
-                            if (e == null) {
-                                user_info.put("profile_picture", file);
-                                user_info.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
-                                        //getProfilePicture();
+                    if (currentUser != null) {
 
-                                    }
-                                });
+
+                        // Retrieve the object by id
+                        query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseObject>() {
+                            public void done(ParseObject user_info, ParseException e) {
+                                if (e == null) {
+                                    user_info.put("profile_picture", file);
+                                    user_info.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
+
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             });
         }
@@ -895,11 +889,13 @@ public class MainActivity extends ActionBarActivity implements
 
             ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
 
-            //ivAppIconImg.setImageBitmap(bp);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+            byte[] picture = bos.toByteArray();
 
 
-            byte[] picture = new byte[0];
-            picture = bitmapToByteArray(bp);
+           /* byte[] picture = new byte[0];
+            picture = bitmapToByteArray(bp);*/
 
             final ParseFile fileFromCamera = new ParseFile("ABFrmCamera.jpg", picture);
             fileFromCamera.saveInBackground(new SaveCallback() {
@@ -908,25 +904,28 @@ public class MainActivity extends ActionBarActivity implements
                     ParseQuery<ParseObject> query = ParseQuery.getQuery("_User");
 
                     ParseUser currentUser = ParseUser.getCurrentUser();
+                    if (currentUser != null) {
 
-                    // Retrieve the object by id
-                    query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseObject>() {
-                        public void done(ParseObject user_info_camera, ParseException e) {
-                            if (e == null) {
-                                user_info_camera.put("profile_picture", fileFromCamera);
-                                user_info_camera.saveInBackground(new SaveCallback() {
-                                    @Override
-                                    public void done(ParseException e) {
-                                        Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
-                                        //getProfilePicture();
+                        // Retrieve the object by id
+                        query.getInBackground(currentUser.getObjectId(), new GetCallback<ParseObject>() {
+                            public void done(ParseObject user_info_camera, ParseException e) {
+                                if (e == null) {
+                                    user_info_camera.put("profile_picture", fileFromCamera);
+                                    user_info_camera.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
 
-                                    }
-                                });
+                                        }
+                                    });
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             });
+
+
 
         }
 
@@ -955,17 +954,5 @@ public class MainActivity extends ActionBarActivity implements
     }
 
 
-
-    public static byte[] bitmapToByteArray(Bitmap bm) {
-        // Create the buffer with the correct size
-        int iBytes = bm.getWidth() * bm.getHeight() * 4;
-        ByteBuffer buffer = ByteBuffer.allocate(iBytes);
-
-        // Log.e("DBG", buffer.remaining()+""); -- Returns a correct number based on dimensions
-        // Copy to buffer and then into byte array
-        bm.copyPixelsToBuffer(buffer);
-        // Log.e("DBG", buffer.remaining()+""); -- Returns 0
-        return buffer.array();
-    }
 
 }
