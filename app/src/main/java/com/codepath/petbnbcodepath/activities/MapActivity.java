@@ -16,6 +16,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
@@ -238,6 +240,36 @@ public class MapActivity extends ActionBarActivity
                 // Code goes here
             }
         });
+
+        vpPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+
+                ImageView ivCoverPicture = (ImageView) page.findViewById(R.id.ivCoverPicture);
+                TextView tvSummary = (TextView) page.findViewById(R.id.tvSummary);
+                TextView tvNumReviews = (TextView) page.findViewById(R.id.tvNumReviews);
+                TextView tvCost = (TextView) page.findViewById(R.id.tvCost);
+                int pageWidth = page.getWidth();
+
+
+                if (position < -1) { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    page.setAlpha(0);
+
+                }
+
+                else if (position <= 1) { // [-1,1]
+                    ivCoverPicture.setTranslationX((float)(position) * pageWidth / 1.5f);
+                    tvSummary.setTranslationX((float)(position) * pageWidth / 4);
+                    tvNumReviews.setTranslationX((float)(position) * pageWidth / 2);
+                    tvCost.setTranslationX((float) (position) * pageWidth / 1);
+
+                } else { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    page.setAlpha(0);
+                }
+            }
+        });
     }
 
     public void goToDetailView(View view) {
@@ -247,7 +279,7 @@ public class MapActivity extends ActionBarActivity
         Intent intent = new Intent(MapActivity.this, DetailsPageActivity.class);
         intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
         intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
-        intent.putExtra(Constants.coverPictureKey,currentListing.getCoverPictureUrl());
+        intent.putExtra(Constants.coverPictureKey, currentListing.getCoverPictureUrl());
         intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
         intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
         intent.putExtra(Constants.listingCostKey, currentListing.getCost());
