@@ -6,10 +6,10 @@ import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.net.GoogleMapReverseGeoCodingClient;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class Listing {
 
     // Stores the actual latitude, longitude because that's what we pass around
     private ParseGeoPoint latLng;
-
+    private String title;
     // Stores the result of the reverse geocoding - currently just the city and state
     private String cityState;
     private String first_name;
@@ -45,6 +45,10 @@ public class Listing {
     private Review firstReview;
 
     private GoogleMapReverseGeoCodingClient client;
+
+    public String getTitle(){
+        return title;
+    }
 
     public Review getFirstReview() {
         return firstReview;
@@ -113,14 +117,14 @@ public class Listing {
                 } else {
                     currListing.firstReview = new Review();
                     currListing.firstReview.setReview_description(parseObject.
-                                                               getString(Constants.descriptionKey));
+                            getString(Constants.descriptionKey));
                     currListing.firstReview.setReviewer_first_name(parseObject.
-                         getParseObject(Constants.reviewerIdKey).getString(Constants.firstNameKey));
+                            getParseObject(Constants.reviewerIdKey).getString(Constants.firstNameKey));
                 }
 
             }
         });
-
+        currListing.title = listing.getString(Constants.titleKey);
         currListing.cost = listing.getInt(Constants.listingCostKey);
         currListing.latLng = listing.getParseGeoPoint(Constants.listingLatlngKey);
         currListing.client = new GoogleMapReverseGeoCodingClient();

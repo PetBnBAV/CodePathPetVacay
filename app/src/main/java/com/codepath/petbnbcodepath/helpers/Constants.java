@@ -90,5 +90,6 @@ public class Constants {
     public static final String playgroundKey = "play_ground";
     public static final double defaultLatitude = 37.3541;
     public static final double defaultLongitude = -121.955;
-
+    public static final String LATITUDE = "latitude";
+    public static final String LONGITUDE = "longitude";
 }

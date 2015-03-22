@@ -271,7 +271,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     public void setDefaultToolbar() {
         tvToolbatTitle.setText(R.string.list_your_space_title);
-        tvToolbatTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_back,0,0,0);
+        tvToolbatTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_backinblack,0,0,0);
         tvToolbarSecondaryTitle.setVisibility(View.VISIBLE);
     }
 

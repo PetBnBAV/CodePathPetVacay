@@ -114,7 +114,7 @@ public class Utils {
             return sb.toString().trim();
         }
         else {
-            Toast.makeText(context, "Sorry, Not able to get current city name, please type it.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Sorry, Not able to get current location, please type it.", Toast.LENGTH_SHORT).show();
         }
         return city;
 

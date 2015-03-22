@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/cardView"
+    card_view:cardCornerRadius="@dimen/card_corner_radius"
+    style="@style/MainCardView">
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/white">
 
     <com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -60,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textStyle="bold"
+        android:textColor="@color/gg_text_dark_gray"
         android:text="Cozy cabin with a view of the lake"
         android:layout_below="@+id/view_pager"
         android:layout_alignParentLeft="true"
@@ -67,6 +75,7 @@
         android:paddingTop="10dp"/>
     <TextView
         android:id="@+id/tvPostSubTitle"
+        android:textColor="@color/gg_text_light_gray"
         android:layout_below="@+id/tvPostTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -75,3 +84,4 @@
         />
 
 </RelativeLayout>
+    </android.support.v7.widget.CardView>

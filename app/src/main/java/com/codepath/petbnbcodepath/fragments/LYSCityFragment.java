@@ -51,7 +51,6 @@ public class LYSCityFragment extends Fragment {
         LYSCityFragment frag = new LYSCityFragment();
         sActivity = activity;
         return frag;
-
     }
 
     public interface CitySelectListner {
