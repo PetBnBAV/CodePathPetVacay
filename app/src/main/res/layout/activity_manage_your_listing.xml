@@ -161,6 +161,7 @@
 
                                 <CheckBox
                                     android:id="@+id/cbPhoto"
+                                    android:clickable="false"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignBottom="@+id/tvPhotoCount"
@@ -218,6 +219,7 @@
 
                             <CheckBox
                                 android:id="@+id/cbTitle"
+                                android:clickable="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignBottom="@+id/tvPhotoCount"
@@ -228,7 +230,6 @@
                                 android:layout_marginTop="15dp"
                                 android:checked="false" />
                         </LinearLayout>
-
 
                         <LinearLayout
                             android:id="@+id/llMYLSummary"
@@ -276,6 +277,7 @@
 
                             <CheckBox
                                 android:id="@+id/cbSummary"
+                                android:clickable="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignBottom="@+id/tvPhotoCount"
@@ -332,6 +334,7 @@
 
                             <CheckBox
                                 android:id="@+id/cbPrice"
+                                android:clickable="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -342,16 +345,18 @@
                                 android:checked="false" />
                         </LinearLayout>
 
+
+
+
                         <LinearLayout
                             android:id="@+id/llMYLAddress"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
                             android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="vertical">
 
@@ -382,7 +387,6 @@
                                     android:textColor="@color/gg_dark_gray"
                                     android:textColorHint="@color/gg_dark_gray" />
                             </LinearLayout>
-
                             <View
                                 android:layout_width="0dp"
                                 android:layout_height="0dp"
@@ -390,6 +394,7 @@
 
                             <CheckBox
                                 android:id="@+id/cbAddress"
+                                android:clickable="false"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -397,8 +402,10 @@
                                 android:layout_marginEnd="44dp"
                                 android:layout_marginRight="44dp"
                                 android:layout_marginTop="15dp"
-                                android:checked="false" />
+                                android:checked="false"
+                                android:layout_weight="0.45" />
                         </LinearLayout>
+
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -425,29 +432,16 @@
                 </RelativeLayout>
             </ScrollView>
 
-            <LinearLayout
-                android:id="@+id/linearLayout"
+            <Button
+                android:id="@+id/btNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/theme_teal"
+                android:textColor="@color/vl_white"
+                android:text="@string/next_button"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:background="@drawable/button_background"
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <TextView
-                    android:id="@+id/tvPost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
-                    android:layout_gravity="center"
-                    android:text="List Your Space"
-                    android:textColor="#FFFFFF"
-                    android:textSize="20dp" />
-            </LinearLayout>
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
         </LinearLayout>
 
     </FrameLayout>

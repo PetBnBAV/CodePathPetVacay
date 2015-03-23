@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
@@ -36,11 +36,9 @@ public class LYSCityFragment extends Fragment {
     private static Activity sActivity;
     private CitySelectListner mCallback;
     private AutoCompleteTextView etSearch;
-    private TextView tvStickyButton;
+    private Button tvStickyButton;
     private ImageView ivCurrentLocation;
     private boolean stickyButtonEnabled = false;
-    private float ALPHA_BUTTON_DISABLED = (float) 0.4;
-    private float ALPHA_BUTTON_ENABLED = (float) 1.0;
     String query ="";
 
     private GoogleMap map;
@@ -113,14 +111,21 @@ public class LYSCityFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_lsy_city,parent,false);
+        setupView(view);
+        setupViewListeners();
+        return view;
+    }
+
+    public void setupView(View view){
         mCallback.setToolbar(getActivity().getResources().getString(R.string.city),"");
 
         etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
         etSearch.setAdapter(new PlacesAutoCompleteAdapter(sActivity, R.layout.list_item));
-        tvStickyButton = (TextView) view.findViewById(R.id.tvNext);
+        tvStickyButton = (Button) view.findViewById(R.id.btNext);
+
+        tvStickyButton.setEnabled(false);
+        tvStickyButton.setAlpha(Constants.btnDisabledAlpha);
         ivCurrentLocation = (ImageView) view.findViewById(R.id.ivCurrentLocation);
-        setupViewListeners();
-        return view;
 
     }
 
@@ -138,12 +143,14 @@ public class LYSCityFragment extends Fragment {
         etSearch.addTextChangedListener(new TextWatcher(){
             public void afterTextChanged(Editable s) {
                 if(s.length()>0){
-                    tvStickyButton.setAlpha(ALPHA_BUTTON_ENABLED);
                     stickyButtonEnabled = true;
+                    tvStickyButton.setAlpha(Constants.btnEnabledAlpha);
                 }else{
-                    tvStickyButton.setAlpha(ALPHA_BUTTON_DISABLED);
                     stickyButtonEnabled = false;
+                    tvStickyButton.setAlpha(Constants.btnDisabledAlpha);
                 }
+                tvStickyButton.setEnabled(stickyButtonEnabled);
+
             }
             public void beforeTextChanged(CharSequence s, int start, int count, int after){}
             public void onTextChanged(CharSequence s, int start, int before, int count){}

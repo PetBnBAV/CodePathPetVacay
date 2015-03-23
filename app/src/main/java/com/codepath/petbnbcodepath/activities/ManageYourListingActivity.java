@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -57,10 +58,12 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     private TextView tvOptionalDetails;
     private Activity sActivity;
-    private TextView tvStickyButton;
+    private Button btStickyButton;
     private boolean stickyButtonEnabled = true;//TODO make it enable only in certain situation
     final static int max_word_count_title = 35;
     final static int max_word_count_summary = 50;
+
+    private int stepsLeft =5;
     MYLLandingPageFragment mylLandingPage;
     MYLPriceFragment mylPriceFragment;
     MYLAddressFragment mylAddress;
@@ -108,7 +111,8 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     private void setupViews() {
         stickyProgressBar = (LinearLayout) findViewById(R.id.stickyProgressBar);
-//        String sumbitButtonText  = getResources().getQuantityString(R.string.countdown_unit,3);
+//        String sumbitButtonText  = MessageFormat.format(getBaseContext().getString(R.string.countdown_unit), stepsLeft);
+//        getResources().getQuantityText(R.string.countdown_unit,stepsLeft);
         llMYLImage = (LinearLayout) findViewById(R.id.llMYLImage);
         coverImage = (ImageView) findViewById(R.id.coverImage);
         tvPhotoCount = (TextView) findViewById(R.id.tvPhotoCount);
@@ -132,7 +136,8 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         cbAddress = (CheckBox) findViewById(R.id.cbAddress);
 
         tvOptionalDetails = (TextView) findViewById(R.id.optionalDetails);
-        tvStickyButton = (TextView) findViewById(R.id.tvPost);
+        btStickyButton = (Button) findViewById(R.id.btNext);
+        updateProgress(stepsLeft);
     }
     View.OnClickListener mListener = new View.OnClickListener() {
         @Override
@@ -142,10 +147,10 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     };
 
     public void setupViewListeners() {
-        tvStickyButton.setOnClickListener(new View.OnClickListener() {
+        btStickyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!stickyButtonEnabled)
+                if (!stickyButtonEnabled)
                     return;
                 //Post the listing
             }
@@ -202,7 +207,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
 
 
-        tvStickyButton.setOnClickListener(new View.OnClickListener() {
+        btStickyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ParseUser currentUser = ParseUser.getCurrentUser();
@@ -283,11 +288,13 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.commit();
         if(fieldType==0){
             cbTitle.setChecked(!value.isEmpty());
+            if(!value.isEmpty()){updateProgress(--stepsLeft);}
             tvMYLTitle.setText(value);
             mTitle = value;
         }
         else if(fieldType==1){
             cbSummary.setChecked(!value.isEmpty());
+            if(!value.isEmpty()){updateProgress(--stepsLeft);}
             tvMYLSummary.setText(value);
             mSummary=value;
         }
@@ -301,6 +308,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.commit();
         try {
             cbPrice.setChecked(Integer.parseInt(value)>0);
+            if(Integer.parseInt(value)>0){updateProgress(--stepsLeft);}
             mCost = Integer.parseInt(value);
             tvMYLPrice.setText(value);
         } catch (NumberFormatException e){
@@ -316,7 +324,29 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.hide(mylAddress);
         ft1.commit();
         cbAddress.setChecked(!address.isEmpty());
+        if(!address.isEmpty()){updateProgress(--stepsLeft);}
         tvMYLAddress.setText(address);
         mAddress=address;
     }
+
+    public void updateProgress(int steps){
+        int count = stickyProgressBar.getChildCount();
+        btStickyButton.setText(getString(R.string.countdown_unit_, steps - 1));
+        View v = null;
+        if(count-steps<=1){
+            stickyButtonEnabled = true;
+            return;
+        }
+        for(int i=1; i<count-steps; i++) {
+            v = stickyProgressBar.getChildAt(i);
+            v.setBackgroundColor(getResources().getColor(R.color.teal));
+        }
+        //Update this once Camera thing is done.
+        if(count-steps<=1){
+            stickyButtonEnabled = true;
+            btStickyButton.setText(getString(R.string.complete_profile));
+
+        }
+    }
+
 }

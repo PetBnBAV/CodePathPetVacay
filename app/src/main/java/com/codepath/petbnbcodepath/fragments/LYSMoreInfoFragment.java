@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -22,7 +23,7 @@ public class LYSMoreInfoFragment extends Fragment {
     private ImageButton ibtPetSmall,ibtPetMedium,ibtPetLarge;
     private ImageButton ibtPetDog,ibtPetCat,ibtPetTypeBoth;
     private ImageButton ibtPlaygroundDeck,ibtPlaygroundBackyard,ibtPlaygroundPark;
-    private TextView tvStickyButton;
+    private Button tvStickyButton;
     private boolean stickyButtonEnabled = true;//TODO make it enable only in certain situation
 
     public static LYSMoreInfoFragment getInstance(Activity activity){
@@ -89,7 +90,7 @@ public class LYSMoreInfoFragment extends Fragment {
         ibtPlaygroundPark = (ImageButton)view.findViewById(R.id.ivPlaygroundPark);
 
         ibtPlaygroundPark.setOnClickListener(mListener);
-        tvStickyButton = (TextView) view.findViewById(R.id.tvNext);
+        tvStickyButton = (Button) view.findViewById(R.id.btNext);
         setupViewListeners();
         return view;
 
