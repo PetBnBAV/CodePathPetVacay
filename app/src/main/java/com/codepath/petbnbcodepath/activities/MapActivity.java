@@ -2,6 +2,7 @@ package com.codepath.petbnbcodepath.activities;
 
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -18,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,12 +63,28 @@ public class MapActivity extends ActionBarActivity
     private IconGenerator iconFactoryTeal;
     private IconGenerator iconFactoryRed;
 
+    private ProgressBar progressBar;
+    private AnimationDrawable animationDrawable;
+
+    public void showProgressBar() {
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+        animationDrawable.start();
+    }
+
+    public void hideProgressBar() {
+        animationDrawable.stop();
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_map);
+
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        animationDrawable = (AnimationDrawable) progressBar.getIndeterminateDrawable();
+        showProgressBar();
 
         String fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.dark_gray)
                 + "\">";
@@ -108,6 +126,7 @@ public class MapActivity extends ActionBarActivity
 
         mapFragment = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map));
         if (mapFragment != null) {
+
             mapFragment.getMapAsync(new OnMapReadyCallback() {
                 @Override
                 public void onMapReady(GoogleMap map) {
@@ -117,6 +136,7 @@ public class MapActivity extends ActionBarActivity
                     getNearbyListings(latitude, longitude);
                 }
             });
+            hideProgressBar();
         } else {
             Log.e(TAG, "Error - Map Fragment was null!!");
         }
@@ -386,9 +406,10 @@ public class MapActivity extends ActionBarActivity
         int id = item.getItemId();
 
         if (id == android.R.id.home) {
-            Intent intent = NavUtils.getParentActivityIntent(this);
+            //Intent intent = NavUtils.getParentActivityIntent(this);
             //intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-            NavUtils.navigateUpTo(this, intent);
+            //NavUtils.navigateUpTo(this, intent);
+            finish();
             overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
         }
 

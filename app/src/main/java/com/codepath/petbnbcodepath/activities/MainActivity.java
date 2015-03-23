@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -106,11 +109,27 @@ public class MainActivity extends ActionBarActivity implements
 	 */
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
+    private ProgressBar progressBar;
+    private AnimationDrawable animationDrawable;
+
+    public void showProgressBar() {
+        progressBar.setVisibility(ProgressBar.VISIBLE);
+        animationDrawable.start();
+    }
+
+    public void hideProgressBar() {
+        animationDrawable.stop();
+        progressBar.setVisibility(ProgressBar.INVISIBLE);
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        animationDrawable = (AnimationDrawable) progressBar.getIndeterminateDrawable();
+        showProgressBar();
 
         initialize();
         setUpListeners();
@@ -582,6 +601,8 @@ public class MainActivity extends ActionBarActivity implements
 //        Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude()) + "," +
 //                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
 
+
+        hideProgressBar();
         Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
                 mCurrentLocation.getLongitude());
         viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));

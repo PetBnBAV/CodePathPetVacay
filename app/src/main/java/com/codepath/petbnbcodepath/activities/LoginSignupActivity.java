@@ -44,6 +44,7 @@ public class LoginSignupActivity extends ActionBarActivity
 
     public void onLogin() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.pull_in_from_left, R.anim.hold);
         ft.replace(R.id.frag_login_signup, new LoginFragment());
         ft.addToBackStack("login_frag");
         ft.commit();
@@ -54,6 +55,7 @@ public class LoginSignupActivity extends ActionBarActivity
 
     public void onSignUp() {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.setCustomAnimations(R.anim.pull_in_from_left, R.anim.hold);
         ft.replace(R.id.frag_login_signup, new SignUpFragment());
         ft.addToBackStack("signup_frag");
         ft.commit();
