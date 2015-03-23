@@ -30,8 +30,8 @@ public class Constants {
     public static final String listingIdKey = "listingId";
     public static final String reviewerIdKey = "reviewerId";
     public static final String objectIdKey = "objectId";
-    public static final String ownerIdKey = "ownerId";
 
+    public static final String ownerIdKey = "ownerId";
     public static final String summaryKey = "listingSummary";
     public static final String numReviewsKey = "numReviews";
     public static final String descriptionKey = "description";
@@ -94,4 +94,6 @@ public class Constants {
     public static final String LATITUDE = "latitude";
     public static final String LONGITUDE = "longitude";
     public static final String SECONADRY_ICON = "secondaryIconResource";
+    public static final String TEAL_COLOR = "#008080";
+
 }

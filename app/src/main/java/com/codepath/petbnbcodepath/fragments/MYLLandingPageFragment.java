@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
@@ -118,6 +117,7 @@ public class MYLLandingPageFragment extends Fragment {
         tvWordCount = (TextView)view.findViewById(R.id.tvWordCount);
         tvWordCount.setText(getString(R.string.wordCount,sMaxCount));
         ivHint = (ImageView)view.findViewById(R.id.ivHint);
+        Utils.setTealBorder(ivHint);
         mCallback.setToolbarForFragment();
         tvDone = (TextView) getActivity().findViewById(R.id.tvToolbarTitle);
         if(sFieldType==0) {

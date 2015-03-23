@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -23,25 +24,29 @@ public class DetailsPageActivity extends ActionBarActivity {
     ImageView ivReviewerImage;
     TextView tvSitterName;
     TextView tvReviewCountDetail;
-    TextView tvNext;
+    Button btNext;
     TextView tvPrice;
+    TextView tvDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
 
-
         final String firstName = getIntent().getStringExtra(Constants.firstNameKey);
         final String lastName = getIntent().getStringExtra(Constants.lastNameKey);
         final String coverPicture = getIntent().getStringExtra(Constants.coverPictureKey);
+        final String title = getIntent().getStringExtra(Constants.titleKey);
         final int reviewCount = getIntent().getIntExtra(Constants.reviewerIdKey, 0);
         final int cost = getIntent().getIntExtra(Constants.listingCostKey, 0);
         final String objectId = getIntent().getStringExtra(Constants.objectIdKey);
+        final String firstReview = getIntent().getStringExtra(Constants.firstReview);
+        final String description = getIntent().getStringExtra(Constants.descriptionKey);
+        final int houseType = getIntent().getIntExtra(Constants.houseTypeKey,0);
+        final int petType =  getIntent().getIntExtra(Constants.petTypeKey,0);
+        final boolean hasPet = getIntent().getBooleanExtra(Constants.hasPetsKey,false);
 
 
-
-        String firstReview = getIntent().getStringExtra(Constants.firstReview);
         viewPager = (WrapContentHeightViewPager) findViewById(R.id.view_pager);
         ImagePagerAdapter adapter = new ImagePagerAdapter(this);
         //TODO Need pass Images to adapter
@@ -57,8 +62,8 @@ public class DetailsPageActivity extends ActionBarActivity {
         }catch (NumberFormatException e){}
         tvPrice = (TextView)findViewById(R.id.tvPrice);
         tvPrice.setText("$ "+cost);
-        tvNext = (TextView)findViewById(R.id.tvNext);
-        tvNext.setOnClickListener(new View.OnClickListener() {
+        btNext = (Button)findViewById(R.id.btNext);
+        btNext.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent i = new Intent(DetailsPageActivity.this, BookingDetailsActivity.class);
@@ -92,6 +97,9 @@ public class DetailsPageActivity extends ActionBarActivity {
                 .fit()
                 .transform(transformation)
                 .into(ivReviewerImage);
+
+        tvDescription = (TextView) findViewById(R.id.tvDescription);
+        tvDescription.setText(description);
     }
 
     @Override

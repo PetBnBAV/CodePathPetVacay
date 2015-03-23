@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.helpers.Utils;
 
 /**
  * Created by gangwal on 3/14/15.
@@ -66,6 +67,7 @@ public class LYSMoreInfoFragment extends Fragment {
 
 
         ibtPlus = (ImageButton)view.findViewById(R.id.ivPlus);
+        Utils.setTealBorder(ibtPlus);
         ibtPlus.setOnClickListener(mListener);
 
         ibtPetSmall = (ImageButton)view.findViewById(R.id.ivPetSizeSmall);

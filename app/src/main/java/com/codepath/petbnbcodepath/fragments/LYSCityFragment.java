@@ -2,6 +2,7 @@ package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -126,6 +127,9 @@ public class LYSCityFragment extends Fragment {
         tvStickyButton.setEnabled(false);
         tvStickyButton.setAlpha(Constants.btnDisabledAlpha);
         ivCurrentLocation = (ImageView) view.findViewById(R.id.ivCurrentLocation);
+        int color = Color.parseColor(Constants.TEAL_COLOR);
+        ivCurrentLocation.setColorFilter(color);
+
 
     }
 

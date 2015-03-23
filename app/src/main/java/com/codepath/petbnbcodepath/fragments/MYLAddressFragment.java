@@ -184,5 +184,6 @@ public class MYLAddressFragment extends Fragment {
         tvStickyButton = (TextView)view.findViewById(R.id.tvNext);
         ivCurrentLocation = (ImageView)view.findViewById(R.id.ivCurrentLocation);
         tvDone = (TextView) getActivity().findViewById(R.id.tvToolbarTitle);
+        Utils.setTealBorder(ivCurrentLocation);
     }
 }

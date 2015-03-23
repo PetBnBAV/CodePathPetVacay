@@ -2,12 +2,14 @@ package com.codepath.petbnbcodepath.helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -138,5 +140,10 @@ public class Utils {
                 in.hideSoftInputFromWindow(view.getWindowToken(),
                     InputMethodManager.HIDE_NOT_ALWAYS);}
         }
+    }
+
+    public static void setTealBorder(ImageView view){
+        int color = Color.parseColor(Constants.TEAL_COLOR);
+        view.setColorFilter(color);
     }
 }

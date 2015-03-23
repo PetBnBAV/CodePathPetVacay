@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.linearlistview.LinearListView;
 import com.linearlistview.LinearListView.OnItemClickListener;
 
@@ -53,6 +54,7 @@ public class LYSHomeTypeFragment extends Fragment {
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(sActivity).inflate(R.layout.list_lsy_item, parent, false);
                 viewHolder.ivHomeTypeIcon = (ImageView) convertView.findViewById(R.id.ivItemType);
+                Utils.setTealBorder(viewHolder.ivHomeTypeIcon);
                 viewHolder.tvHomeTypeTitle = (TextView)convertView.findViewById(R.id.tvItemTypeTitle);
                 viewHolder.tvHomeTypeDescription = (TextView) convertView.findViewById(R.id.tvItemTypeDescription);
                 if(houseTypeTitleList==null){

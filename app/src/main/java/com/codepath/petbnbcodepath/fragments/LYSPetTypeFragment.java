@@ -1,6 +1,8 @@
 package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -44,7 +46,7 @@ public class LYSPetTypeFragment extends Fragment {
     }
 
     private BaseAdapter mAdapter = new BaseAdapter() {
-        private Integer [] petTypeIconList = {R.drawable.dog_clipart1,R.drawable.cat_clipart1,R.drawable.dog_cat_clipart1};
+        private Integer [] petTypeIconList = {R.drawable.dog_color,R.drawable.cat_color,R.drawable.dog_cat_color};
         String [] petTypeTitleList=null;
         String [] petTypeDescriptionList;
 
@@ -56,6 +58,9 @@ public class LYSPetTypeFragment extends Fragment {
                 viewHolder = new ViewHolder();
                 convertView = LayoutInflater.from(sActivity).inflate(R.layout.list_lsy_item, parent, false);
                 viewHolder.ivPetTypeIcon = (ImageView) convertView.findViewById(R.id.ivItemType);
+                int color = Color.parseColor(Constants.TEAL_COLOR);
+                viewHolder.ivPetTypeIcon.setColorFilter(color, PorterDuff.Mode.DST_ATOP);
+
                 viewHolder.tvPetTypeTitle = (TextView)convertView.findViewById(R.id.tvItemTypeTitle);
                 viewHolder.tvPetTypeDescription = (TextView) convertView.findViewById(R.id.tvItemTypeDescription);
                 if(petTypeTitleList==null){

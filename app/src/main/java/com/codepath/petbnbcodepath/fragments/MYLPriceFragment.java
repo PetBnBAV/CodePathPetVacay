@@ -87,6 +87,7 @@ public class MYLPriceFragment extends Fragment {
         tvSuggestedPrice = (TextView)view.findViewById(R.id.tvSuggestedPrice);
         tvSuggestedPrice.setText(getString(R.string.suggestedPrice,suggestedPrice));
         ivHint = (ImageView)view.findViewById(R.id.ivHint);
+        Utils.setTealBorder(ivHint);
         etValue.setHint(R.string.currencyUnit);
 //        etValue.setText(String.valueOf(sPrice));
         tvDone = (TextView) getActivity().findViewById(R.id.tvToolbarTitle);

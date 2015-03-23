@@ -1,16 +1,10 @@
 package com.codepath.petbnbcodepath.models;
 
-import android.util.Log;
-
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.net.GoogleMapReverseGeoCodingClient;
-import com.parse.CountCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,11 +29,29 @@ public class Listing {
     private String first_name;
     private String last_name;
     private String coverPictureUrl;
+
+    public String getDescription() {
+        return description;
+    }
+
     private String description;
     private String objectId;
 
     private int cost;
     private int numReviews;
+
+    public int getHomeType() {
+        return homeType;
+    }
+
+    public int getPetType() {
+        return petType;
+    }
+
+    public boolean isHasPets() {
+        return hasPets;
+    }
+
     private int homeType;
     private int petType;
     private boolean hasPets;
@@ -47,7 +59,6 @@ public class Listing {
     private Review firstReview;
 
     private GoogleMapReverseGeoCodingClient client;
-
 
     public void setNumReviews(int numReviews) {
         this.numReviews = numReviews;

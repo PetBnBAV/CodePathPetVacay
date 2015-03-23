@@ -272,6 +272,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 //    }
 
     public void gotoDetailsPage(Listing currentListing){
+        //todo Crude way of doing this, need to implement Parceable instead
         Intent intent = new Intent(mActivity, DetailsPageActivity.class);
         intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
         intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
@@ -280,6 +281,10 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
         intent.putExtra(Constants.listingCostKey, currentListing.getCost());
         intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
+        intent.putExtra(Constants.descriptionKey, currentListing.getDescription());
+        intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
+        intent.putExtra(Constants.petTypeKey,currentListing.getPetType());
+        intent.putExtra(Constants.hasPetsKey,currentListing.isHasPets());
         mActivity.startActivity(intent);
     }
 }
