@@ -58,7 +58,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     private TextView tvOptionalDetails;
     private Activity sActivity;
-    private Button tvStickyButton;
+    private Button btStickyButton;
     private boolean stickyButtonEnabled = true;//TODO make it enable only in certain situation
     final static int max_word_count_title = 35;
     final static int max_word_count_summary = 50;
@@ -136,7 +136,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         cbAddress = (CheckBox) findViewById(R.id.cbAddress);
 
         tvOptionalDetails = (TextView) findViewById(R.id.optionalDetails);
-        tvStickyButton = (Button) findViewById(R.id.btNext);
+        btStickyButton = (Button) findViewById(R.id.btNext);
         updateProgress(stepsLeft);
     }
     View.OnClickListener mListener = new View.OnClickListener() {
@@ -147,10 +147,10 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     };
 
     public void setupViewListeners() {
-        tvStickyButton.setOnClickListener(new View.OnClickListener() {
+        btStickyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!stickyButtonEnabled)
+                if (!stickyButtonEnabled)
                     return;
                 //Post the listing
             }
@@ -207,7 +207,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
 
 
-        tvStickyButton.setOnClickListener(new View.OnClickListener() {
+        btStickyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ParseUser currentUser = ParseUser.getCurrentUser();
@@ -331,6 +331,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     public void updateProgress(int steps){
         int count = stickyProgressBar.getChildCount();
+        btStickyButton.setText(getString(R.string.countdown_unit_, steps - 1));
         View v = null;
         if(count-steps<=1){
             stickyButtonEnabled = true;
@@ -343,7 +344,9 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         //Update this once Camera thing is done.
         if(count-steps<=1){
             stickyButtonEnabled = true;
-        }
+            btStickyButton.setText(getString(R.string.complete_profile));
 
+        }
     }
+
 }

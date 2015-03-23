@@ -192,6 +192,8 @@
     <string name="myl_address">Set Address</string>
     <string name="myl_addressHint">Only confirmed pet owners can see your address</string>
     <string name="countdown_unit">{0,plural,=0 {Complete profile} one {{0,number,integer} step to list} other {{0,number,integer} steps to list}}</string>>
+    <string name="countdown_unit_">%1$d steps to list</string>
+    <string name="complete_profile">Complete profile</string>
 
 
 
