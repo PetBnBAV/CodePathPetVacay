@@ -38,6 +38,7 @@ import com.codepath.petbnbcodepath.adapters.FragmentPageAdapter;
 import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentNoPP;
 import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentWithPP;
 import com.codepath.petbnbcodepath.fragments.LandingPageFragment;
+import com.codepath.petbnbcodepath.fragments.PostingsListFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.interfaces.FragmentCameraCommunicator;
 import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
@@ -67,9 +68,9 @@ public class MainActivity extends ActionBarActivity implements
                                                     GoogleApiClient.ConnectionCallbacks,
                                                     LocationListener,
                                                     GoogleApiClient.OnConnectionFailedListener,
-                                                    LandingPageFragment.OnLandingPageListener,
                                                     FragmentCommunicator,
-                                                    FragmentCameraCommunicator{
+                                                    FragmentCameraCommunicator,
+                                                    PostingsListFragment.PostingsListListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -605,7 +606,7 @@ public class MainActivity extends ActionBarActivity implements
         hideProgressBar();
         Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
                 mCurrentLocation.getLongitude());
-        viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
+        viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager(), this));
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
