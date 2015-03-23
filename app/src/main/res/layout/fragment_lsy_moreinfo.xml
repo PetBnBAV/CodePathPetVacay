@@ -226,28 +226,14 @@
                 android:layout_marginRight="30dp"/>
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:orientation="vertical"
+    <Button
+        android:id="@+id/btNext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_background"
-        android:id="@+id/linearLayout"
-        android:alpha="0.4"
-        android:padding="10dp"
+        android:background="@color/theme_teal"
+        android:textColor="@color/vl_white"
+        android:text="@string/next_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:id="@+id/tvNext"
-            android:textColor="#FFFFFF"
-            android:textSize="20dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="center"
-            android:paddingRight="2dp"/>
-    </LinearLayout>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 </RelativeLayout>

@@ -210,6 +210,7 @@
     <string name="property_type">Property Type</string>
     <string name="location">Location</string>
     <string name="more_info">More Info</string>
+    <string name="next_button">Next</string>
 
 
     <string name="pick_proper_date">Please choose a pick up date that\'s after drop off date! Please re-select!</string>

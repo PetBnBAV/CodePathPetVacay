@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
@@ -31,6 +32,7 @@ public class MYLLandingPageFragment extends Fragment {
     private TextView tvDone;
     private static int sMaxCount,sFieldType;
     private static String  sValue;
+
     public static MYLLandingPageFragment getInstance(Activity activity, int maxCount,int fieldType, String value){
         MYLLandingPageFragment frag = new MYLLandingPageFragment();
         sMaxCount = maxCount;
