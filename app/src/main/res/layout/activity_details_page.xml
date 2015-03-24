@@ -89,6 +89,8 @@
                 android:layout_marginRight="60dp"
                 android:textStyle="bold"
                 android:gravity="center_horizontal"
+                android:textColor="@color/secondaryTextColor"
+
                 />
             <LinearLayout
                 android:orientation="horizontal"

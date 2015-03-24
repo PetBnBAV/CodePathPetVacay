@@ -15,6 +15,8 @@ import com.codepath.petbnbcodepath.adapters.ImagePagerAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
@@ -27,15 +29,19 @@ public class DetailsPageActivity extends ActionBarActivity {
     Button btNext;
     TextView tvPrice;
     TextView tvDescription;
+    TextView tvPostTitle;
+    String mFirstName;
+    String mLastName;
+    String mCoverPicture = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
+        final String firstName;
+        final String lastName;
+        final String coverPicture;
 
-        final String firstName = getIntent().getStringExtra(Constants.firstNameKey);
-        final String lastName = getIntent().getStringExtra(Constants.lastNameKey);
-        final String coverPicture = getIntent().getStringExtra(Constants.coverPictureKey);
         final String title = getIntent().getStringExtra(Constants.titleKey);
         final int reviewCount = getIntent().getIntExtra(Constants.reviewerIdKey, 0);
         final int cost = getIntent().getIntExtra(Constants.listingCostKey, 0);
@@ -45,6 +51,30 @@ public class DetailsPageActivity extends ActionBarActivity {
         final int houseType = getIntent().getIntExtra(Constants.houseTypeKey,0);
         final int petType =  getIntent().getIntExtra(Constants.petTypeKey,0);
         final boolean hasPet = getIntent().getBooleanExtra(Constants.hasPetsKey,false);
+
+        final boolean isPreview = getIntent().getBooleanExtra(Constants.IS_PREVIEW,false);
+        int visibilityRequestBtn =  (isPreview? View.GONE:View.VISIBLE);
+
+        //Detect and show user's info
+        if(!isPreview){
+            mFirstName = getIntent().getStringExtra(Constants.firstNameKey);
+            mLastName = getIntent().getStringExtra(Constants.lastNameKey);
+            mCoverPicture = getIntent().getStringExtra(Constants.coverPictureKey);
+        }
+        else {
+
+            //Show self name if isPreview
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser != null && isPreview) {
+                mFirstName = currentUser.get(Constants.firstNameKey).toString();
+                mLastName = currentUser.get(Constants.lastNameKey).toString();
+                mCoverPicture = ((ParseFile) currentUser.get(Constants.coverPictureKey)).getUrl();
+            }
+        }
+
+        firstName = mFirstName;
+        lastName = mLastName;
+        coverPicture = mCoverPicture;
 
 
         viewPager = (WrapContentHeightViewPager) findViewById(R.id.view_pager);
@@ -63,6 +93,7 @@ public class DetailsPageActivity extends ActionBarActivity {
         tvPrice = (TextView)findViewById(R.id.tvPrice);
         tvPrice.setText("$ "+cost);
         btNext = (Button)findViewById(R.id.btNext);
+        btNext.setVisibility(visibilityRequestBtn);
         btNext.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -97,7 +128,8 @@ public class DetailsPageActivity extends ActionBarActivity {
                 .fit()
                 .transform(transformation)
                 .into(ivReviewerImage);
-
+        tvPostTitle = (TextView) findViewById(R.id.tvPostTitle);
+        tvPostTitle.setText(title);
         tvDescription = (TextView) findViewById(R.id.tvDescription);
         tvDescription.setText(description);
     }

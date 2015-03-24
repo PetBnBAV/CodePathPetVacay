@@ -95,5 +95,6 @@ public class Constants {
     public static final String LONGITUDE = "longitude";
     public static final String SECONADRY_ICON = "secondaryIconResource";
     public static final String TEAL_COLOR = "#008080";
+    public static final String IS_PREVIEW="is_preview";
 
 }

@@ -22,6 +22,7 @@ import com.codepath.petbnbcodepath.fragments.MYLLandingPageFragment;
 import com.codepath.petbnbcodepath.fragments.MYLPriceFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.helpers.Utils;
+import com.codepath.petbnbcodepath.models.Listing;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -55,6 +56,8 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     private LinearLayout llMYLAddress;
     private TextView tvMYLAddress;
     private CheckBox cbAddress;
+    //Need to remove default, after demo.
+    private ParseGeoPoint mGeoPoint = new ParseGeoPoint(Constants.defaultLatitude,Constants.defaultLongitude);;
 
     private TextView tvOptionalDetails;
     private Activity sActivity;
@@ -89,6 +92,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     final int RESULT_PICTURES_ADDED = 60;
 
+    Listing listing = new Listing();
 
 
     @Override
@@ -108,8 +112,19 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         petSize = intent.getIntExtra(Constants.petSizeKey,-1);
         playground =intent.getIntExtra(Constants.playgroundKey,-1);
         setupViews();
+        setupListing();
         setupViewListeners();
     }
+    private void setupListing() {
+        listing.setPetType(petType);
+        listing.setHomeType(houseType);
+        listing.setCityState(city);
+        boolean hasPets = petCount>0?true:false;
+        listing.setHasPets(hasPets);
+        //TODO Pet Size & Playground not implemented
+        //listing.setPetSize(petSize);
+        //playground =intent.getIntExtra(Constants.playgroundKey,-1);
+        }
 
     private void setupViews() {
         stickyProgressBar = (LinearLayout) findViewById(R.id.stickyProgressBar);
@@ -223,6 +238,9 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
                     posting.put(Constants.homeTypeKey, houseType);
                     //TODO need to update petSize, playground, city
                     ParseGeoPoint geoPoint = Utils.getLocationFromAddress(ManageYourListingActivity.this, mAddress);
+                    //TODO If the address is not a valid address, notify user.
+                    if(geoPoint==null)
+                        geoPoint = new ParseGeoPoint(Constants.defaultLatitude,Constants.defaultLongitude);
                     posting.put(Constants.latlngKey, geoPoint);
                     posting.put(Constants.sitterIdKey, currentUser);
                     posting.saveInBackground(new SaveCallback() {
@@ -234,19 +252,22 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
                         }
                     });
                 }
+                gotoPreview();
             }
         });
 
         tvToolbarSecondaryTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                TODO goto preview page of Details View.
-            }
+                gotoPreview();            }
         });
 
     }
 
+    public void gotoPreview(){
+        Utils.gotoDetailsPage(this, listing, true);
 
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -293,12 +314,14 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             if(!value.isEmpty()){updateProgress(--stepsLeft);}
             tvMYLTitle.setText(value);
             mTitle = value;
+            listing.setTitle(mTitle);
         }
         else if(fieldType==1){
             cbSummary.setChecked(!value.isEmpty());
             if(!value.isEmpty()){updateProgress(--stepsLeft);}
             tvMYLSummary.setText(value);
             mSummary=value;
+            listing.setDescription(mSummary);
         }
     }
 
@@ -313,9 +336,11 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             if(Integer.parseInt(value)>0){updateProgress(--stepsLeft);}
             mCost = Integer.parseInt(value);
             tvMYLPrice.setText(value);
+            listing.setCost(mCost);
         } catch (NumberFormatException e){
             cbPrice.setChecked(false);
             tvMYLPrice.setText("");
+            listing.setCost(mCost);
         }
     }
 
@@ -329,6 +354,11 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         if(!address.isEmpty()){updateProgress(--stepsLeft);}
         tvMYLAddress.setText(address);
         mAddress=address;
+        mGeoPoint = Utils.getLocationFromAddress(ManageYourListingActivity.this, mAddress);
+        //TODO If the address is not a valid address, notify user.
+        if(mGeoPoint==null)
+            mGeoPoint = new ParseGeoPoint(Constants.defaultLatitude,Constants.defaultLongitude);
+        listing.setLatLng(mGeoPoint);
     }
 
     public void updateProgress(int steps){

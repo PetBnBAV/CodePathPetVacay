@@ -50,22 +50,22 @@ public class Utils {
 
     }
 
-    static public LatLng getCurrentLatLng(Context context){
-        LocationManager lm = (LocationManager)context.getSystemService(Context.LOCATION_SERVICE);
+    static public LatLng getCurrentLatLng(Context context) {
+        LocationManager lm = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
         Location location = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if(location==null){
-            return new LatLng(Constants.defaultLatitude,Constants.defaultLongitude);
+        if (location == null) {
+            return new LatLng(Constants.defaultLatitude, Constants.defaultLongitude);
         }
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
-        return new LatLng(latitude,longitude);
+        return new LatLng(latitude, longitude);
     }
 
 
-    static public String getCityName(Context context, double latitude, double longitude){
+    static public String getCityName(Context context, double latitude, double longitude) {
         {
             Geocoder gcd = new Geocoder(context, Locale.getDefault());
-            String city= "";
+            String city = "";
 
             LatLng latLng = getCurrentLatLng(context);
             List<Address> addresses = null;
@@ -73,17 +73,17 @@ public class Utils {
                 addresses = gcd.getFromLocation(latitude, longitude, 1);
             } catch (IOException e) {
                 e.printStackTrace();
-                Toast.makeText(context,"Sorry, Not able to get current city name, please type it.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Sorry, Not able to get current city name, please type it.", Toast.LENGTH_SHORT).show();
             }
             if (addresses.size() > 0) {
                 Address address = addresses.get(0);
-                String cityName[]={"","",""};
-                int idx=0;
-                if(address.getLocality()!=null)
+                String cityName[] = {"", "", ""};
+                int idx = 0;
+                if (address.getLocality() != null)
                     cityName[idx++] = address.getLocality();
-                if(address.getAdminArea()!=null)
+                if (address.getAdminArea() != null)
                     cityName[idx++] = address.getAdminArea();
-                if(address.getCountryCode()!=null)
+                if (address.getCountryCode() != null)
                     cityName[idx++] = address.getCountryCode();
 
                 StringBuilder sb = new StringBuilder();
@@ -92,8 +92,7 @@ public class Utils {
                     sb.append(n);
                 }
                 return sb.toString();
-            }
-            else {
+            } else {
                 Toast.makeText(context, "Sorry, Not able to get current city name, please type it.", Toast.LENGTH_SHORT).show();
             }
             return city;
@@ -101,14 +100,15 @@ public class Utils {
         }
 
     }
-    static public String getCurrentCityName(Context context){
+
+    static public String getCurrentCityName(Context context) {
         LatLng latLng = getCurrentLatLng(context);
-        return getCityName(context,latLng.latitude, latLng.longitude);
+        return getCityName(context, latLng.latitude, latLng.longitude);
     }
 
-    static public String getCurrentLocationString(Context context){
+    static public String getCurrentLocationString(Context context) {
         Geocoder gcd = new Geocoder(context, Locale.getDefault());
-        String city= "";
+        String city = "";
 
         LatLng latLng = getCurrentLatLng(context);
         List<Address> addresses = null;
@@ -116,7 +116,7 @@ public class Utils {
             addresses = gcd.getFromLocation(latLng.latitude, latLng.longitude, 1);
         } catch (IOException e) {
             e.printStackTrace();
-            Toast.makeText(context,"Sorry, Not able to get current city name, please type it.",Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Sorry, Not able to get current city name, please type it.", Toast.LENGTH_SHORT).show();
         }
         if (addresses.size() > 0) {
             Address address = addresses.get(0);
@@ -125,44 +125,50 @@ public class Utils {
                 sb.append(address.getAddressLine(i)).append(" ");
             }
             return sb.toString().trim();
-        }
-        else {
+        } else {
             Toast.makeText(context, "Sorry, Not able to get current location, please type it.", Toast.LENGTH_SHORT).show();
         }
         return city;
 
     }
 
-    static public void hideKeyboard(Activity activity){
-        if(activity==null)
+    static public void hideKeyboard(Activity activity) {
+        if (activity == null)
             return;
         InputMethodManager in = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(in!=null) {
+        if (in != null) {
             View view = activity.getCurrentFocus();
             if (view != null) {
                 in.hideSoftInputFromWindow(view.getWindowToken(),
-                    InputMethodManager.HIDE_NOT_ALWAYS);}
+                        InputMethodManager.HIDE_NOT_ALWAYS);
+            }
         }
     }
 
-    public static void setTealBorder(ImageView view){
+    public static void setTealBorder(ImageView view) {
         int color = Color.parseColor(Constants.TEAL_COLOR);
         view.setColorFilter(color);
     }
 
 
-    public static void gotoDetailsPage(Context context,Listing currentListing){
+    public static void gotoDetailsPage(Context context, Listing currentListing) {
+        gotoDetailsPage(context, currentListing, false);
+    }
+
+    public static void gotoDetailsPage(Context context, Listing currentListing, boolean isPreview) {
         Intent intent = new Intent(context, DetailsPageActivity.class);
         intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
         intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
-        intent.putExtra(Constants.coverPictureKey,currentListing.getCoverPictureUrl());
-        intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
+        intent.putExtra(Constants.coverPictureKey, currentListing.getCoverPictureUrl());
+        intent.putExtra(Constants.titleKey, currentListing.getTitle());
+        intent.putExtra(Constants.reviewerIdKey, currentListing.getNumReviews());
         intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
         intent.putExtra(Constants.listingCostKey, currentListing.getCost());
         intent.putExtra(Constants.descriptionKey, currentListing.getDescription());
         intent.putExtra(Constants.hasPetsKey, currentListing.isHasPets());
         intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
         intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
+        intent.putExtra(Constants.IS_PREVIEW, isPreview);
         context.startActivity(intent);
     }
 }

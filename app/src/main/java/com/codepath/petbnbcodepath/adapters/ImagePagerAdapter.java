@@ -54,7 +54,8 @@ public class ImagePagerAdapter extends PagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        imageView.setAdjustViewBounds(true);
         //TODO dummy logic, needs to be updated
-        tempCoverPicture= "";
+        if(tempCoverPicture==null)
+            tempCoverPicture= "";
         if(position==0 && !tempCoverPicture.isEmpty()){
             imageView.setImageResource(0);
 
@@ -74,7 +75,9 @@ public class ImagePagerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoDetailsPage(context,currentListing);
+                //Check to see if we are in List or Detail page
+                if(currentListing!=null)
+                    Utils.gotoDetailsPage(context,currentListing);
             }
         });
 

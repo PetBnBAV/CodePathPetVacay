@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * Created by vibhalaljani on 3/8/15.
  *
+
  * This is a model class for our listing schema. It is used for the landing page and the
  * swiping fragments below the map.
  */
@@ -157,5 +158,49 @@ public class Listing {
             currListing.coverPictureUrl = sitter.getParseFile("profile_picture").getUrl();
         }
         return currListing;
+    }
+
+    public void setLatLng(ParseGeoPoint latLng) {
+        this.latLng = latLng;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setCityState(String cityState) {
+        this.cityState = cityState;
+    }
+
+    public void setFirst_name(String first_name) {
+        this.first_name = first_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
+    }
+
+    public void setCoverPictureUrl(String coverPictureUrl) {
+        this.coverPictureUrl = coverPictureUrl;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    public void setHomeType(int homeType) {
+        this.homeType = homeType;
+    }
+
+    public void setPetType(int petType) {
+        this.petType = petType;
+    }
+
+    public void setHasPets(boolean hasPets) {
+        this.hasPets = hasPets;
     }
 }
