@@ -87,6 +87,8 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     ParseUser currentUser = ParseUser.getCurrentUser();
 
+    final int RESULT_PICTURES_ADDED = 60;
+
 
 
     @Override
@@ -160,7 +162,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             public void onClick(View v) {
                 //TODO need to move camera stuff to fragment
                                 Intent intent = new Intent(ManageYourListingActivity.this, CameraActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, RESULT_PICTURES_ADDED);
             }
         });
         llMYLTitle.setOnClickListener(new View.OnClickListener() {

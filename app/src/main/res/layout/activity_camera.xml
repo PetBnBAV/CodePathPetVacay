@@ -29,10 +29,10 @@
 
     <ImageView
         android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_height="200dp"
         android:id="@+id/ivTakePicture"
         android:padding="10dp"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/llDragandDrop"
         android:layout_centerHorizontal="true" />
 
     <LinearLayout
@@ -68,9 +68,9 @@
         android:id="@+id/tvAddPhotos"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:layout_alignTop="@+id/ivTakePicture"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="130dp" />
+        android:layout_marginTop="79dp"
+        android:layout_below="@+id/ivDirection"
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -91,4 +91,54 @@
         android:layout_above="@+id/ivTakePicture"
         android:layout_alignRight="@+id/ivTakePicture"
         android:layout_alignEnd="@+id/ivTakePicture" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_below="@+id/ivTakePicture"
+        android:layout_alignStart="@+id/tvNumOfPhotos"
+        android:layout_marginTop="41dp"
+        android:layout_alignEnd="@+id/ivTakePicture"
+        android:id="@+id/linearLayout3">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:id="@+id/ivPhotoOne" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:id="@+id/ivPhotoTwo" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/linearLayout3"
+        android:layout_marginBottom="33dp"
+        android:layout_alignEnd="@+id/linearLayout3">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:id="@+id/ivPhotoThree" />
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:id="@+id/ivPhotoFour" />
+    </LinearLayout>
+
 </RelativeLayout>

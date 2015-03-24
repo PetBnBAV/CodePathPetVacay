@@ -89,8 +89,9 @@ public class Booking {
 
         Date startDate = bookings.getDate("startDate");
         Date endDate =  bookings.getDate("endDate");
-        bookingList.bookingStartDate = format.format(Date.parse(startDate.toString()));
-        bookingList.bookingEndDate = format.format(Date.parse(endDate.toString()));
+
+        bookingList.bookingStartDate = format.format(startDate);
+        bookingList.bookingEndDate = format.format(endDate);
 
         bookingList.listingId = bookings.getParseObject("listingId");
         bookingList.listing_pictures =  bookingList.listingId.getParseObject("listing_pictures");

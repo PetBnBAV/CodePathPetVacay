@@ -42,6 +42,7 @@ public class CameraActivity extends ActionBarActivity {
 
     final int RESULT_LAUNCH_CAMERA = 20;
     final int RESULT_LAUNCH_GALLERY = 30;
+    final int RESULT_PICTURES_ADDED = 60;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -262,6 +263,9 @@ public class CameraActivity extends ActionBarActivity {
 
     public void onBack(View v)
     {
+        Intent intent=new Intent();
+        intent.putExtra("MESSAGE","pictures");
+        setResult(RESULT_PICTURES_ADDED,intent);
         finish();
 
     }
