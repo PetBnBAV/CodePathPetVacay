@@ -36,6 +36,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:drawablePadding="5dp"
                 android:drawableRight="@drawable/ic_ib_bolt"
                 android:paddingRight="2dp"/>
         </LinearLayout>

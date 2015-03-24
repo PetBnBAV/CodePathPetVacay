@@ -1,7 +1,6 @@
 package com.codepath.petbnbcodepath.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
@@ -14,8 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
-import com.codepath.petbnbcodepath.activities.DetailsPageActivity;
-import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
 import com.dexafree.materialList.controller.IMaterialListAdapter;
@@ -150,7 +148,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         viewHolder.ivSitterImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoDetailsPage(currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing);
             }
         });
 
@@ -173,20 +171,20 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         viewHolder.viewPager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoDetailsPage(currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing);
             }
         });
 
         viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoDetailsPage(currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing);
             }
         });
         viewHolder.tvPostSubTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoDetailsPage(currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing);
             }
         });
 
@@ -287,18 +285,4 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 //        return convertView;
 //    }
 
-    public void gotoDetailsPage(Listing currentListing){
-        Intent intent = new Intent(mActivity, DetailsPageActivity.class);
-        intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
-        intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
-        intent.putExtra(Constants.coverPictureKey,currentListing.getCoverPictureUrl());
-        intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
-        intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
-        intent.putExtra(Constants.listingCostKey, currentListing.getCost());
-        intent.putExtra(Constants.descriptionKey, currentListing.getDescription());
-        intent.putExtra(Constants.hasPetsKey, currentListing.isHasPets());
-        intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
-        intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
-        mActivity.startActivity(intent);
-    }
 }
