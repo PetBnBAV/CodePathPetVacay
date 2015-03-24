@@ -9,6 +9,8 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -60,6 +62,7 @@ import com.squareup.picasso.Transformation;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 
 public class MainActivity extends ActionBarActivity implements
@@ -700,16 +703,40 @@ public class MainActivity extends ActionBarActivity implements
     }
 
     public void onEtQuerySubmit(String query) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+
         Intent i = new Intent(MainActivity.this, MapActivity.class);
-        i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
-        i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
-        i.putExtra(Constants.locationStrKey, query);
-        startActivity(i);
+
+            try {
+                address = coder.getFromLocationName(query, 5);
+                if (address != null) {
+                    Address location = address.get(0);
+                    i.putExtra(Constants.latitude, location.getLatitude());
+                    i.putExtra(Constants.longitude, location.getLongitude());
+                    i.putExtra(Constants.locationStrKey, query);
+                } else {
+                    i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
+                    i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
+                    i.putExtra(Constants.locationStrKey, getResources().getString(R.string.curr_loc));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            startActivity(i);
 
         //Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
 
 //        Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
+    }
 
+    public void onCurrLoc() {
+        Intent i = new Intent(MainActivity.this, MapActivity.class);
+        i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
+        i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
+        i.putExtra(Constants.locationStrKey, getResources().getString(R.string.curr_loc));
+        startActivity(i);
     }
 
     public void onlvLandingPageItemClick(double latitude, double longitude) {

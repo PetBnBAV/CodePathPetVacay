@@ -131,7 +131,7 @@ public class LandingPageFragment extends Fragment {
 
         lvLandingPage = (ListView) view.findViewById(R.id.lvLandingPage);
         lvLandingPage.addHeaderView(landingPageView, null, false);
-        sitterArrayList = new ArrayList<>();
+        sitterArrayList = new ArrayList();
         sitterArrayAdapter = new LandingPageAdapter(getActivity(), sitterArrayList);
         lvLandingPage.setAdapter(sitterArrayAdapter);
 

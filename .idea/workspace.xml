@@ -39,7 +39,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-<<<<<<< HEAD
+<!--HEAD-->
       <file leaf-file-name="PostingArrayAdapter.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/adapters/PostingArrayAdapter.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -62,7 +62,7 @@
           </provider>
         </entry>
       </file>
-<<<<<<< HEAD
+<!-- HEAD-->
       <file leaf-file-name="fragment_mly_address.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_mly_address.xml">
           <provider selected="true" editor-type-id="text-editor">

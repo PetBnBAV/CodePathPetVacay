@@ -7,8 +7,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
+import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.adapters.PlacesAutoCompleteAdapter;
 import com.codepath.petbnbcodepath.adapters.PostingArrayAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
@@ -39,7 +43,12 @@ public class PostingsListFragment extends Fragment {
     private PostingArrayAdapter aPosts;
     private String TAG = PostingsListFragment.class.getSimpleName();
 
+    private AutoCompleteTextView etSearch;
+    private TextView tvCurrLoc;
+
     public interface PostingsListListener {
+        public void onEtQuerySubmit(String query);
+        public void onCurrLoc();
     }
 
     public static PostingsListFragment getInstance(Activity activity){
@@ -77,12 +86,32 @@ public class PostingsListFragment extends Fragment {
             getNearbyListings(latitude, longitude);
         }
         lvPosting = (MaterialListView) view.findViewById(R.id.lvPost);
+        etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
+        etSearch.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
+        tvCurrLoc = (TextView) view.findViewById(R.id.tvCurrLoc);
 
 
-
+        setupViewListeners();
 
 
         return view;
+    }
+
+    private void setupViewListeners() {
+        etSearch.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String query = (String) parent.getItemAtPosition(position);
+                mCallback.onEtQuerySubmit(query);
+            }
+        });
+
+        tvCurrLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onCurrLoc();
+            }
+        });
     }
 
     /**

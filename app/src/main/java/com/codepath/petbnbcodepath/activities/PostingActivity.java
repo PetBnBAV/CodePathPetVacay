@@ -47,4 +47,12 @@ public class PostingActivity extends ActionBarActivity implements PostingsListFr
         return super.onOptionsItemSelected(item);
     }
 
+    public void onCurrLoc() {
+
+    }
+
+    public void onEtQuerySubmit(String query) {
+
+    }
+
 }

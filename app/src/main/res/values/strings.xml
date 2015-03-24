@@ -222,4 +222,6 @@
     <string name="descriptionLabel">Description</string>
     <string name="pick_proper_date">Please choose a pick up date that\'s after drop off date! Please re-select!</string>
     <string name="return_to_listings">Listings View</string>
+
+    <string name="curr_loc">or Current Location</string>
 </resources>
