@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.helpers.Utils;
+import com.codepath.petbnbcodepath.models.Listing;
 import com.squareup.picasso.Picasso;
 
 
@@ -17,7 +19,8 @@ import com.squareup.picasso.Picasso;
 public class ImagePagerAdapter extends PagerAdapter {
 
     private Context context;
-    public String tempCoverPicture="";
+    public String tempCoverPicture= "";
+    public Listing currentListing;
     public int[] mImages = new int[] {
             R.drawable.pet_sitter1,
             R.drawable.pet_sitter2,
@@ -51,6 +54,7 @@ public class ImagePagerAdapter extends PagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
 //        imageView.setAdjustViewBounds(true);
         //TODO dummy logic, needs to be updated
+        tempCoverPicture= "";
         if(position==0 && !tempCoverPicture.isEmpty()){
             imageView.setImageResource(0);
 
@@ -65,6 +69,15 @@ public class ImagePagerAdapter extends PagerAdapter {
                     .fit()
                     .into(imageView);        }
         ((ViewPager) container).addView(imageView, 0);
+
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.gotoDetailsPage(context,currentListing);
+            }
+        });
+
         return imageView;
     }
 

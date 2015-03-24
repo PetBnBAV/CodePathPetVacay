@@ -2,6 +2,7 @@ package com.codepath.petbnbcodepath.helpers;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
@@ -12,6 +13,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.codepath.petbnbcodepath.activities.DetailsPageActivity;
+import com.codepath.petbnbcodepath.models.Listing;
 import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseGeoPoint;
 
@@ -145,5 +148,21 @@ public class Utils {
     public static void setTealBorder(ImageView view){
         int color = Color.parseColor(Constants.TEAL_COLOR);
         view.setColorFilter(color);
+    }
+
+
+    public static void gotoDetailsPage(Context context,Listing currentListing){
+        Intent intent = new Intent(context, DetailsPageActivity.class);
+        intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
+        intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
+        intent.putExtra(Constants.coverPictureKey,currentListing.getCoverPictureUrl());
+        intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
+        intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
+        intent.putExtra(Constants.listingCostKey, currentListing.getCost());
+        intent.putExtra(Constants.descriptionKey, currentListing.getDescription());
+        intent.putExtra(Constants.hasPetsKey, currentListing.isHasPets());
+        intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
+        intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
+        context.startActivity(intent);
     }
 }

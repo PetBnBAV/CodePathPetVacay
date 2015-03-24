@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -109,6 +110,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
 
         View convertView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_post, viewGroup, false);
+
         return  new ViewHolder(convertView);
     }
 
@@ -154,13 +156,6 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
             }
         });
 
-        //TODO Right now for demo we are showing both type of details page. Should not be this in real scenario.
-        viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-
         //TODO need to have a icon on action bar.
         viewHolder.tvPostSubTitle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,7 +169,31 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         ImagePagerAdapter adapter = new ImagePagerAdapter(mActivity);
         //TODO Need pass Images to adapter
         adapter.tempCoverPicture = currentListing.getCoverPictureUrl();
+        adapter.currentListing = currentListing;
         viewHolder.viewPager.setAdapter(adapter);
+
+        //Setting onClick for most of the item in the view
+
+        viewHolder.viewPager.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
+        viewHolder.viewPager.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoDetailsPage(currentListing);
+            }
+        });
+
+        viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoDetailsPage(currentListing);
+            }
+        });
+
     }
 
 //    public PostingArrayAdapter(FragmentActivity activity, List<Listing> listings,String dummy) {
