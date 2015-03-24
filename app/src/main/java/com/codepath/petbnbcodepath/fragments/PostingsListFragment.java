@@ -12,6 +12,8 @@ import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.PostingArrayAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
+import com.dexafree.materialList.controller.OnDismissCallback;
+import com.dexafree.materialList.model.Card;
 import com.dexafree.materialList.view.MaterialListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -75,6 +77,11 @@ public class PostingsListFragment extends Fragment {
             getNearbyListings(latitude, longitude);
         }
         lvPosting = (MaterialListView) view.findViewById(R.id.lvPost);
+
+
+
+
+
         return view;
     }
 
@@ -108,5 +115,11 @@ public class PostingsListFragment extends Fragment {
     public void onNearbyListingsLoaded() {
         aPosts = new PostingArrayAdapter((android.support.v4.app.FragmentActivity) sActivity,posts);
         lvPosting.setAdapter(aPosts);
+        lvPosting.setOnDismissCallback(new OnDismissCallback() {
+            @Override
+            public void onDismiss(Card card, int position) {
+                // Do whatever you want here
+            }
+        });
     }
 }
