@@ -6,7 +6,6 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -16,7 +15,6 @@ import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.activities.DetailsPageActivity;
-import com.codepath.petbnbcodepath.activities.MapActivity;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
@@ -157,15 +155,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         });
 
         //TODO need to have a icon on action bar.
-        viewHolder.tvPostSubTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(mActivity, MapActivity.class);
-                i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
-                i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
-                mActivity.startActivity(i);
-            }
-        });
+
         ImagePagerAdapter adapter = new ImagePagerAdapter(mActivity);
         //TODO Need pass Images to adapter
         adapter.tempCoverPicture = currentListing.getCoverPictureUrl();
@@ -174,11 +164,11 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 
         //Setting onClick for most of the item in the view
 
-        viewHolder.viewPager.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
+//        viewHolder.viewPager.setOnTouchListener(new View.OnTouchListener() {
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return false;
+//            }
+//        });
 
         viewHolder.viewPager.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -188,6 +178,12 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         });
 
         viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoDetailsPage(currentListing);
+            }
+        });
+        viewHolder.tvPostSubTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoDetailsPage(currentListing);
