@@ -102,6 +102,7 @@ public class PostingsListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String query = (String) parent.getItemAtPosition(position);
+                etSearch.setText("");
                 mCallback.onEtQuerySubmit(query);
             }
         });
