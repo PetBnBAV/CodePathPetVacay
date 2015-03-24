@@ -105,7 +105,7 @@ public class Listing {
     }
 
     public static ArrayList<Listing> fromParseObjectList (List<ParseObject> listingList) {
-        ArrayList<Listing> nearbyListings = new ArrayList<>();
+        ArrayList<Listing> nearbyListings = new ArrayList();
         for (int i = 0; i < listingList.size(); i++) {
             nearbyListings.add(Listing.fromParseObject(listingList.get(i)));
         }
@@ -152,9 +152,9 @@ public class Listing {
         ParseObject sitter = listing.getParseObject(Constants.sitterIdKey);
         currListing.first_name = sitter.getString(Constants.firstNameKey);
         currListing.last_name = sitter.getString(Constants.lastNameKey);
-        ParseFile coverPictureFile = sitter.getParseFile(Constants.coverPictureKey);
+        ParseFile coverPictureFile = sitter.getParseFile("profile_picture");
         if (coverPictureFile != null) {
-            currListing.coverPictureUrl = sitter.getParseFile(Constants.coverPictureKey).getUrl();
+            currListing.coverPictureUrl = sitter.getParseFile("profile_picture").getUrl();
         }
         return currListing;
     }
