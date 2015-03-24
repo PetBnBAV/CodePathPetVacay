@@ -18,7 +18,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,7 +36,6 @@ import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.FragmentPageAdapter;
 import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentNoPP;
 import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentWithPP;
-import com.codepath.petbnbcodepath.fragments.LandingPageFragment;
 import com.codepath.petbnbcodepath.fragments.PostingsListFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.interfaces.FragmentCameraCommunicator;
@@ -601,10 +599,14 @@ public class MainActivity extends ActionBarActivity implements
                 mGoogleApiClient);
 //        Toast.makeText(this, Double.toString(mCurrentLocation.getLatitude()) + "," +
 //                Double.toString(mCurrentLocation.getLongitude()), Toast.LENGTH_LONG).show();
-
-
         hideProgressBar();
-        Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
+        //Condition to avoid NPE
+        if(mCurrentLocation==null){
+            Toast.makeText(this, "Please check if location service is enabled or not", Toast.LENGTH_LONG).show();
+            return;
+        }
+        else
+            Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
                 mCurrentLocation.getLongitude());
         viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager(), this));
 

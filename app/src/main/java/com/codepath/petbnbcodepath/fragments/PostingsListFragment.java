@@ -61,6 +61,12 @@ public class PostingsListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
+        View view  = inflater.inflate(R.layout.fragment_posting_list,parent,false);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             final double latitude = bundle.getDouble(Constants.LATITUDE, 0);
@@ -68,11 +74,6 @@ public class PostingsListFragment extends Fragment {
             posts = new ArrayList<Listing>();
             getNearbyListings(latitude, longitude);
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_posting_list,parent,false);
         lvPosting = (MaterialListView) view.findViewById(R.id.lvPost);
         return view;
     }

@@ -154,6 +154,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
             }
         });
 
+        //TODO Right now for demo we are showing both type of details page. Should not be this in real scenario.
         viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -272,7 +273,6 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 //    }
 
     public void gotoDetailsPage(Listing currentListing){
-        //todo Crude way of doing this, need to implement Parceable instead
         Intent intent = new Intent(mActivity, DetailsPageActivity.class);
         intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
         intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
@@ -280,11 +280,10 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         intent.putExtra(Constants.reviewerIdKey,currentListing.getNumReviews());
         intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
         intent.putExtra(Constants.listingCostKey, currentListing.getCost());
-        intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
         intent.putExtra(Constants.descriptionKey, currentListing.getDescription());
+        intent.putExtra(Constants.hasPetsKey, currentListing.isHasPets());
         intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
-        intent.putExtra(Constants.petTypeKey,currentListing.getPetType());
-        intent.putExtra(Constants.hasPetsKey,currentListing.isHasPets());
+        intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
         mActivity.startActivity(intent);
     }
 }
