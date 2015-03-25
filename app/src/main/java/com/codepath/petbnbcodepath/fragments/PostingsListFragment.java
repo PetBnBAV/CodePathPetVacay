@@ -1,6 +1,7 @@
 package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
@@ -80,11 +82,15 @@ public class PostingsListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
         View view  = inflater.inflate(R.layout.fragment_posting_list,parent,false);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
+        animationDrawable = (AnimationDrawable)progressBar.getIndeterminateDrawable();
+        showProgressBar();
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             final double latitude = bundle.getDouble(Constants.LATITUDE, 0);
             final double longitude = bundle.getDouble(Constants.LONGITUDE, 0);
             posts = new ArrayList<Listing>();
+
             getNearbyListings(latitude, longitude);
         }
         lvPosting = (MaterialListView) view.findViewById(R.id.lvPost);
@@ -140,6 +146,19 @@ public class PostingsListFragment extends Fragment {
         });
     }
 
+    private AnimationDrawable animationDrawable;
+    private ProgressBar progressBar;
+
+    public void showProgressBar() {
+        animationDrawable.start();
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    public void hideProgressBar() {
+        animationDrawable.stop();
+        progressBar.setVisibility(View.INVISIBLE);
+    }
+
     /**
      * Add near by listing to ArrayAdapter
      * @param latitude
@@ -169,6 +188,7 @@ public class PostingsListFragment extends Fragment {
      */
     public void onNearbyListingsLoaded() {
         aPosts = new PostingArrayAdapter((android.support.v4.app.FragmentActivity) sActivity,posts);
+        hideProgressBar();
         lvPosting.setAdapter(aPosts);
         lvPosting.setOnDismissCallback(new OnDismissCallback() {
             @Override

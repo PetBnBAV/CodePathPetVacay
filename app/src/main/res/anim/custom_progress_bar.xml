@@ -4,18 +4,18 @@
 
     <item
         android:drawable="@mipmap/tealgarfield1"
-        android:duration="1500"
+        android:duration="100"
         />
     <item
         android:drawable="@mipmap/tealgarfield2"
-        android:duration="1500"
+        android:duration="100"
         />
     <item
         android:drawable="@mipmap/tealgarfield3"
-        android:duration="1500"
+        android:duration="100"
         />
     <item
         android:drawable="@mipmap/tealgarfield4"
-        android:duration="1500"
+        android:duration="100"
         />
 </animation-list>
