@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -88,6 +89,8 @@ public class MainActivity extends ActionBarActivity implements
     private String[] mOptionMenu;
     private ViewPager viewPager;
 
+    private FragmentPagerAdapter adapterPager;
+
 
     boolean loggedIn = false;
     boolean useLocalPP = false;
@@ -139,6 +142,8 @@ public class MainActivity extends ActionBarActivity implements
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
+        adapterPager = new FragmentPageAdapter(getSupportFragmentManager(), this);
+
         /*viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
 
         // Give the PagerSlidingTabStrip the ViewPager
@@ -611,7 +616,7 @@ public class MainActivity extends ActionBarActivity implements
         else
             Constants.currLatLng = new ParseGeoPoint(mCurrentLocation.getLatitude(),
                 mCurrentLocation.getLongitude());
-        viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager(), this));
+        viewPager.setAdapter(adapterPager);
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);

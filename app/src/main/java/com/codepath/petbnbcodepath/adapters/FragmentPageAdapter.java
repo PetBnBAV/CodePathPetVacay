@@ -72,6 +72,11 @@ public class FragmentPageAdapter extends FragmentPagerAdapter implements IconTab
     }
 
     @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
+
+    @Override
     public int getPageIconResId(int position) {
         return tabIcons[position];
     }
