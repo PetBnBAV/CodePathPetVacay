@@ -211,12 +211,12 @@ public class MainActivity extends ActionBarActivity implements
             public void onClick(View v) {
 
                 if (!loggedIn) {
-                    Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
                     myLogin();
                 }
                 else {
 
-                    Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(MainActivity.this, "Logo Clicked", Toast.LENGTH_SHORT).show();
                     FragmentManager fm = getSupportFragmentManager();
 
                     if(userHasPP) {
@@ -360,7 +360,7 @@ public class MainActivity extends ActionBarActivity implements
 
                     else {
 
-                        Toast.makeText(MainActivity.this, "User has NO  profile picture", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "User has NO  profile picture", Toast.LENGTH_LONG).show();
 
                         Picasso.with(getApplicationContext())
                                 .load(R.drawable.ic_user)
@@ -771,7 +771,7 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public void onRemoveCurrentPhoto() {
-        Toast.makeText(MainActivity.this, "Remove Current Photo", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Remove Current Photo", Toast.LENGTH_SHORT).show();
 
         userHasPP = false;
 
@@ -809,14 +809,14 @@ public class MainActivity extends ActionBarActivity implements
 
     @Override
     public void onTakePhoto() {
-        Toast.makeText(MainActivity.this, "Take Photo", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Take Photo", Toast.LENGTH_SHORT).show();
         launchCamera();
 
     }
 
     @Override
     public void onChooseFromLibrary() {
-        Toast.makeText(MainActivity.this, "Choose From Library", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(MainActivity.this, "Choose From Library", Toast.LENGTH_SHORT).show();
         launchGallery();
     }
 
@@ -904,7 +904,7 @@ public class MainActivity extends ActionBarActivity implements
                                     user_info.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
-                                            Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });
@@ -970,7 +970,7 @@ public class MainActivity extends ActionBarActivity implements
                                     user_info_camera.saveInBackground(new SaveCallback() {
                                         @Override
                                         public void done(ParseException e) {
-                                            Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
+                                            //Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
 
                                         }
                                     });
