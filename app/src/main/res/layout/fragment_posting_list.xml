@@ -3,7 +3,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android">
-        <ProgressBar
+    <ProgressBar
             android:id="@+id/progressBar1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,8 +28,6 @@
             android:hint="@string/whereto"
             android:paddingLeft="@dimen/textview_hint_padding"
             android:paddingStart="@dimen/textview_hint_padding"
-            android:nextFocusUp="@+id/tvCurrLoc"
-            android:nextFocusLeft="@+id/tvCurrLoc"
             android:singleLine="true"
             android:textColor="@color/light_gray"
             android:textColorHint="@color/light_gray" />
@@ -60,4 +58,4 @@
             android:divider="@android:color/transparent"
             android:dividerHeight="20dp" />
     </LinearLayout>
- </RelativeLayout>
+</RelativeLayout>
