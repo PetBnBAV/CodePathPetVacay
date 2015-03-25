@@ -195,7 +195,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
         query.getInBackground(objectId, new GetCallback<ParseObject>() {
             public void done(ParseObject object, ParseException e) {
                 if (e == null) {
-                    String coverPicUrl = object.getParseFile(Constants.coverPictureKey).getUrl();
+                    String profilePicUrl = object.getParseFile("profile_picture").getUrl();
                     firstName = object.getString(Constants.firstNameKey);
                     tvFirstName.setText(object.getString(Constants.firstNameKey));
                     tvLastName.setText(object.getString(Constants.lastNameKey));
@@ -214,7 +214,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                     // Resizing with 0 height, allows the height to be variable, while the width is
                     // fixed as the screen width - so the aspect ratio is maintained.
                     Picasso.with(PetOwnerProfileActivity.this)
-                            .load(coverPicUrl)
+                            .load(profilePicUrl)
                             .resize(targetWidth, 0)
                             .placeholder(getResources().getDrawable(R.drawable.placeholder))
                             .into(ivProfilePic);

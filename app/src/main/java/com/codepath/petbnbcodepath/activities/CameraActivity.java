@@ -27,14 +27,25 @@ import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class CameraActivity extends ActionBarActivity {
 
-    ImageView ivTakePicture;
+
+    ImageView ivPhotoOne;
+    ImageView ivPhotoTwo;
+    ImageView ivPhotoThree;
+    ImageView ivPhotoFour;
+    ImageView ivPhotoFive;
+
     TextView tvAddPhotos;
     ImageView ivDirection;
     Toolbar toolbar;
     int photosCount = 0;
     TextView tvNumOfPhotos;
+    boolean mainPhotoEmpty = false;
 
     LinearLayout llDragandDrop;
     Button btnBackBlack;
@@ -44,6 +55,18 @@ public class CameraActivity extends ActionBarActivity {
     final int RESULT_LAUNCH_GALLERY = 30;
     final int RESULT_PICTURES_ADDED = 60;
 
+    int MAX_NO_OF_PHOTOS =  5;
+
+    byte photoOne[];
+    byte photoTwo[];
+    byte photoThree[];
+    byte photoFour[];
+    byte photoFive[];
+
+    String path;
+
+    String test;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +75,21 @@ public class CameraActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarforcamera);
         setSupportActionBar(toolbar);
 
-        ivTakePicture = (ImageView) findViewById(R.id.ivTakePicture);
+        photoOne = new byte[0];
+        photoTwo = new byte[0];
+        photoThree = new byte[0];
+        photoFour = new byte[0];
+        photoFive = new byte[0];
+
+
+
+       // ivTakePicture = (ImageView) findViewById(R.id.ivPhotoFive);
+        ivPhotoOne = (ImageView) findViewById(R.id.ivPhotoOne);
+        ivPhotoTwo = (ImageView) findViewById(R.id.ivPhotoTwo);
+        ivPhotoThree = (ImageView) findViewById(R.id.ivPhotoThree);
+        ivPhotoFour = (ImageView) findViewById(R.id.ivPhotoFour);
+        ivPhotoFive = (ImageView) findViewById(R.id.ivPhotoFive);
+
         llDragandDrop = (LinearLayout) findViewById(R.id.llDragandDrop);
         ivDirection = (ImageView) findViewById(R.id.ivDirection);
         tvAddPhotos = (TextView) findViewById(R.id.tvAddPhotos);
@@ -61,7 +98,7 @@ public class CameraActivity extends ActionBarActivity {
 
         tvAddPhotos.setText("Add photos to your listing");
 
-        ivTakePicture.setOnLongClickListener(longListener);
+        ivPhotoOne.setOnLongClickListener(longListener);
         llDragandDrop.setOnDragListener(DropListener);
 
     }
@@ -139,7 +176,11 @@ public class CameraActivity extends ActionBarActivity {
                     ViewGroup owner = (ViewGroup) draggedView.getParent();
 
                     ImageView iv =  (ImageView) owner.getChildAt(2);
+
                     iv.setImageResource(0);
+                    iv.setImageBitmap(null);
+
+                    mainPhotoEmpty = true;
 
                     getSupportActionBar().show();
                     photosCount--;
@@ -179,25 +220,255 @@ public class CameraActivity extends ActionBarActivity {
             String selectedImagePath = getPath(selectedImageUri);
             System.out.println("Image Path : " + selectedImagePath);
 
-            ivTakePicture.setVisibility(View.VISIBLE);
 
-            ivTakePicture.setImageURI(selectedImageUri);
-            tvAddPhotos.setVisibility(View.INVISIBLE);
-            ivDirection.setVisibility(View.INVISIBLE);
-            photosCount++;
-            updatePhotoCount();
+            switch(photosCount)
+            {
+                case 0:
+                    ivPhotoOne.setVisibility(View.VISIBLE);
+                    test = selectedImagePath;
+                    ivPhotoOne.setImageURI(selectedImageUri);
+                    tvAddPhotos.setVisibility(View.INVISIBLE);
+                    ivDirection.setVisibility(View.INVISIBLE);
+                    try {
+                        photoOne = readBytesFromURI(selectedImageUri);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 1:
+                    if(mainPhotoEmpty)
+                    {
+                        ivPhotoOne.setImageURI(selectedImageUri);
+                        mainPhotoEmpty = false;
+                        try {
+                            photoOne = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    else
+                    {
+                        ivPhotoTwo.setImageURI(selectedImageUri);
+                        try {
+                            photoTwo = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 2:
+                    if(mainPhotoEmpty)
+                    {
+                        ivPhotoOne.setImageURI(selectedImageUri);
+                        mainPhotoEmpty = false;
+                        try {
+                            photoOne = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    else
+                    {
+                        ivPhotoThree.setImageURI(selectedImageUri);
+                        try {
+                            photoThree = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 3:
+                    if(mainPhotoEmpty)
+                    {
+                        ivPhotoOne.setImageURI(selectedImageUri);
+                        mainPhotoEmpty = false;
+                        try {
+                            photoOne = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    else
+                    {
+                        ivPhotoFour.setImageURI(selectedImageUri);
+                        try {
+                            photoFour = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 4:
+
+
+                    if(mainPhotoEmpty)
+                    {
+                       ivPhotoOne.setImageURI(selectedImageUri);
+                        mainPhotoEmpty = false;
+                        try {
+                            photoOne = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    else
+                    {
+                        ivPhotoFive.setImageURI(selectedImageUri);
+                        try {
+                            photoFive = readBytesFromURI(selectedImageUri);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+            }
+
+
+
+
+
         }
 
         if (requestCode == RESULT_LAUNCH_CAMERA && resultCode == RESULT_OK && null != data) {
             Bitmap bp = (Bitmap) data.getExtras().get("data");
-            ivTakePicture.setImageBitmap(bp);
-            tvAddPhotos.setVisibility(View.INVISIBLE);
-            ivDirection.setVisibility(View.INVISIBLE);
-            photosCount++;
-            updatePhotoCount();
+
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            bp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+
+            path = MediaStore.Images.Media.insertImage(getContentResolver(), bp, "Title", null);
 
 
+
+            switch(photosCount)
+            {
+                case 0:
+                    ivPhotoOne.setVisibility(View.VISIBLE);
+                    ivPhotoOne.setImageBitmap(bp);
+                    tvAddPhotos.setVisibility(View.INVISIBLE);
+                    ivDirection.setVisibility(View.INVISIBLE);
+                    photoOne = bos.toByteArray();
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 1:
+                    if(mainPhotoEmpty)
+                    {
+                        ivPhotoOne.setImageBitmap(bp);
+                        photoOne = bos.toByteArray();
+                        mainPhotoEmpty = false;
+
+                    }
+                    else
+                    {
+                        ivPhotoTwo.setImageBitmap(bp);
+                        photoTwo = bos.toByteArray();
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 2:
+                    if(mainPhotoEmpty)
+                    {
+                        ivPhotoOne.setImageBitmap(bp);
+                        photoOne = bos.toByteArray();
+                        mainPhotoEmpty = false;
+
+                    }
+                    else
+                    {
+                        ivPhotoThree.setImageBitmap(bp);
+                        photoThree = bos.toByteArray();
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 3:
+                    if(mainPhotoEmpty)
+                    {
+                        ivPhotoOne.setImageBitmap(bp);
+                        photoOne = bos.toByteArray();
+                        mainPhotoEmpty = false;
+
+                    }
+                    else
+                    {
+                        ivPhotoFour.setImageBitmap(bp);
+                        photoFour = bos.toByteArray();
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+                case 4:
+                    if(mainPhotoEmpty)
+                    {
+                        ivPhotoOne.setImageBitmap(bp);
+                        photoOne = bos.toByteArray();
+                        mainPhotoEmpty = false;
+
+                    }
+                    else
+                    {
+                        ivPhotoFive.setImageBitmap(bp);
+                        photoFive = bos.toByteArray();
+                    }
+
+                    photosCount++;
+                    updatePhotoCount();
+                    break;
+            }
         }
+    }
+
+
+
+    public byte[] readBytesFromURI(Uri uri) throws IOException {
+        // this dynamically extends to take the bytes you read
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
+
+        // this is storage overwritten on each iteration with bytes
+        int bufferSize = 1024;
+        byte[] buffer = new byte[bufferSize];
+
+        // we need to know how may bytes were read to write them to the byteBuffer
+        int len = 0;
+        while ((len = inputStream.read(buffer)) != -1) {
+            byteBuffer.write(buffer, 0, len);
+        }
+
+        // and then we can return your byte array.
+        return byteBuffer.toByteArray();
     }
 
 
@@ -249,12 +520,25 @@ public class CameraActivity extends ActionBarActivity {
         // Handle action buttons
         if(id == R.id.miCamera) {
             //Toast.makeText(this, "camera",Toast.LENGTH_SHORT);
-            launchCamera();
+
+            if(photosCount != MAX_NO_OF_PHOTOS) {
+                launchCamera();
+            }
+            else
+            {
+
+            }
         }
 
         else  if(id == R.id.miGallery) {
            // Toast.makeText(this, "gallery",Toast.LENGTH_SHORT);
-            launchGallery();
+            if(photosCount != MAX_NO_OF_PHOTOS) {
+                launchGallery();
+            }
+            else
+            {
+
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -263,9 +547,21 @@ public class CameraActivity extends ActionBarActivity {
 
     public void onBack(View v)
     {
-        Intent intent=new Intent();
-        intent.putExtra("MESSAGE","pictures");
-        setResult(RESULT_PICTURES_ADDED,intent);
+
+        Intent intent = new Intent();
+
+
+        intent.putExtra("One", path);
+        //intent.putExtra("Two", photoTwo);
+        //intent.putExtra("One", photoThree);
+        //intent.putExtra("Two", photoFour);
+        //intent.putExtra("One", photoFive);
+
+       // Bitmap bmp = BitmapFactory.decodeByteArray(photoOne, 0, photoOne.length);
+       //ivTakePicture.setImageBitmap(bmp);
+
+
+        setResult(RESULT_OK, intent);
         finish();
 
     }

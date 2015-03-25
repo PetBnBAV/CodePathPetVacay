@@ -24,3 +24,19 @@ proguard/
 
 # Log Files
 *.log
+
+.idea/libraries/cardview_v7_21_0_2.xml
+
+.idea/libraries/support_v4_21_0_3.xml
+
+.idea/libraries/support_v4_21_0_3.xml
+
+.idea/libraries/support_annotations_21_0_3.xml
+
+.idea/libraries/recyclerview_v7_21_0_0.xml
+
+.idea/libraries/linearlistview_1_0_1.xml
+
+.idea/libraries/android_maps_utils_0_3_4.xml
+
+.idea/libraries/library_1_2_2.xml
