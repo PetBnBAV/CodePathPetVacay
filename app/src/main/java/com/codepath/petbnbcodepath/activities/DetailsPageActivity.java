@@ -20,6 +20,8 @@ import com.parse.ParseUser;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.util.ArrayList;
+
 public class DetailsPageActivity extends ActionBarActivity {
     WrapContentHeightViewPager viewPager;
     ImageView ivSitterImage;
@@ -51,6 +53,7 @@ public class DetailsPageActivity extends ActionBarActivity {
         final int houseType = getIntent().getIntExtra(Constants.houseTypeKey,0);
         final int petType =  getIntent().getIntExtra(Constants.petTypeKey,0);
         final boolean hasPet = getIntent().getBooleanExtra(Constants.hasPetsKey,false);
+        final ArrayList<String> imageUrlList = getIntent().getStringArrayListExtra(Constants.IMAGE_URL_LIST);
 
         final boolean isPreview = getIntent().getBooleanExtra(Constants.IS_PREVIEW,false);
         int visibilityRequestBtn =  (isPreview? View.GONE:View.VISIBLE);
@@ -78,7 +81,7 @@ public class DetailsPageActivity extends ActionBarActivity {
 
 
         viewPager = (WrapContentHeightViewPager) findViewById(R.id.view_pager);
-        ImagePagerAdapter adapter = new ImagePagerAdapter(this);
+        ImagePagerAdapter adapter = new ImagePagerAdapter(this,imageUrlList);
         //TODO Need pass Images to adapter
         adapter.tempCoverPicture = coverPicture;
         viewPager.setAdapter(adapter);

@@ -38,7 +38,8 @@
         android:textColor="@color/black"
         android:visibility="visible"
         android:gravity="center_vertical"
-        android:layout_marginTop="25dp" />
+        android:paddingTop="25dp"
+        />
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/flMYL"

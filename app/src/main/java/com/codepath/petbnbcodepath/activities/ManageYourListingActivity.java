@@ -2,6 +2,7 @@ package com.codepath.petbnbcodepath.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +15,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.MYLAddressFragment;
@@ -24,10 +24,15 @@ import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
+import com.squareup.picasso.Picasso;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class ManageYourListingActivity extends ActionBarActivity implements MYLLandingPageFragment.PostListingListner,MYLPriceFragment.PriceListingListener,
         MYLAddressFragment.AddressListingListner{
@@ -93,7 +98,8 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     final int RESULT_PICTURES_ADDED = 60;
 
     Listing listing = new Listing();
-
+    String selectedImageUri;
+    ArrayList<String> imageUrlList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -176,14 +182,14 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             @Override
             public void onClick(View v) {
                 //TODO need to move camera stuff to fragment
-                                Intent intent = new Intent(ManageYourListingActivity.this, CameraActivity.class);
+                Intent intent = new Intent(ManageYourListingActivity.this, CameraActivity.class);
                 startActivityForResult(intent, RESULT_PICTURES_ADDED);
             }
         });
         llMYLTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity,ManageYourListingActivity.max_word_count_summary,titleIndex,(String)tvMYLTitle.getText());
+                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity, ManageYourListingActivity.max_word_count_summary, titleIndex, (String) tvMYLTitle.getText());
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.flMYL, mylLandingPage);
                 ft.commit();
@@ -192,7 +198,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         llMYLSummary.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity,ManageYourListingActivity.max_word_count_summary,summaryIndex,(String)tvMYLSummary.getText());
+                mylLandingPage = MYLLandingPageFragment.getInstance(sActivity, ManageYourListingActivity.max_word_count_summary, summaryIndex, (String) tvMYLSummary.getText());
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.flMYL, mylLandingPage);
                 ft.commit();
@@ -202,9 +208,12 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             @Override
             public void onClick(View v) {
                 int price;
-                try{ price = Integer.parseInt((String) tvMYLPrice.getText());}
-                catch (Exception e){price =0;}
-                mylPriceFragment = MYLPriceFragment.getInstance(sActivity,price);
+                try {
+                    price = Integer.parseInt((String) tvMYLPrice.getText());
+                } catch (Exception e) {
+                    price = 0;
+                }
+                mylPriceFragment = MYLPriceFragment.getInstance(sActivity, price);
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.flMYL, mylPriceFragment);
                 ft.commit();
@@ -215,7 +224,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             @Override
             public void onClick(View v) {
                 String address = String.valueOf(tvMYLAddress.getText());
-                mylAddress = MYLAddressFragment.getInstance(sActivity,address);
+                mylAddress = MYLAddressFragment.getInstance(sActivity, address);
                 ft = getSupportFragmentManager().beginTransaction();
                 ft.add(R.id.flMYL, mylAddress);
                 ft.commit();
@@ -223,48 +232,86 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         });
 
 
-
         btStickyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                if (currentUser != null) {
-                    final ParseObject posting = new ParseObject(Constants.petVacayListingTable);
-                    posting.put(Constants.costKey, mCost);
-                    posting.put(Constants.titleKey, mTitle);
-                    posting.put(Constants.descriptionKey, mSummary);
-                    posting.put(Constants.hasPetsKey, true);//TODO need to update the table or UI
-                    posting.put(Constants.petTypeKey, petType);
-                    posting.put(Constants.homeTypeKey, houseType);
-                    //TODO need to update petSize, playground, city
-                    ParseGeoPoint geoPoint = Utils.getLocationFromAddress(ManageYourListingActivity.this, mAddress);
-                    //TODO If the address is not a valid address, notify user.
-                    if(geoPoint==null)
-                        geoPoint = new ParseGeoPoint(Constants.defaultLatitude,Constants.defaultLongitude);
-                    posting.put(Constants.latlngKey, geoPoint);
-                    posting.put(Constants.sitterIdKey, currentUser);
-                    posting.saveInBackground(new SaveCallback() {
-                        @Override
-                        public void done(ParseException e2) {
-                            if (e2 == null) {
-                                Toast.makeText(ManageYourListingActivity.this, "Posted a posting with title " + mTitle, Toast.LENGTH_SHORT).show();
+                byte[] photo = new byte[0];
+                try {
+                    Uri uri = Uri.parse(selectedImageUri);
+                    photo = Utils.readBytesFromURI(ManageYourListingActivity.this, uri);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                final String currentUserId = ParseUser.getCurrentUser().getObjectId();
+
+                final ParseFile file = new ParseFile("coverImage_"+currentUserId+"_1.jpg", photo);
+                file.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+
+                        final ParseObject listingPictures = new ParseObject(Constants.PetVacayListingPictures);
+                        listingPictures.put(Constants.listingPictureItemKeys[0], file);
+                        for(int i=1;i<imageUrlList.size();i++){
+                            try {
+                                final ParseFile file = new ParseFile("coverImage_"+currentUserId+"_"+(i+1)+".jpg",Utils.readBytesFromURI(ManageYourListingActivity.this,Uri.parse(imageUrlList.get(i))));
+                                final String key = Constants.listingPictureItemKeys[i];
+                                file.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        listingPictures.put(key, file);
+
+                                    }
+                                });
+                            } catch (IOException e1) {
+                                e1.printStackTrace();
                             }
                         }
-                    });
-                }
-                gotoPreview();
+                        ParseUser currentUser = ParseUser.getCurrentUser();
+                        final String objectIdListingPicture;
+                        if (currentUser != null) {
+
+                            final ParseObject posting = new ParseObject(Constants.petVacayListingTable);
+                            posting.put(Constants.costKey, mCost);
+                            posting.put(Constants.titleKey, mTitle);
+                            posting.put(Constants.descriptionKey, mSummary);
+                            posting.put(Constants.hasPetsKey, true);//TODO need to update the table or UI
+                            posting.put(Constants.petTypeKey, petType);
+                            posting.put(Constants.homeTypeKey, houseType);
+                            posting.put(Constants.listingPicturesKey, listingPictures);
+                            //TODO need to update petSize, playground, city
+                            ParseGeoPoint geoPoint = Utils.getLocationFromAddress(ManageYourListingActivity.this, mAddress);
+                            //TODO If the address is not a valid address, notify user.
+                            if (geoPoint == null)
+                                geoPoint = new ParseGeoPoint(Constants.defaultLatitude, Constants.defaultLongitude);
+                            posting.put(Constants.latlngKey, geoPoint);
+                            posting.put(Constants.sitterIdKey, currentUser);
+                            posting.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(ParseException e2) {
+//                                    Toast.makeText(ManageYourListingActivity.this, "Posted a posting with title " + mTitle, Toast.LENGTH_SHORT).show();
+
+                                }
+                            });
+
+                        }
+                        gotoPreview();
+                    }
+
+                    ;
+
+                });
+
+                tvToolbarSecondaryTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gotoPreview();
+                    }
+                });
             }
         });
-
-        tvToolbarSecondaryTitle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoPreview();            }
-        });
-
     }
 
-    public void gotoPreview(){
+        public void gotoPreview(){
         Utils.gotoDetailsPage(this, listing, true);
 
     }
@@ -373,6 +420,29 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             stickyButtonEnabled = true;
             btStickyButton.setText(getString(R.string.complete_profile));
 
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+
+        if (requestCode == RESULT_PICTURES_ADDED && resultCode == RESULT_OK && null != data) {
+            imageUrlList = data.getExtras().getStringArrayList(Constants.COVER_PICTURES_URL);
+            listing.setImageUrlList(imageUrlList);
+            for(String imageUrl : imageUrlList){
+                if(imageUrl!=null) {
+                    selectedImageUri = imageUrl;
+                    break;
+                }
+            }
+            ImageView image = (ImageView) findViewById(R.id.coverImage);
+
+            Picasso.with(getApplicationContext())
+                    .load(selectedImageUri)
+                    .placeholder(R.drawable.default_photo_bg)
+                    .into(image);
         }
     }
 

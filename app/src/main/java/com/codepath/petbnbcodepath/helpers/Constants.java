@@ -16,6 +16,7 @@ public class Constants {
     public static final String petVacayListingTable = "PetVacayListing";
     public static final String petVacayReviewTable = "PetVacayReview";
     public static final String petVacayBookingHistoryTable = "PetVacayBookingHistory";
+    public static final String PetVacayListingPictures = "PetVacayListingPictures";
 
     public static final int whereWithinMiles = 20;
     public static final int nearbyQueryLimit = 10;
@@ -98,5 +99,7 @@ public class Constants {
     public static final String SECONADRY_ICON = "secondaryIconResource";
     public static final String TEAL_COLOR = "#008080";
     public static final String IS_PREVIEW="is_preview";
-
+    public static final String COVER_PICTURES_URL = "cover_pictures_url";
+    public static final String []listingPictureItemKeys = {"lst_picOne","lst_picTwo","lst_picThree","lst_picFour","lst_picFive"};
+    public static final String IMAGE_URL_LIST = "image_url_list";
 }

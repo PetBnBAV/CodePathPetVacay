@@ -2,7 +2,6 @@ package com.codepath.petbnbcodepath.models;
 
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.net.GoogleMapReverseGeoCodingClient;
-import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -58,13 +57,20 @@ public class Listing {
     private int petType;
     private boolean hasPets;
 
+    public ArrayList<String> getImageUrlList() {
+        return imageUrlList;
+    }
+
+    public void setImageUrlList(ArrayList<String> imageUrlList) {
+        this.imageUrlList = imageUrlList;
+    }
+
+    private ArrayList<String> imageUrlList = new ArrayList<String>();
+
     public ArrayList<ParseFile> getListingPictureList() {
         return listingPictureList;
     }
 
-    public void setListingPictureList(ArrayList<ParseFile> listingPictureList) {
-        this.listingPictureList = listingPictureList;
-    }
 
     public int getListingPictureCount() {
         return listingPictureCount;
@@ -177,25 +183,25 @@ public class Listing {
         if (coverPictureFile != null) {
             currListing.coverPictureUrl = sitter.getParseFile("profile_picture").getUrl();
         }
-        ParseObject listingPictures = listing.getParseObject(Constants.listingPicturesKey);
-
         currListing.listingPictureList = new ArrayList<ParseFile>();
-        String []listingPictureItemKeys = {"lst_picOne","lst_picTwo","lst_picThree","lst_picFour","lst_picFive"};
-        for(String listingPictureItem : listingPictureItemKeys)
-        {
-            ParseFile listingPictureFile = null;
-            try {
-                listingPictureFile = listingPictures.fetchIfNeeded().getParseFile(listingPictureItem);
-            } catch (ParseException e) {
-                listingPictureFile =null;
-                e.printStackTrace();
+//        String []listingPictureItemKeys = {"lst_picOne","lst_picTwo","lst_picThree","lst_picFour","lst_picFive"};
+        ParseObject listingPictures = listing.getParseObject(Constants.listingPicturesKey);
+        if(listingPictures!=null) {
+            for (String listingPictureItem : Constants.listingPictureItemKeys) {
+                ParseFile listingPictureFile = null;
+                try {
+                    listingPictureFile = listingPictures.fetchIfNeeded().getParseFile(listingPictureItem);
+                } catch (Exception e) {
+                    listingPictureFile = null;
+                    e.printStackTrace();
+                }
+                if (listingPictureFile != null) {
+                    currListing.listingPictureList.add(listingPictureFile);
+                    currListing.imageUrlList.add(listingPictureFile.getUrl());
+                }
             }
-            if(listingPictureFile!=null){
-                currListing.listingPictureList.add(listingPictureFile);
-            }
+            currListing.listingPictureCount = currListing.listingPictureList.size();
         }
-         currListing.listingPictureCount = currListing.listingPictureList.size();
-
         return currListing;
     }
 

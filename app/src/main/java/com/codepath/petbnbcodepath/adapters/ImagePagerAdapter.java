@@ -12,6 +12,8 @@ import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+
 
 /**
  * Created by gangwal on 3/9/15.
@@ -21,6 +23,7 @@ public class ImagePagerAdapter extends PagerAdapter {
     private Context context;
     public String tempCoverPicture= "";
     public Listing currentListing;
+    ArrayList<String> mImageUrlList;
     public int[] mImages = new int[] {
             R.drawable.pet_sitter1,
             R.drawable.pet_sitter2,
@@ -29,14 +32,14 @@ public class ImagePagerAdapter extends PagerAdapter {
             R.drawable.pett_sitter5,
     };
 
-    public ImagePagerAdapter(Context context){
+    public ImagePagerAdapter(Context context, ArrayList<String> imageUrlList){
         this.context = context;
-
+        this.mImageUrlList = imageUrlList;
     }
 
     @Override
     public int getCount() {
-        return mImages.length;
+        return mImageUrlList.size();
     }
 
     @Override
@@ -56,19 +59,20 @@ public class ImagePagerAdapter extends PagerAdapter {
         //TODO dummy logic, needs to be updated
         if(tempCoverPicture==null)
             tempCoverPicture= "";
-        if(position==0 && !tempCoverPicture.isEmpty()){
-            imageView.setImageResource(0);
-
+//        if(position==0 && !tempCoverPicture.isEmpty()){
+//            imageView.setImageResource(0);
+//
+//            Picasso.with(context)
+//                    .load(tempCoverPicture)
+//                    .fit()
+//                    .into(imageView);
+//        }
+//        else {
             Picasso.with(context)
-                    .load(tempCoverPicture)
+                    .load(mImageUrlList.get(position))
                     .fit()
                     .into(imageView);
-        }
-        else {
-            Picasso.with(context)
-                    .load(mImages[position])
-                    .fit()
-                    .into(imageView);        }
+//        }
         ((ViewPager) container).addView(imageView, 0);
 
 
