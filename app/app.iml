@@ -99,6 +99,7 @@
     <orderEntry type="library" exported="" name="lib-core-3.1.0" level="project" />
     <orderEntry type="library" exported="" name="Parse-1.8.3" level="project" />
     <orderEntry type="library" exported="" name="kenburnsview-1.0.6" level="project" />
+    <orderEntry type="library" exported="" name="parallaxscroll-1.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="materiallist-2.3.2" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
