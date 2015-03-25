@@ -2,6 +2,7 @@ package com.codepath.petbnbcodepath.models;
 
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.net.GoogleMapReverseGeoCodingClient;
+import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
@@ -56,6 +57,25 @@ public class Listing {
     private int homeType;
     private int petType;
     private boolean hasPets;
+
+    public ArrayList<ParseFile> getListingPictureList() {
+        return listingPictureList;
+    }
+
+    public void setListingPictureList(ArrayList<ParseFile> listingPictureList) {
+        this.listingPictureList = listingPictureList;
+    }
+
+    public int getListingPictureCount() {
+        return listingPictureCount;
+    }
+
+    public void setListingPictureCount(int listingPictureCount) {
+        this.listingPictureCount = listingPictureCount;
+    }
+
+    private ArrayList<ParseFile> listingPictureList;
+    private int listingPictureCount;
 
     private Review firstReview;
 
@@ -157,6 +177,25 @@ public class Listing {
         if (coverPictureFile != null) {
             currListing.coverPictureUrl = sitter.getParseFile("profile_picture").getUrl();
         }
+        ParseObject listingPictures = listing.getParseObject(Constants.listingPicturesKey);
+
+        currListing.listingPictureList = new ArrayList<ParseFile>();
+        String []listingPictureItemKeys = {"lst_picOne","lst_picTwo","lst_picThree","lst_picFour","lst_picFive"};
+        for(String listingPictureItem : listingPictureItemKeys)
+        {
+            ParseFile listingPictureFile = null;
+            try {
+                listingPictureFile = listingPictures.fetchIfNeeded().getParseFile(listingPictureItem);
+            } catch (ParseException e) {
+                listingPictureFile =null;
+                e.printStackTrace();
+            }
+            if(listingPictureFile!=null){
+                currListing.listingPictureList.add(listingPictureFile);
+            }
+        }
+         currListing.listingPictureCount = currListing.listingPictureList.size();
+
         return currListing;
     }
 

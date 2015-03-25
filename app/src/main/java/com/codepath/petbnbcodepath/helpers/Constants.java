@@ -73,6 +73,7 @@ public class Constants {
     public static final String latlngKey = "latlng";
     public static final String costKey = "cost";
     public static String locationStrKey = "locationStr";
+    public static String listingPicturesKey = "listing_pictures";
 
     public enum PET_TYPE {
         DOG(0), CAT(1), BOTH(2);
