@@ -178,6 +178,8 @@ public class CameraActivity extends ActionBarActivity {
 
                     mainPhotoEmpty = true;
 
+                    paths.remove(0);
+
                     getSupportActionBar().show();
                     photosCount--;
                     updatePhotoCount();
@@ -217,8 +219,6 @@ public class CameraActivity extends ActionBarActivity {
             String selectedImagePath = getPath(selectedImageUri);
             System.out.println("Image Path : " + selectedImagePath);
 
-            paths.add(selectedImagePath);
-
 
             switch(photosCount)
             {
@@ -227,6 +227,8 @@ public class CameraActivity extends ActionBarActivity {
                     ivPhotoOne.setImageURI(selectedImageUri);
                     tvAddPhotos.setVisibility(View.INVISIBLE);
                     ivDirection.setVisibility(View.INVISIBLE);
+
+                    paths.add(0,selectedImagePath);
 
                     photosCount++;
                     updatePhotoCount();
@@ -237,11 +239,14 @@ public class CameraActivity extends ActionBarActivity {
                         ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
 
+                        paths.add(0,selectedImagePath);
+
                     }
 
                     else
                     {
                         ivPhotoTwo.setImageURI(selectedImageUri);
+                        paths.add(1,selectedImagePath);
 
                     }
 
@@ -254,6 +259,8 @@ public class CameraActivity extends ActionBarActivity {
                         ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
 
+                        paths.add(0,selectedImagePath);
+
                     }
 
                     else
@@ -262,6 +269,8 @@ public class CameraActivity extends ActionBarActivity {
                                 .load(selectedImagePath)
                                 .into(ivPhotoThree);
 //                        ivPhotoThree.setImageURI(selectedImageUri);
+
+                        paths.add(2,selectedImagePath);
                     }
 
                     photosCount++;
@@ -273,11 +282,14 @@ public class CameraActivity extends ActionBarActivity {
                         ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
 
+                        paths.add(0,selectedImagePath);
+
                     }
 
                     else
                     {
                         ivPhotoFour.setImageURI(selectedImageUri);
+                        paths.add(3,selectedImagePath);
                     }
 
                     photosCount++;
@@ -290,11 +302,14 @@ public class CameraActivity extends ActionBarActivity {
                     {
                         ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
+
+                        paths.add(0,selectedImagePath);
                     }
 
                     else
                     {
                         ivPhotoFive.setImageURI(selectedImageUri);
+                        paths.add(4,selectedImagePath);
 
 
                     }
@@ -317,7 +332,7 @@ public class CameraActivity extends ActionBarActivity {
             bp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 
             String url =(MediaStore.Images.Media.insertImage(getContentResolver(), bp, "Title", null));
-            paths.add(url);
+
 
             switch(photosCount)
             {
@@ -329,6 +344,8 @@ public class CameraActivity extends ActionBarActivity {
 //                    ivPhotoOne.setImageBitmap(bp);
                     tvAddPhotos.setVisibility(View.INVISIBLE);
                     ivDirection.setVisibility(View.INVISIBLE);
+
+                    paths.add(0,url);
 
 
                     photosCount++;
@@ -343,6 +360,8 @@ public class CameraActivity extends ActionBarActivity {
 //                        ivPhotoOne.setImageBitmap(bp);
                         mainPhotoEmpty = false;
 
+                        paths.add(0,url);
+
                     }
                     else
                     {
@@ -350,6 +369,8 @@ public class CameraActivity extends ActionBarActivity {
                                 .load(url)
                                 .into(ivPhotoTwo);
 //                        ivPhotoTwo.setImageBitmap(bp);
+
+                        paths.add(1,url);
 
                     }
 
@@ -365,6 +386,8 @@ public class CameraActivity extends ActionBarActivity {
 //                        ivPhotoOne.setImageBitmap(bp);
                         mainPhotoEmpty = false;
 
+                        paths.add(0,url);
+
                     }
                     else
                     {
@@ -372,6 +395,8 @@ public class CameraActivity extends ActionBarActivity {
                                 .load(url)
                                 .into(ivPhotoThree);
 //                        ivPhotoThree.setImageBitmap(bp);
+
+                        paths.add(2,url);
 
                     }
 
@@ -381,20 +406,24 @@ public class CameraActivity extends ActionBarActivity {
                 case 3:
                     if(mainPhotoEmpty)
                     {
-                        Picasso.with(getApplicationContext())
+                       /* Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoOne);
-//                        ivPhotoOne.setImageBitmap(bp);
+                                .into(ivPhotoOne);*/
+                        ivPhotoOne.setImageBitmap(bp);
 
                         mainPhotoEmpty = false;
+
+                        paths.add(0,url);
 
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext())
+                       /* Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoFour);
-//                        ivPhotoFour.setImageBitmap(bp);
+                                .into(ivPhotoFour);*/
+                        ivPhotoFour.setImageBitmap(bp);
+
+                        paths.add(3,url);
 
                     }
 
@@ -404,20 +433,24 @@ public class CameraActivity extends ActionBarActivity {
                 case 4:
                     if(mainPhotoEmpty)
                     {
-                        Picasso.with(getApplicationContext())
+                        /*Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoOne);
-//                        ivPhotoOne.setImageBitmap(bp);
+                                .into(ivPhotoOne);*/
+                       ivPhotoOne.setImageBitmap(bp);
 
                         mainPhotoEmpty = false;
+
+                        paths.add(0,url);
 
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext())
+                        /*Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoFive);
-//                        ivPhotoFive.setImageBitmap(bp);
+                                .into(ivPhotoFive);*/
+                        ivPhotoFive.setImageBitmap(bp);
+
+                        paths.add(4,url);
                     }
                     photosCount++;
                     updatePhotoCount();
@@ -493,6 +526,7 @@ public class CameraActivity extends ActionBarActivity {
             }
             else
             {
+
 
             }
         }
