@@ -169,6 +169,7 @@ public class Utils {
         intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
         intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
         intent.putExtra(Constants.IS_PREVIEW, isPreview);
+        intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
         context.startActivity(intent);
     }
 }

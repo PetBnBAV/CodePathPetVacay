@@ -314,9 +314,9 @@ public class SignUpFragment extends Fragment {
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
-                    Toast.makeText(getActivity(),
+                   /* Toast.makeText(getActivity(),
                             "You are now signed up " + ParseUser.getCurrentUser().toString(),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
                     ParseInstallation installation =
                             ParseInstallation.getCurrentInstallation();
                     installation.put("user", ParseUser.getCurrentUser());

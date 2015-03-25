@@ -7,7 +7,7 @@
     <AutoCompleteTextView
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="@dimen/landing_pg_search_height"
         android:hint="@string/whereto"
         android:background="@color/vl_white"
         android:paddingLeft="@dimen/textview_hint_padding"
@@ -16,7 +16,8 @@
         android:textColor="@color/light_gray"
         android:textColorHint="@color/light_gray"
         android:drawableRight="@mipmap/landing_loc"
-        android:drawableEnd="@mipmap/landing_loc"/>
+        android:drawableEnd="@mipmap/landing_loc"
+        />
     <TextView
         android:id="@+id/tvCurrLoc"
         android:layout_width="match_parent"

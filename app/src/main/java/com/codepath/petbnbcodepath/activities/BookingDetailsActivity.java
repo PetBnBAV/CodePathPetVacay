@@ -354,7 +354,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                                                                     getResources().getString(R.string.booking_request_submitted),
                                                                     Toast.LENGTH_SHORT).show();
                                                         } else {
-                                                            Log.i(TAG, "Error: " + e.getMessage());
+                                                            Log.i(TAG, "Erroraaa: " + e.getMessage());
                                                         }
                                                     }
                                                 });

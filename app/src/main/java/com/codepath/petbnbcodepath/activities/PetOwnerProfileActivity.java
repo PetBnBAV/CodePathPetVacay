@@ -325,6 +325,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                         }
                     }
                 });
+                finish();
             }
         });
 
@@ -389,6 +390,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                         }
                     }
                 });
+                finish();
             }
         });
     }

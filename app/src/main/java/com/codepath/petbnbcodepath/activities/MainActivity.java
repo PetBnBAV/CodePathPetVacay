@@ -333,7 +333,7 @@ public class MainActivity extends ActionBarActivity implements
 
                         if (file.getUrl() != null) {
 
-                            Toast.makeText(MainActivity.this, "User has profile picture", Toast.LENGTH_LONG).show();
+                            //Toast.makeText(MainActivity.this, "User has profile picture", Toast.LENGTH_LONG).show();
 
                             userHasPP = true;
 
