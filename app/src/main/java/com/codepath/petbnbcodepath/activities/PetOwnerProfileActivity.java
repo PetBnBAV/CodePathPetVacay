@@ -215,7 +215,9 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                     // fixed as the screen width - so the aspect ratio is maintained.
                     Picasso.with(PetOwnerProfileActivity.this)
                             .load(profilePicUrl)
-                            .resize(targetWidth, 0)
+                            .resize(targetWidth,
+                                    (int)getResources().getDimension(R.dimen.pet_owner_profile_image))
+                            .centerInside()
                             .placeholder(getResources().getDrawable(R.drawable.placeholder))
                             .into(ivProfilePic);
                     petOwnerUser = (ParseUser) object;

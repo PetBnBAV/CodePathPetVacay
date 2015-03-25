@@ -13,7 +13,8 @@
         android:background="@color/dark_gray"
         android:adjustViewBounds="true"
         android:src="@drawable/vacationdogs"
-        android:scaleType="center"/>
+        android:scaleType="centerCrop"
+        android:fitsSystemWindows="true"/>
 
     <TextView
         android:id="@+id/tvLogin"

@@ -10,8 +10,9 @@
         android:layout_height="match_parent"
         android:background="@color/dark_gray"
         android:adjustViewBounds="true"
+        android:fitsSystemWindows="true"
         android:src="@drawable/vacationdogs"
-        android:scaleType="center"
+        android:scaleType="centerCrop"
         />
     <TextView
         android:id="@+id/tvLogo"

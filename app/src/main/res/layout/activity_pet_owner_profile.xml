@@ -25,7 +25,7 @@
                 <ImageView
                     android:id="@+id/ivProfilePic"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/pet_owner_profile_image"
                     android:adjustViewBounds="true" />
 
                 <TextView
