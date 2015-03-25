@@ -27,6 +27,7 @@ public class Constants {
     public static final String firstNameKey = "first_name";
     public static final String lastNameKey = "last_name";
     public static final String coverPictureKey = "cover_picture";
+    public static final String profilePictureKey = "profile_picture";
     public static final String listingIdKey = "listingId";
     public static final String reviewerIdKey = "reviewerId";
     public static final String objectIdKey = "objectId";

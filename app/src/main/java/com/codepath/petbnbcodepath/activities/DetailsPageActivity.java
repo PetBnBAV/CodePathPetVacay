@@ -68,7 +68,7 @@ public class DetailsPageActivity extends ActionBarActivity {
             if (currentUser != null && isPreview) {
                 mFirstName = currentUser.get(Constants.firstNameKey).toString();
                 mLastName = currentUser.get(Constants.lastNameKey).toString();
-                mCoverPicture = ((ParseFile) currentUser.get(Constants.coverPictureKey)).getUrl();
+                mCoverPicture = ((ParseFile) currentUser.get(Constants.profilePictureKey)).getUrl();
             }
         }
 
