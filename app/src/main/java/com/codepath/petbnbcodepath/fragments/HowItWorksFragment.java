@@ -4,13 +4,11 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -65,10 +63,10 @@ public class HowItWorksFragment extends Fragment implements FragmentCommunicator
         super.onCreate(savedInstanceState);
         pageNumber = getArguments().getInt("pageNumber");
 
-        if (Build.VERSION.SDK_INT < 16) {
+      /*  if (Build.VERSION.SDK_INT < 16) {
             getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-        }
+        }*/
 
     }
 
