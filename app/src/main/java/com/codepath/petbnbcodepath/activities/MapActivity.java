@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.ListingSummaryFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -163,9 +164,9 @@ public class MapActivity extends ActionBarActivity
     }
 
     public void onReviewCountAdded() {
-        listingSummaryAdapter = new MyListingSummaryAdapter(getSupportFragmentManager(),
+        /*listingSummaryAdapter = new MyListingSummaryAdapter(getSupportFragmentManager(),
                 nearbyListings.size(),
-                nearbyListings);
+                nearbyListings);*/
         listingSummaryAdapter.notifyDataSetChanged();
     }
 
@@ -308,7 +309,7 @@ public class MapActivity extends ActionBarActivity
         int position = vpPager.getCurrentItem();
         Listing currentListing = nearbyListings.get(position);
 
-        Intent intent = new Intent(MapActivity.this, DetailsPageActivity.class);
+       /* Intent intent = new Intent(MapActivity.this, DetailsPageActivity.class);
         intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
         intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
         intent.putExtra(Constants.coverPictureKey, currentListing.getCoverPictureUrl());
@@ -316,7 +317,8 @@ public class MapActivity extends ActionBarActivity
         intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
         intent.putExtra(Constants.listingCostKey, currentListing.getCost());
         intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
-        startActivity(intent);
+        startActivity(intent);*/
+        Utils.gotoDetailsPage(this, currentListing);
         overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
     }
 
