@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -39,7 +38,6 @@ public class HistoryPageUserFragment extends Fragment {
     TextView tvBStartDate;
     TextView tvBEndDate;
 
-    Button btnStartExploring;
 
 
     private int mHistoryPageUser;
@@ -77,7 +75,6 @@ public class HistoryPageUserFragment extends Fragment {
         tvBStartDate = (TextView) view.findViewById(R.id.tvBHStartDate);
         tvBEndDate = (TextView) view.findViewById(R.id.tvBHEndDate);
         lvBookingsHistory = (ListView) view.findViewById(R.id.lvBookingsHistory);
-        btnStartExploring = (Button) view.findViewById(R.id.btnStartExploring);
 
 
         bookingArrayList = new ArrayList<>();
@@ -97,7 +94,6 @@ public class HistoryPageUserFragment extends Fragment {
 
         if(currentUser != null) {
 
-            btnStartExploring.setVisibility(View.INVISIBLE);
 
             ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayBookingHistoryTable);
             query.whereEqualTo(Constants.ownerIdKey, ParseUser.getCurrentUser());
@@ -119,10 +115,6 @@ public class HistoryPageUserFragment extends Fragment {
 
                 }
             });
-        }
-        else
-        {
-            btnStartExploring.setVisibility(View.VISIBLE);
         }
     }
 }

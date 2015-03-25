@@ -28,8 +28,7 @@ import android.widget.TextView;
 import com.codepath.petbnbcodepath.R;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
 
 public class CameraActivity extends ActionBarActivity {
 
@@ -53,19 +52,11 @@ public class CameraActivity extends ActionBarActivity {
 
     final int RESULT_LAUNCH_CAMERA = 20;
     final int RESULT_LAUNCH_GALLERY = 30;
-    final int RESULT_PICTURES_ADDED = 60;
 
     int MAX_NO_OF_PHOTOS =  5;
 
-    byte photoOne[];
-    byte photoTwo[];
-    byte photoThree[];
-    byte photoFour[];
-    byte photoFive[];
 
-    String path;
-
-    String test;
+    ArrayList<String> paths;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,11 +66,7 @@ public class CameraActivity extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbarforcamera);
         setSupportActionBar(toolbar);
 
-        photoOne = new byte[0];
-        photoTwo = new byte[0];
-        photoThree = new byte[0];
-        photoFour = new byte[0];
-        photoFive = new byte[0];
+        paths = new ArrayList<String>();
 
 
 
@@ -220,20 +207,16 @@ public class CameraActivity extends ActionBarActivity {
             String selectedImagePath = getPath(selectedImageUri);
             System.out.println("Image Path : " + selectedImagePath);
 
+            paths.add(selectedImagePath);
+
 
             switch(photosCount)
             {
                 case 0:
                     ivPhotoOne.setVisibility(View.VISIBLE);
-                    test = selectedImagePath;
                     ivPhotoOne.setImageURI(selectedImageUri);
                     tvAddPhotos.setVisibility(View.INVISIBLE);
                     ivDirection.setVisibility(View.INVISIBLE);
-                    try {
-                        photoOne = readBytesFromURI(selectedImageUri);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
 
                     photosCount++;
                     updatePhotoCount();
@@ -243,22 +226,12 @@ public class CameraActivity extends ActionBarActivity {
                     {
                         ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
-                        try {
-                            photoOne = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
                     }
 
                     else
                     {
                         ivPhotoTwo.setImageURI(selectedImageUri);
-                        try {
-                            photoTwo = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
                     }
 
@@ -270,23 +243,12 @@ public class CameraActivity extends ActionBarActivity {
                     {
                         ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
-                        try {
-                            photoOne = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
                     }
 
                     else
                     {
                         ivPhotoThree.setImageURI(selectedImageUri);
-                        try {
-                            photoThree = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
                     }
 
                     photosCount++;
@@ -297,22 +259,13 @@ public class CameraActivity extends ActionBarActivity {
                     {
                         ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
-                        try {
-                            photoOne = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
 
                     }
 
                     else
                     {
                         ivPhotoFour.setImageURI(selectedImageUri);
-                        try {
-                            photoFour = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
 
                     }
 
@@ -326,22 +279,14 @@ public class CameraActivity extends ActionBarActivity {
                     {
                        ivPhotoOne.setImageURI(selectedImageUri);
                         mainPhotoEmpty = false;
-                        try {
-                            photoOne = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
 
                     }
 
                     else
                     {
                         ivPhotoFive.setImageURI(selectedImageUri);
-                        try {
-                            photoFive = readBytesFromURI(selectedImageUri);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+
 
                     }
 
@@ -362,7 +307,7 @@ public class CameraActivity extends ActionBarActivity {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             bp.compress(Bitmap.CompressFormat.JPEG, 100, bos);
 
-            path = MediaStore.Images.Media.insertImage(getContentResolver(), bp, "Title", null);
+            paths.add(MediaStore.Images.Media.insertImage(getContentResolver(), bp, "Title", null));
 
 
 
@@ -373,7 +318,7 @@ public class CameraActivity extends ActionBarActivity {
                     ivPhotoOne.setImageBitmap(bp);
                     tvAddPhotos.setVisibility(View.INVISIBLE);
                     ivDirection.setVisibility(View.INVISIBLE);
-                    photoOne = bos.toByteArray();
+
 
                     photosCount++;
                     updatePhotoCount();
@@ -382,14 +327,14 @@ public class CameraActivity extends ActionBarActivity {
                     if(mainPhotoEmpty)
                     {
                         ivPhotoOne.setImageBitmap(bp);
-                        photoOne = bos.toByteArray();
+
                         mainPhotoEmpty = false;
 
                     }
                     else
                     {
                         ivPhotoTwo.setImageBitmap(bp);
-                        photoTwo = bos.toByteArray();
+
                     }
 
                     photosCount++;
@@ -399,14 +344,14 @@ public class CameraActivity extends ActionBarActivity {
                     if(mainPhotoEmpty)
                     {
                         ivPhotoOne.setImageBitmap(bp);
-                        photoOne = bos.toByteArray();
+
                         mainPhotoEmpty = false;
 
                     }
                     else
                     {
                         ivPhotoThree.setImageBitmap(bp);
-                        photoThree = bos.toByteArray();
+
                     }
 
                     photosCount++;
@@ -416,14 +361,14 @@ public class CameraActivity extends ActionBarActivity {
                     if(mainPhotoEmpty)
                     {
                         ivPhotoOne.setImageBitmap(bp);
-                        photoOne = bos.toByteArray();
+
                         mainPhotoEmpty = false;
 
                     }
                     else
                     {
                         ivPhotoFour.setImageBitmap(bp);
-                        photoFour = bos.toByteArray();
+
                     }
 
                     photosCount++;
@@ -433,14 +378,14 @@ public class CameraActivity extends ActionBarActivity {
                     if(mainPhotoEmpty)
                     {
                         ivPhotoOne.setImageBitmap(bp);
-                        photoOne = bos.toByteArray();
+
                         mainPhotoEmpty = false;
 
                     }
                     else
                     {
                         ivPhotoFive.setImageBitmap(bp);
-                        photoFive = bos.toByteArray();
+
                     }
 
                     photosCount++;
@@ -450,26 +395,6 @@ public class CameraActivity extends ActionBarActivity {
         }
     }
 
-
-
-    public byte[] readBytesFromURI(Uri uri) throws IOException {
-        // this dynamically extends to take the bytes you read
-        InputStream inputStream = getContentResolver().openInputStream(uri);
-        ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
-
-        // this is storage overwritten on each iteration with bytes
-        int bufferSize = 1024;
-        byte[] buffer = new byte[bufferSize];
-
-        // we need to know how may bytes were read to write them to the byteBuffer
-        int len = 0;
-        while ((len = inputStream.read(buffer)) != -1) {
-            byteBuffer.write(buffer, 0, len);
-        }
-
-        // and then we can return your byte array.
-        return byteBuffer.toByteArray();
-    }
 
 
     public void updatePhotoCount()
@@ -551,15 +476,7 @@ public class CameraActivity extends ActionBarActivity {
         Intent intent = new Intent();
 
 
-        intent.putExtra("One", path);
-        //intent.putExtra("Two", photoTwo);
-        //intent.putExtra("One", photoThree);
-        //intent.putExtra("Two", photoFour);
-        //intent.putExtra("One", photoFive);
-
-       // Bitmap bmp = BitmapFactory.decodeByteArray(photoOne, 0, photoOne.length);
-       //ivTakePicture.setImageBitmap(bmp);
-
+        intent.putStringArrayListExtra("Pictures", paths);
 
         setResult(RESULT_OK, intent);
         finish();
