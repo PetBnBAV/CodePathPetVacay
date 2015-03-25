@@ -8,9 +8,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.HowItWorksFragment;
+import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 
 
 public class HowItWorksActivity extends FragmentActivity implements FragmentCommunicator {
@@ -22,6 +22,8 @@ public class HowItWorksActivity extends FragmentActivity implements FragmentComm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_how_it_works);
+
+
 
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());

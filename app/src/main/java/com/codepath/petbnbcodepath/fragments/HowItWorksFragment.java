@@ -1,14 +1,12 @@
 package com.codepath.petbnbcodepath.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +16,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
+import com.codepath.petbnbcodepath.helpers.BitmapScaler;
+import com.codepath.petbnbcodepath.helpers.DeviceDimensionsHelper;
+import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.parse.ParseUser;
 
 public class HowItWorksFragment extends Fragment implements FragmentCommunicator {
@@ -65,6 +65,11 @@ public class HowItWorksFragment extends Fragment implements FragmentCommunicator
         super.onCreate(savedInstanceState);
         pageNumber = getArguments().getInt("pageNumber");
 
+        if (Build.VERSION.SDK_INT < 16) {
+            getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN,
+            WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+        }
+
     }
 
 
@@ -88,6 +93,7 @@ public class HowItWorksFragment extends Fragment implements FragmentCommunicator
         setupClickListeners();
 
 
+
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             linearLayoutHSW.setVisibility(View.INVISIBLE);
@@ -103,11 +109,6 @@ public class HowItWorksFragment extends Fragment implements FragmentCommunicator
 
     public void fitImageToRetainAspectRatio(int page)
     {
-        WindowManager wm = (WindowManager) getActivity().getSystemService(Context.WINDOW_SERVICE);
-        Display display = wm.getDefaultDisplay();
-        Point size = new Point();
-        display.getSize(size);
-        int targetWidth = size.x;
         Drawable headerDrawable = null;
         Bitmap bMap = null;
 
@@ -135,18 +136,14 @@ public class HowItWorksFragment extends Fragment implements FragmentCommunicator
                 break;
         }
 
-        if(headerDrawable != null){
-        int currWidth = headerDrawable.getIntrinsicWidth();
-        int currHeight = headerDrawable.getIntrinsicHeight();
-        int origAspectRatio = currWidth / currHeight;
-        int targetHeight = targetWidth / origAspectRatio;
 
-        // Resize the bitmap to 150x100 (width x height)
-        Bitmap bMapScaled = Bitmap.createScaledBitmap(bMap, targetWidth, targetHeight, true);
-        // Loads the resized Bitmap into an ImageView
-        ivHSWImage.setImageBitmap(bMapScaled);
 
-        }
+        // Get height or width of screen at runtime
+        int screenWidth = DeviceDimensionsHelper.getDisplayWidth(getActivity());
+        int screenHeight = DeviceDimensionsHelper.getDisplayHeight(getActivity());
+       // Resize a Bitmap maintaining aspect ratio based on screen width
+
+        ivHSWImage.setImageBitmap( BitmapScaler.scaleToFill(bMap, screenWidth,screenHeight));
     }
 
 

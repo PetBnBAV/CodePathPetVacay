@@ -59,10 +59,12 @@
         </activity>
         <activity
             android:name=".activities.HowItWorksActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
             android:label="@string/title_activity_how_it_works" >
         </activity>
         <activity
             android:name=".activities.WhyHostActivity"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" >
             android:label="@string/title_activity_why_host" >
         </activity>
         <activity

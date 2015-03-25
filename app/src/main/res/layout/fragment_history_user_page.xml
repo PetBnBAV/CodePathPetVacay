@@ -3,6 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context=".MainActivity">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Start Exploring"
+        android:id="@+id/btnStartExploring"
+        android:background="@color/petvacayteal"
+        android:textColor="@color/white"
+        android:padding="5dp"
+        android:gravity="center"
+        android:capitalize="none"
+        android:layout_below="@+id/tvWhenYouBook"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="58dp" />
+
+
     <ListView
         android:id="@+id/lvBookingsHistory"
         android:paddingTop="40dp"

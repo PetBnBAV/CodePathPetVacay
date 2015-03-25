@@ -32,21 +32,26 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_how_it_works">HowItWorksActivity</string>
-    <string name="HSWTitleOne">Welcome to PetVacay One</string>
-    <string name="HSWTitleTwo">Welcome to PetVacay Two</string>
-    <string name="HSWTitleThree">Welcome to PetVacay Three</string>
-    <string name="HSWTitleFour">Welcome to PetVacay Four</string>
-    <string name="HSWTextOne">Safe,affordable and convenient boarding service for your pets One</string>
+
+    <string name="HSWTitleOne">SEND YOUR PET ON VACAY</string>
+    <string name="HSWTitleTwo">WELCOME TO PetVacay</string>
+    <string name="HSWTitleThree">FIND THE PERFECT VACATION HOME FOR YOUR PET</string>
+    <string name="HSWTitleFour">BOOK IT IN A SNAP</string>
+
+    <string name="HSWTextOne">Knowing your pet is being loved and cared for while you\'re travelling changes everything.</string>
     <string name="HSWTextTwo">Safe,affordable and convenient boarding service for your pets Two</string>
-    <string name="HSWTextThree">Safe,affordable and convenient boarding service for your pets Three</string>
-    <string name="HSWTextFour">Safe,affordable and convenient boarding service for your pets Four</string>
+    <string name="HSWTextThree">Search by location, home type, and more. Read reviews and see what other pet parents have to say about each sitter and home.</string>
+    <string name="HSWTextFour">Connect with pet lovers, confirm boarding dates - all through PetVacay\'s trusted services.</string>
+
     <string name="title_activity_why_host">WhyHostActivity</string>
-    <string name="WHTitleOne">Welcome to PetVacay One</string>
-    <string name="WHTitleTwo">Welcome to PetVacay Two</string>
-    <string name="WHTitleThree">Welcome to PetVacay Three</string>
-    <string name="WHTextOne">Safe,affordable and convenient boarding service for your pets One</string>
-    <string name="WHTextTwo">Safe,affordable and convenient boarding service for your pets Two</string>
-    <string name="WHTextThree">Safe,affordable and convenient boarding service for your pets Three</string>
+    <string name="WHTitleOne">MEET PET PARENTS IN YOUR NEIGHBORHOOD</string>
+    <string name="WHTitleTwo">FUND YOUR NEXT ADVENTURE</string>
+    <string name="WHTitleThree">DISCOVER YOUR PERSONAL PET TYPE</string>
+
+    <string name="WHTextOne">Become a host and enjoy your time with the furry companion</string>
+    <string name="WHTextTwo">earn money to pay the bills and plan your next vacation</string>
+    <string name="WHTextThree">Try it out before you make a big commitment to become a pet parent</string>
+
     <string name="generic_error">:-O Something went wrong!</string>
     <string name="search">Search</string>
     <string name="whereto">Where at?</string>
