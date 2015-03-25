@@ -127,6 +127,11 @@ public class LoginSignupActivity extends ActionBarActivity
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -137,7 +142,9 @@ public class LoginSignupActivity extends ActionBarActivity
         if (fragmentManager.getBackStackEntryCount() > 0) {
             fragmentManager.popBackStack();
         } else {
-            super.onBackPressed();
+            //super.onBackPressed();
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
         }
     }
 }

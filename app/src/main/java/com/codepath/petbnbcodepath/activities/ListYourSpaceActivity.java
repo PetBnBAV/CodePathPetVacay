@@ -31,6 +31,7 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_list_your_space);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvToolbatTitle = (TextView) findViewById(R.id.tvToolbarTitle);
@@ -44,6 +45,11 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -58,6 +64,11 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 

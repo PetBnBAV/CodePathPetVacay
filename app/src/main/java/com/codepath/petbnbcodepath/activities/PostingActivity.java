@@ -16,6 +16,7 @@ public class PostingActivity extends ActionBarActivity implements PostingsListFr
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_posting);
         final double latitude = getIntent().getDoubleExtra(Constants.LATITUDE, Constants.defaultLatitude);
         final double longitude = getIntent().getDoubleExtra(Constants.LONGITUDE, Constants.defaultLongitude);
@@ -32,6 +33,12 @@ public class PostingActivity extends ActionBarActivity implements PostingsListFr
     }
 
     @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_posting, menu);
@@ -42,6 +49,11 @@ public class PostingActivity extends ActionBarActivity implements PostingsListFr
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
             return true;
         }
         return super.onOptionsItemSelected(item);

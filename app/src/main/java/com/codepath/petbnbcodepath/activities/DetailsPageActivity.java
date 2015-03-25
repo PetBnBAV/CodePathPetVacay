@@ -138,12 +138,9 @@ public class DetailsPageActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onPause() {
-        // Whenever this activity is paused (i.e. looses focus because another activity is started etc)
-        // Override how this activity is animated out of view
-        // The new activity is kept still and this activity is pushed out to the left
+    public void onBackPressed() {
+        finish();
         overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
-        super.onPause();
     }
 
     @Override
@@ -162,6 +159,12 @@ public class DetailsPageActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
             return true;
         }
 

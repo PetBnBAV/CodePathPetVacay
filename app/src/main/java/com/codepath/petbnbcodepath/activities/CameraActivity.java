@@ -63,6 +63,7 @@ public class CameraActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_camera);
 
         toolbar = (Toolbar) findViewById(R.id.toolbarforcamera);
@@ -90,6 +91,12 @@ public class CameraActivity extends ActionBarActivity {
         ivPhotoOne.setOnLongClickListener(longListener);
         llDragandDrop.setOnDragListener(DropListener);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
     }
 
 
@@ -488,6 +495,12 @@ public class CameraActivity extends ActionBarActivity {
             {
 
             }
+        }
+
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -20,11 +20,18 @@ public class WhyHostActivity extends FragmentActivity implements FragmentCommuni
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_why_host);
 
         ViewPager vwpPager = (ViewPager) findViewById(R.id.vpager);
         adapterViewPager = new MyPgrAdapter(getSupportFragmentManager());
         vwpPager.setAdapter(adapterViewPager);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
     }
 
     @Override

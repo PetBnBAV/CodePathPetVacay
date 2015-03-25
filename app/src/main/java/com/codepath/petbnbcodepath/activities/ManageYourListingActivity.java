@@ -104,6 +104,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_manage_your_listing);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         tvToolbatTitle = (TextView) findViewById(R.id.tvToolbarTitle);
@@ -315,6 +316,13 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         Utils.gotoDetailsPage(this, listing, true);
 
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -328,6 +336,12 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

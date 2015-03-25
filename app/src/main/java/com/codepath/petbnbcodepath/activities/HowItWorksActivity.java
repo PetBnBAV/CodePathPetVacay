@@ -21,6 +21,7 @@ public class HowItWorksActivity extends FragmentActivity implements FragmentComm
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.pull_in_from_left, R.anim.hold);
         setContentView(R.layout.activity_how_it_works);
 
 
@@ -30,6 +31,12 @@ public class HowItWorksActivity extends FragmentActivity implements FragmentComm
         vpPager.setAdapter(adapterViewPager);
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
     }
 
     @Override

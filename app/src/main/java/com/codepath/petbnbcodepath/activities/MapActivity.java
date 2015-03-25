@@ -154,14 +154,7 @@ public class MapActivity extends ActionBarActivity
 
     }
 
-    @Override
-    protected void onPause() {
-        // Whenever this activity is paused (i.e. looses focus because another activity is started etc)
-        // Override how this activity is animated out of view
-        // The new activity is kept still and this activity is pushed out to the left
-        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
-        super.onPause();
-    }
+
 
     public void onReviewCountAdded() {
         /*listingSummaryAdapter = new MyListingSummaryAdapter(getSupportFragmentManager(),
@@ -392,6 +385,12 @@ public class MapActivity extends ActionBarActivity
         map.setOnMarkerClickListener(this);
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -413,6 +412,7 @@ public class MapActivity extends ActionBarActivity
             //NavUtils.navigateUpTo(this, intent);
             finish();
             overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
+            return true;
         }
 
         //noinspection SimplifiableIfStatement
