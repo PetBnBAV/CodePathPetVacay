@@ -27,7 +27,6 @@ import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.helpers.Constants;
-import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -265,10 +264,10 @@ public class CameraActivity extends ActionBarActivity {
 
                     else
                     {
-                        Picasso.with(getApplicationContext())
+                        /*Picasso.with(getApplicationContext())
                                 .load(selectedImagePath)
-                                .into(ivPhotoThree);
-//                        ivPhotoThree.setImageURI(selectedImageUri);
+                                .into(ivPhotoThree);*/
+                        ivPhotoThree.setImageURI(selectedImageUri);
 
                         paths.add(2,selectedImagePath);
                     }
@@ -338,10 +337,10 @@ public class CameraActivity extends ActionBarActivity {
             {
                 case 0:
                     ivPhotoOne.setVisibility(View.VISIBLE);
-                    Picasso.with(getApplicationContext())
+                    /*Picasso.with(getApplicationContext())
                             .load(url)
-                            .into(ivPhotoOne);
-//                    ivPhotoOne.setImageBitmap(bp);
+                            .into(ivPhotoOne);*/
+                   ivPhotoOne.setImageBitmap(bp);
                     tvAddPhotos.setVisibility(View.INVISIBLE);
                     ivDirection.setVisibility(View.INVISIBLE);
 
@@ -354,10 +353,10 @@ public class CameraActivity extends ActionBarActivity {
                 case 1:
                     if(mainPhotoEmpty)
                     {
-                        Picasso.with(getApplicationContext())
+                        /*Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoOne);
-//                        ivPhotoOne.setImageBitmap(bp);
+                                .into(ivPhotoOne);*/
+                        ivPhotoOne.setImageBitmap(bp);
                         mainPhotoEmpty = false;
 
                         paths.add(0,url);
@@ -365,10 +364,10 @@ public class CameraActivity extends ActionBarActivity {
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext())
+                        /*Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoTwo);
-//                        ivPhotoTwo.setImageBitmap(bp);
+                                .into(ivPhotoTwo);*/
+                        ivPhotoTwo.setImageBitmap(bp);
 
                         paths.add(1,url);
 
@@ -380,10 +379,10 @@ public class CameraActivity extends ActionBarActivity {
                 case 2:
                     if(mainPhotoEmpty)
                     {
-                        Picasso.with(getApplicationContext())
+                       /* Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoOne);
-//                        ivPhotoOne.setImageBitmap(bp);
+                                .into(ivPhotoOne);*/
+                        ivPhotoOne.setImageBitmap(bp);
                         mainPhotoEmpty = false;
 
                         paths.add(0,url);
@@ -391,10 +390,10 @@ public class CameraActivity extends ActionBarActivity {
                     }
                     else
                     {
-                        Picasso.with(getApplicationContext())
+                       /* Picasso.with(getApplicationContext())
                                 .load(url)
-                                .into(ivPhotoThree);
-//                        ivPhotoThree.setImageBitmap(bp);
+                                .into(ivPhotoThree);*/
+                        ivPhotoThree.setImageBitmap(bp);
 
                         paths.add(2,url);
 
