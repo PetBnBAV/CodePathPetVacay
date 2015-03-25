@@ -1,46 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="40dp"
-    >
+    android:orientation="vertical"
+    android:paddingTop="40dp">
     <AutoCompleteTextView
         android:id="@+id/etSearch"
         android:layout_width="match_parent"
         android:layout_height="@dimen/landing_pg_search_height"
-        android:hint="@string/whereto"
         android:background="@color/vl_white"
+        android:drawableEnd="@mipmap/landing_loc"
+        android:drawableRight="@mipmap/landing_loc"
+        android:hint="@string/whereto"
         android:paddingLeft="@dimen/textview_hint_padding"
         android:paddingStart="@dimen/textview_hint_padding"
         android:singleLine="true"
         android:textColor="@color/light_gray"
-        android:textColorHint="@color/light_gray"
-        android:drawableRight="@mipmap/landing_loc"
-        android:drawableEnd="@mipmap/landing_loc"
-        />
+        android:textColorHint="@color/light_gray" />
+
     <TextView
         android:id="@+id/tvCurrLoc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/dark_gray"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:text="@string/curr_loc"
         android:background="@color/bgWhite"
+        android:paddingBottom="@dimen/tvCurrLoc_padding_top"
         android:paddingLeft="@dimen/textview_hint_padding"
         android:paddingStart="@dimen/textview_hint_padding"
         android:paddingTop="@dimen/tvCurrLoc_padding_top"
-        android:paddingBottom="@dimen/tvCurrLoc_padding_top"/>
+        android:text="@string/curr_loc"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textColor="@color/dark_gray" />
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="1dp"
-        android:background="@color/light_gray"
-        />
+        android:background="@color/light_gray" />
+
     <com.dexafree.materialList.view.MaterialListView
+        android:id="@+id/lvPost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lvPost"
         android:layout_gravity="center_horizontal"
         android:divider="@android:color/transparent"
-        android:dividerHeight="20dp"
-        />
+        android:dividerHeight="20dp" />
 </LinearLayout>
+

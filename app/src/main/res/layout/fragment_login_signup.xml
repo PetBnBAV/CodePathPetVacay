@@ -10,8 +10,8 @@
         android:layout_height="match_parent"
         android:background="@color/dark_gray"
         android:adjustViewBounds="true"
-        android:src="@drawable/two_cats_summer_fishing"
-        android:scaleType="centerCrop"
+        android:src="@drawable/vacationdogs"
+        android:scaleType="center"
         />
     <TextView
         android:id="@+id/tvLogo"
