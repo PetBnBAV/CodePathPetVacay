@@ -115,6 +115,9 @@ public class ImagePagerAdapter extends PagerAdapter {
             }
         });
 
+
+
+
         return imageView;
     }
 

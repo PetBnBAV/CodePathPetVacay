@@ -51,7 +51,20 @@
             android:layout_alignRight="@+id/ivSitterImage"
             android:layout_alignEnd="@+id/ivSitterImage"
             android:layout_marginTop="43dp" />
-
+        <ImageView
+            android:id="@+id/ivheart"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@drawable/wishlist_heart_unselected"
+            android:alpha="0"
+            />
+        <ImageView
+            android:id="@+id/ivheart2"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:src="@drawable/wishlist_heart_unselected"
+            android:alpha="0"
+            />
         <ImageView
             android:layout_width="60dp"
             android:layout_height="60dp"

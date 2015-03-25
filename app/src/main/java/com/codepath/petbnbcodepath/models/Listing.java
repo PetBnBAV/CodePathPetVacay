@@ -18,6 +18,16 @@ import java.util.List;
  */
 public class Listing {
 
+    public boolean isWishlist() {
+        return isWishlist;
+    }
+
+    public void setWishlist(boolean isWishlist) {
+        this.isWishlist = isWishlist;
+    }
+
+    public boolean isWishlist;
+
     private static final String TAG = "LISTING";
 
     // Stores the actual latitude, longitude because that's what we pass around

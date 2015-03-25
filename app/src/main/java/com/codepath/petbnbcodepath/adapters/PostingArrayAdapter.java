@@ -1,5 +1,7 @@
 package com.codepath.petbnbcodepath.adapters;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -24,6 +26,7 @@ import com.squareup.picasso.Transformation;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by gangwal on 3/8/15.
@@ -72,7 +75,9 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         TextView tvPostTitle;
         TextView tvPrice;
         TextView tvPostSubTitle;
+        ImageView ivheart,ivheart2;
         WrapContentHeightViewPager viewPager;
+        boolean isWishList = false;
 
         public ViewHolder(View convertView) {
             super(convertView);
@@ -82,6 +87,9 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
             tvPrice = (TextView)convertView.findViewById(R.id.tvPrice);
             tvPostSubTitle = (TextView)convertView.findViewById(R.id.tvPostSubTitle);
             tvPostTitle = (TextView)convertView.findViewById(R.id.tvPostTitle);
+            ivheart = (ImageView)convertView.findViewById(R.id.ivheart);
+            ivheart2 = (ImageView)convertView.findViewById(R.id.ivheart2);
+
         }
     }
 
@@ -119,7 +127,8 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         //TODO Need to update this
         String city = (currentListing.getCityState()==null)?"San Francisco":currentListing.getCityState();
         viewHolder.tvPostTitle.setText(currentListing.getTitle());
-        viewHolder.tvPostSubTitle.setText("Entire Home - "+currentListing.getNumReviews() +" Reviews - " +city);
+//        viewHolder.tvPostSubTitle.setText("Entire Home - "+currentListing.getNumReviews() +" Reviews - " +city);
+        viewHolder.tvPostSubTitle.setText("Entire Home - "+randInt() +" Reviews - " +city);
 
         viewHolder.ivSitterImage.setImageResource(0);
         Transformation transformation = new RoundedTransformationBuilder()
@@ -142,9 +151,48 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
             @Override
             public void onClick(View v) {
                 viewHolderF.ivWishlist.startAnimation(anim);
-                viewHolderF.ivWishlist.setImageResource(R.drawable.wishlist_heart_selected);
+                if(!currentListing.isWishlist())
+                    viewHolderF.ivWishlist.setImageResource(R.drawable.wishlist_heart_selected);
+                else
+                    viewHolderF.ivWishlist.setImageResource(R.drawable.wishlist_heart_unselected);
+                currentListing.setWishlist(!currentListing.isWishlist);
+
             }
         });
+        final ImageView ivheart = viewHolder.ivheart;
+        final ImageView ivheart2 = viewHolder.ivheart2;
+
+        ivWishlist.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AnimatorSet set = new AnimatorSet();
+                set.playTogether(
+                        ObjectAnimator.ofFloat(ivheart2, "alpha", 0.2f)
+                                .setDuration(1000),
+                        ObjectAnimator.ofFloat(ivheart, "alpha", 0.2f)
+                                .setDuration(1000),
+                        ObjectAnimator.ofFloat(ivheart2, "scaleX", 0.2f, 1.0f)
+                                .setDuration(1000),
+                        ObjectAnimator.ofFloat(ivheart2, "scaleY", 0.2f, 1.0f)
+                                .setDuration(1000)
+                );
+                AnimatorSet animatorSet = new AnimatorSet();
+                animatorSet.playTogether(ObjectAnimator.ofFloat(ivheart2, "alpha", 0.0f)
+                                .setDuration(0),
+                        ObjectAnimator.ofFloat(ivheart, "alpha", 0.0f)
+                                .setDuration(0));
+                AnimatorSet set3 = new AnimatorSet();
+                set3.playSequentially(set, animatorSet);
+                set3.start();
+                viewHolderF.ivWishlist.startAnimation(anim);
+                if(!currentListing.isWishlist())
+                    viewHolderF.ivWishlist.setImageResource(R.drawable.wishlist_heart_selected);
+                else
+                    viewHolderF.ivWishlist.setImageResource(R.drawable.wishlist_heart_unselected);
+                currentListing.setWishlist(!currentListing.isWishlist);                return true;
+            }
+        });
+
         viewHolder.ivSitterImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -284,5 +332,14 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 //        viewHolder.viewPager.setAdapter(adapter);
 //        return convertView;
 //    }
+
+    public static int randInt() {
+        int min=10, max=40;
+
+        Random rand = new Random();
+        int randomNum = rand.nextInt((max - min) + 1) + min;
+
+        return randomNum;
+    }
 
 }
