@@ -81,7 +81,7 @@ public class DetailsPageActivity extends ActionBarActivity {
 
 
         viewPager = (WrapContentHeightViewPager) findViewById(R.id.view_pager);
-        ImagePagerAdapter adapter = new ImagePagerAdapter(this,imageUrlList);
+        ImagePagerAdapter adapter = new ImagePagerAdapter(this,imageUrlList,isPreview);
         //TODO Need pass Images to adapter
         adapter.tempCoverPicture = coverPicture;
         viewPager.setAdapter(adapter);

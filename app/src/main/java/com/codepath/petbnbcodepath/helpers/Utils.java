@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.parse.ParseGeoPoint;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -179,7 +181,16 @@ public class Utils {
 
     public static  byte[] readBytesFromURI(Context context,Uri uri) throws IOException {
         // this dynamically extends to take the bytes you read
-        InputStream inputStream = context.getContentResolver().openInputStream(uri);
+        InputStream inputStream;
+        try {
+             inputStream = context.getContentResolver().openInputStream(uri);
+
+        }catch (FileNotFoundException e){
+            String path = uri.getPath();
+            File file = new File(path);
+            Uri uri1 = Uri.fromFile(file);
+            inputStream = context.getContentResolver().openInputStream(uri1);
+        }
         ByteArrayOutputStream byteBuffer = new ByteArrayOutputStream();
 
         // this is storage overwritten on each iteration with bytes

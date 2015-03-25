@@ -31,6 +31,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -236,6 +237,7 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         btStickyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 byte[] photo = new byte[0];
                 try {
                     Uri uri = Uri.parse(selectedImageUri);
@@ -245,21 +247,22 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
                 }
                 final String currentUserId = ParseUser.getCurrentUser().getObjectId();
 
-                final ParseFile file = new ParseFile("coverImage_"+currentUserId+"_1.jpg", photo);
+                final ParseFile file = new ParseFile("coverImage_" + currentUserId + "_1.jpg", photo);
                 file.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
 
                         final ParseObject listingPictures = new ParseObject(Constants.PetVacayListingPictures);
                         listingPictures.put(Constants.listingPictureItemKeys[0], file);
-                        for(int i=1;i<imageUrlList.size();i++){
+                        for (int i = 1; i < imageUrlList.size(); i++) {
                             try {
-                                final ParseFile file = new ParseFile("coverImage_"+currentUserId+"_"+(i+1)+".jpg",Utils.readBytesFromURI(ManageYourListingActivity.this,Uri.parse(imageUrlList.get(i))));
+                                final ParseFile file = new ParseFile("coverImage_" + currentUserId + "_" + (i + 1) + ".jpg", Utils.readBytesFromURI(ManageYourListingActivity.this, Uri.parse(imageUrlList.get(i))));
                                 final String key = Constants.listingPictureItemKeys[i];
                                 file.saveInBackground(new SaveCallback() {
                                     @Override
                                     public void done(ParseException e) {
                                         listingPictures.put(key, file);
+                                        listingPictures.saveInBackground();
 
                                     }
                                 });
@@ -297,22 +300,30 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
                         }
                         gotoPreview();
                     }
-
-                    ;
-
-                });
-
-                tvToolbarSecondaryTitle.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        gotoPreview();
-                    }
                 });
             }
         });
+
+
+        tvToolbarSecondaryTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoPreview();
+            }
+        });
+
+    }
+    private void disableStickyButton() {
+//        btStickyButton.setEnabled(false);
+        btStickyButton.setAlpha(Constants.btnDisabledAlpha);
     }
 
-        public void gotoPreview(){
+    private void enableStickyButton(){
+//        btStickyButton.setEnabled(true);
+        btStickyButton.setAlpha(Constants.btnEnabledAlpha);
+    }
+
+    public void gotoPreview(){
         Utils.gotoDetailsPage(this, listing, true);
 
     }
@@ -367,16 +378,16 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.commit();
         if(fieldType==0){
             cbTitle.setChecked(!value.isEmpty());
+            mTitle = value;
             if(!value.isEmpty()){updateProgress(--stepsLeft);}
             tvMYLTitle.setText(value);
-            mTitle = value;
             listing.setTitle(mTitle);
         }
         else if(fieldType==1){
             cbSummary.setChecked(!value.isEmpty());
+            mSummary=value;
             if(!value.isEmpty()){updateProgress(--stepsLeft);}
             tvMYLSummary.setText(value);
-            mSummary=value;
             listing.setDescription(mSummary);
         }
     }
@@ -389,8 +400,8 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.commit();
         try {
             cbPrice.setChecked(Integer.parseInt(value)>0);
-            if(Integer.parseInt(value)>0){updateProgress(--stepsLeft);}
             mCost = Integer.parseInt(value);
+            if(Integer.parseInt(value)>0){updateProgress(--stepsLeft);}
             tvMYLPrice.setText(value);
             listing.setCost(mCost);
         } catch (NumberFormatException e){
@@ -407,9 +418,9 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
         ft1.hide(mylAddress);
         ft1.commit();
         cbAddress.setChecked(!address.isEmpty());
+        mAddress=address;
         if(!address.isEmpty()){updateProgress(--stepsLeft);}
         tvMYLAddress.setText(address);
-        mAddress=address;
         mGeoPoint = Utils.getLocationFromAddress(ManageYourListingActivity.this, mAddress);
         //TODO If the address is not a valid address, notify user.
         if(mGeoPoint==null)
@@ -419,21 +430,26 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
 
     public void updateProgress(int steps){
         int count = stickyProgressBar.getChildCount();
-        btStickyButton.setText(getString(R.string.countdown_unit_, steps - 1));
+        btStickyButton.setText(getString(R.string.countdown_unit_, Math.max(0,steps)));
         View v = null;
-        if(count-steps<=1){
-            stickyButtonEnabled = true;
-            return;
-        }
+//        if(count-steps<=1){
+//            stickyButtonEnabled = true;
+//            return;
+//        }
         for(int i=1; i<count-steps; i++) {
-            v = stickyProgressBar.getChildAt(i);
-            v.setBackgroundColor(getResources().getColor(R.color.teal));
+           try {
+               v = stickyProgressBar.getChildAt(i);
+               v.setBackgroundColor(getResources().getColor(R.color.teal));
+           }catch (Exception e){}
         }
-        //Update this once Camera thing is done.
-        if(count-steps<=1){
-            stickyButtonEnabled = true;
-            btStickyButton.setText(getString(R.string.complete_profile));
 
+        if(selectedImageUri==null||mTitle==null||mSummary==null||mAddress==null||mCost<=0)
+        {
+            disableStickyButton();
+        }
+        else {
+            enableStickyButton();
+            btStickyButton.setText(getString(R.string.complete_profile));
         }
     }
 
@@ -453,10 +469,26 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             }
             ImageView image = (ImageView) findViewById(R.id.coverImage);
 
-            Picasso.with(getApplicationContext())
-                    .load(selectedImageUri)
-                    .placeholder(R.drawable.default_photo_bg)
-                    .into(image);
+            //Picture directly from camera
+            if(selectedImageUri.contains("content://")){
+                Picasso.with(getApplicationContext())
+                        .load(selectedImageUri)
+                        .placeholder(R.drawable.default_photo_bg)
+                        .into(image);
+            }
+            else {
+                Uri uri = null;
+                if (selectedImageUri != null) {
+                    uri = Uri.parse(selectedImageUri);
+
+                }
+                Picasso.with(getApplicationContext())
+                        .load(new File(selectedImageUri))
+                        .placeholder(R.drawable.default_photo_bg)
+                        .into(image);
+            }
+            cbPhoto.setChecked(true);
+            updateProgress(--stepsLeft);
         }
     }
 

@@ -270,7 +270,7 @@ public class CameraActivity extends ActionBarActivity {
                         ivPhotoThree.setImageURI(selectedImageUri);
 
                         paths.add(2,selectedImagePath);
-                    }
+                        }
 
                     photosCount++;
                     updatePhotoCount();

@@ -1,6 +1,7 @@
 package com.codepath.petbnbcodepath.adapters;
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -24,6 +26,7 @@ public class ImagePagerAdapter extends PagerAdapter {
     public String tempCoverPicture= "";
     public Listing currentListing;
     ArrayList<String> mImageUrlList;
+    boolean mIsPreview;
     public int[] mImages = new int[] {
             R.drawable.pet_sitter1,
             R.drawable.pet_sitter2,
@@ -32,9 +35,10 @@ public class ImagePagerAdapter extends PagerAdapter {
             R.drawable.pett_sitter5,
     };
 
-    public ImagePagerAdapter(Context context, ArrayList<String> imageUrlList){
+    public ImagePagerAdapter(Context context, ArrayList<String> imageUrlList,boolean isPreview){
         this.context = context;
         this.mImageUrlList = imageUrlList;
+        this.mIsPreview = isPreview;
     }
 
     @Override
@@ -68,11 +72,37 @@ public class ImagePagerAdapter extends PagerAdapter {
 //                    .into(imageView);
 //        }
 //        else {
+        String selectedImageUri = mImageUrlList.get(position);
+        if(mIsPreview && (!selectedImageUri.contains("content://"))){
+            Uri uri = null;
+//            if (selectedImageUri != null) {
+//                uri = Uri.parse(selectedImageUri);
+//
+//            }
             Picasso.with(context)
-                    .load(mImageUrlList.get(position))
-                    .fit()
+                    .load(new File(selectedImageUri))
+                    .placeholder(R.drawable.default_photo_bg)
                     .into(imageView);
+        }
+        else {
+            Picasso.with(context)
+                    .load(selectedImageUri)
+                    .placeholder(R.drawable.default_photo_bg)
+                    .into(imageView);
+        }
 //        }
+//        else {
+//            Uri uri = null;
+//            if (selectedImageUri != null) {
+//                uri = Uri.parse(selectedImageUri);
+//
+//            }
+//            Picasso.with(context)
+//                    .load(new File(selectedImageUri))
+//                    .placeholder(R.drawable.default_photo_bg)
+//                    .into(imageView);
+//        }
+
         ((ViewPager) container).addView(imageView, 0);
 
 

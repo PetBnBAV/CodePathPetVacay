@@ -130,6 +130,9 @@ public class MYLAddressFragment extends Fragment {
         tvDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(tvAddress==null){
+                    return;
+                }
                 mCallback.addressListing(String.valueOf(tvAddress.getText()));
                 Utils.hideKeyboard(getActivity());
             }

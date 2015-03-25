@@ -154,7 +154,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 
         //TODO need to have a icon on action bar.
 
-        ImagePagerAdapter adapter = new ImagePagerAdapter(mActivity,currentListing.getImageUrlList());
+        ImagePagerAdapter adapter = new ImagePagerAdapter(mActivity,currentListing.getImageUrlList(),false);
         //TODO Need pass Images to adapter
         adapter.tempCoverPicture = currentListing.getCoverPictureUrl();
         adapter.currentListing = currentListing;
