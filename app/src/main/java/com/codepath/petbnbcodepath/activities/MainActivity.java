@@ -21,6 +21,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -49,10 +50,12 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -105,6 +108,8 @@ public class MainActivity extends ActionBarActivity implements
 
     final int RESULT_TAKE_PHOTO = 40;
     final int RESULT_CHOOSE_FROM_LIBRARY = 50;
+
+    private static final String TAG = "MAINACTIVITY";
 
 
 
@@ -434,11 +439,10 @@ public class MainActivity extends ActionBarActivity implements
             public void onClick(DialogInterface dialog, int which) {
                // Toast.makeText(getApplicationContext(), "You clicked on YES", Toast.LENGTH_SHORT).show();
                 //Log out
+                ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                installation.remove(Constants.userKey);
                 ParseUser.logOut();
                 userIsLoggedOut();
-
-
-
             }
         });
 

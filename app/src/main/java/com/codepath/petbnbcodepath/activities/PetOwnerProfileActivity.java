@@ -2,8 +2,10 @@ package com.codepath.petbnbcodepath.activities;
 
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
 import android.view.Display;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ExpandableListView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -39,8 +42,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,11 +102,26 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        overridePendingTransition(R.anim.rotate_in, R.anim.hold);
         setContentView(R.layout.activity_pet_owner_profile);
         fontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.theme_teal) + "\">";
         selDateFontHtmlBeg = "<font color=\"" + getResources().getColor(R.color.dark_gray)
                 + "\">";
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        for(int i = 0; i < toolbar.getChildCount(); i++) {
+            final View v = toolbar.getChildAt(i);
+
+            // Changing the color of back button (or open drawer button).
+            if (v instanceof ImageButton) {
+                //Action Bar back button
+                ((ImageButton) v).getDrawable().setColorFilter(
+                        getResources().getColor(R.color.dark_gray), PorterDuff.Mode.MULTIPLY);
+            }
+        }
 
         try {
             JSONObject json = new JSONObject(getIntent().getExtras().getString("com.parse.Data"));
@@ -199,6 +215,10 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                     firstName = object.getString(Constants.firstNameKey);
                     tvFirstName.setText(object.getString(Constants.firstNameKey));
                     tvLastName.setText(object.getString(Constants.lastNameKey));
+                    getSupportActionBar().setTitle(Html.fromHtml(selDateFontHtmlBeg +
+                            object.getString(Constants.firstNameKey) + " " +
+                            object.getString(Constants.lastNameKey) +
+                            selDateFontHtmlEnd));
                     if (message != null) {
                         tvMsgFrom.setText(getResources().getString(R.string.message_from) + " " +
                                           object.getString(Constants.firstNameKey) +
@@ -218,7 +238,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                             .resize(targetWidth,
                                     (int)getResources().getDimension(R.dimen.pet_owner_profile_image))
                             .centerInside()
-                            .placeholder(getResources().getDrawable(R.drawable.placeholder))
+                            .placeholder(getResources().getDrawable(R.drawable.tealpaw))
                             .into(ivProfilePic);
                     petOwnerUser = (ParseUser) object;
                 } else {
@@ -328,6 +348,7 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
                     }
                 });
                 finish();
+                overridePendingTransition(R.anim.hold, R.anim.rotate_out);
             }
         });
 
@@ -397,6 +418,12 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.rotate_out);
+    }
+
     private void prepareListData() {
 
         LocalDate dropOffDateJoda = new LocalDate(dropOffDate);
@@ -448,6 +475,12 @@ public class PetOwnerProfileActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.hold, R.anim.rotate_out);
             return true;
         }
 
