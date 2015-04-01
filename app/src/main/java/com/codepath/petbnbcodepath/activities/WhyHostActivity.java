@@ -7,6 +7,10 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.R;
@@ -26,6 +30,38 @@ public class WhyHostActivity extends FragmentActivity implements FragmentCommuni
         ViewPager vwpPager = (ViewPager) findViewById(R.id.vpager);
         adapterViewPager = new MyPgrAdapter(getSupportFragmentManager());
         vwpPager.setAdapter(adapterViewPager);
+
+        vwpPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+
+                TextView tvWHTitle = (TextView) page.findViewById(R.id.tvWHTitle);
+                TextView tvWHText = (TextView) page.findViewById(R.id.tvWHText);
+                Button btnWHList = (Button) page.findViewById(R.id.btnWHList);
+                Button btnWHBack = (Button) page.findViewById(R.id.btnWHBack);
+                int pageWidth = page.getWidth();
+
+
+                if (position < -1) { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    page.setAlpha(1);
+
+                }
+
+                else if (position <= 1) { // [-1,1]
+                    //ivHWSImage.setTranslationX(position * pageWidth / 16);
+                    tvWHTitle.setTranslationX(position * pageWidth * 2);
+                    tvWHText.setTranslationX(position * pageWidth / 2);
+                    btnWHList.setTranslationX(position * pageWidth / 2);
+                    btnWHBack.setTranslationX(position * pageWidth / 4);
+
+                } else { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    page.setAlpha(1);
+                }
+            }
+        });
+
     }
 
     @Override

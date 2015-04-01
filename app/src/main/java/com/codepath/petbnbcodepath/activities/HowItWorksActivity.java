@@ -7,6 +7,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.fragments.HowItWorksFragment;
@@ -29,6 +34,39 @@ public class HowItWorksActivity extends FragmentActivity implements FragmentComm
         ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
+
+        vpPager.setPageTransformer(false, new ViewPager.PageTransformer() {
+            @Override
+            public void transformPage(View page, float position) {
+
+                TextView tvHSWTitle = (TextView) page.findViewById(R.id.tvHSWTitle);
+                TextView tvHSWText = (TextView) page.findViewById(R.id.tvHSWText);
+                LinearLayout linearLayoutHSW = (LinearLayout) page.findViewById(R.id.linearLayoutHSW);
+                Button btnHSWSkip = (Button) page.findViewById(R.id.btnHSWSkip);
+                Button btnHSWBack = (Button) page.findViewById(R.id.btnHSWBack);
+                int pageWidth = page.getWidth();
+
+
+                if (position < -1) { // [-Infinity,-1)
+                    // This page is way off-screen to the left.
+                    page.setAlpha(1);
+
+                }
+
+                else if (position <= 1) { // [-1,1]
+                    //ivHWSImage.setTranslationX(position * pageWidth / 16);
+                    tvHSWTitle.setTranslationX(position * pageWidth * 2);
+                    tvHSWText.setTranslationX(position * pageWidth / 2);
+                    linearLayoutHSW.setTranslationX(position * pageWidth / 1);
+                    btnHSWSkip.setTranslationX(position * pageWidth / 2);
+                    btnHSWBack.setTranslationX(position * pageWidth / 4);
+
+                } else { // (1,+Infinity]
+                    // This page is way off-screen to the right.
+                    page.setAlpha(1);
+                }
+            }
+        });
 
 
     }
