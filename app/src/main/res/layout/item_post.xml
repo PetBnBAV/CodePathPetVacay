@@ -69,6 +69,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:id="@+id/ivSitterImage"
+            android:transitionName="profile"
             android:src="@drawable/sample_profile"
             android:layout_gravity="right|center_vertical"
             android:layout_marginRight="41dp"

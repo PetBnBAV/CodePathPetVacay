@@ -18,55 +18,17 @@ import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.models.Listing;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
-import com.dexafree.materialList.controller.IMaterialListAdapter;
-import com.dexafree.materialList.model.Card;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
 /**
  * Created by gangwal on 3/8/15.
  */
-public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapter.ViewHolder> implements IMaterialListAdapter {
-
-    @Override
-    public void add(Card card) {
-
-    }
-
-    @Override
-    public void addAll(Card... cards) {
-
-    }
-
-    @Override
-    public void addAll(Collection<Card> cards) {
-
-    }
-
-    @Override
-    public void remove(Card card, boolean b) {
-
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
-    public Card getCard(int i) {
-        return null;
-    }
-
-    @Override
-    public int getPosition(Card card) {
-        return 0;
-    }
+public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapter.ViewHolder>  {
 
     protected class ViewHolder  extends RecyclerView.ViewHolder {
         ImageView ivSitterImage;
@@ -119,7 +81,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(final ViewHolder viewHolder, int position) {
         final Listing currentListing = mlistings.get(position);
         final ViewHolder viewHolderF = viewHolder;
 
@@ -196,7 +158,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         viewHolder.ivSitterImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoDetailsPage(mActivity,currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing,false,viewHolder.ivSitterImage);
             }
         });
 
@@ -219,20 +181,20 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         viewHolder.viewPager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoDetailsPage(mActivity,currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing,false,viewHolder.ivSitterImage);
             }
         });
 
         viewHolder.tvPostTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoDetailsPage(mActivity,currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing,false,viewHolder.ivSitterImage);
             }
         });
         viewHolder.tvPostSubTitle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Utils.gotoDetailsPage(mActivity,currentListing);
+                Utils.gotoDetailsPage(mActivity,currentListing,false,viewHolder.ivSitterImage);
             }
         });
 
@@ -335,10 +297,8 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 
     public static int randInt() {
         int min=10, max=40;
-
         Random rand = new Random();
         int randomNum = rand.nextInt((max - min) + 1) + min;
-
         return randomNum;
     }
 

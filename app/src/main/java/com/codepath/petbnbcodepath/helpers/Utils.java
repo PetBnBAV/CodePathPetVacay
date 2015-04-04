@@ -9,6 +9,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
@@ -176,7 +177,32 @@ public class Utils {
         intent.putExtra(Constants.IS_PREVIEW, isPreview);
         intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
         intent.putStringArrayListExtra(Constants.IMAGE_URL_LIST,currentListing.getImageUrlList());
+
+
         context.startActivity(intent);
+    }
+
+    public static void gotoDetailsPage(Context context, Listing currentListing, boolean isPreview,ImageView ivProfile) {
+        Intent intent = new Intent(context, DetailsPageActivity.class);
+        intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
+        intent.putExtra(Constants.lastNameKey, currentListing.getLast_name());
+        intent.putExtra(Constants.coverPictureKey, currentListing.getCoverPictureUrl());
+        intent.putExtra(Constants.titleKey, currentListing.getTitle());
+        intent.putExtra(Constants.reviewerIdKey, currentListing.getNumReviews());
+        intent.putExtra(Constants.firstReview, String.valueOf(currentListing.getFirstReview()));
+        intent.putExtra(Constants.listingCostKey, currentListing.getCost());
+        intent.putExtra(Constants.descriptionKey, currentListing.getDescription());
+        intent.putExtra(Constants.hasPetsKey, currentListing.isHasPets());
+        intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
+        intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
+        intent.putExtra(Constants.IS_PREVIEW, isPreview);
+        intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
+        intent.putStringArrayListExtra(Constants.IMAGE_URL_LIST,currentListing.getImageUrlList());
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+              makeSceneTransitionAnimation((Activity) context, (View) ivProfile, "profile");
+
+        context.startActivity(intent,options.toBundle());
     }
 
     public static  byte[] readBytesFromURI(Context context,Uri uri) throws IOException {

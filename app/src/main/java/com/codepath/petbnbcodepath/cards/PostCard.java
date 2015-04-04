@@ -1,15 +1,13 @@
 package com.codepath.petbnbcodepath.cards;
 
 import android.content.Context;
+import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
-
-import com.codepath.petbnbcodepath.R;
-import com.dexafree.materialList.cards.ExtendedCard;
 
 /**
  * Created by gangwal on 3/21/15.
  */
-public class PostCard extends ExtendedCard {
+public class PostCard extends CardView {
 
         public PostCard(final Context context) {
             super(context);
@@ -25,9 +23,9 @@ public class PostCard extends ExtendedCard {
         super(context);
     }
 
-    @Override
-        public int getLayout() {
-            return R.layout.item_post;
-        }
+//    @Override
+//        public int getLayout() {
+//            return R.layout.item_post;
+//        }
     }
 

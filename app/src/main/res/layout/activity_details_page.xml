@@ -126,6 +126,7 @@
                 android:layout_width="75dp"
                 android:layout_height="75dp"
                 android:id="@+id/ivSitterImage"
+                android:transitionName="profile"
                 android:src="@drawable/sample_profile"
                 android:layout_margin="10dp"/>
 

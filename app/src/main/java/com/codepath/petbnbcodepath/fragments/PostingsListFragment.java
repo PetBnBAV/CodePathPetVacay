@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -20,9 +22,6 @@ import com.codepath.petbnbcodepath.adapters.PlacesAutoCompleteAdapter;
 import com.codepath.petbnbcodepath.adapters.PostingArrayAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
-import com.dexafree.materialList.controller.OnDismissCallback;
-import com.dexafree.materialList.model.Card;
-import com.dexafree.materialList.view.MaterialListView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -41,7 +40,7 @@ public class PostingsListFragment extends Fragment {
     private static Activity sActivity;
     private PostingsListListener mCallback;
 
-    MaterialListView lvPosting;
+    RecyclerView lvPosting;
     ArrayList<Listing> posts;
 
     private PostingArrayAdapter aPosts;
@@ -93,7 +92,12 @@ public class PostingsListFragment extends Fragment {
 
             getNearbyListings(latitude, longitude);
         }
-        lvPosting = (MaterialListView) view.findViewById(R.id.lvPost);
+        lvPosting = (RecyclerView) view.findViewById(R.id.lvPost);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.scrollToPosition(0);
+        lvPosting.setLayoutManager(layoutManager);
+        lvPosting.setHasFixedSize(true);
         etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
         etSearch.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
         tvCurrLoc = (TextView) view.findViewById(R.id.tvCurrLoc);
@@ -190,11 +194,5 @@ public class PostingsListFragment extends Fragment {
         aPosts = new PostingArrayAdapter((android.support.v4.app.FragmentActivity) sActivity,posts);
         hideProgressBar();
         lvPosting.setAdapter(aPosts);
-        lvPosting.setOnDismissCallback(new OnDismissCallback() {
-            @Override
-            public void onDismiss(Card card, int position) {
-                // Do whatever you want here
-            }
-        });
     }
 }

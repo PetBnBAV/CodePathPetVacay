@@ -46,6 +46,7 @@
     <dimen name="login_terms_margin">25dp</dimen>
     <dimen name="tvCurrLoc_padding_top">5dp</dimen>
     <dimen name="landing_pg_search_height">35dp</dimen>
+    <dimen name="card_corner_radius">4dp</dimen>
 
     <dimen name="pet_owner_profile_image">250dp</dimen>
 

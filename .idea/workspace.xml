@@ -1336,16 +1336,13 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/adapters/ImagePagerAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/helpers/Constants.java" />
-<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/activities/PostingActivity.java" />
-=======
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/activities/DetailsPageActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/adapters/PostingArrayAdapter.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/../../../MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/FragmentCommunicator.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_history_page.xml" />
->>>>>>> origin/master
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_login.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/fragments/HistoryPageFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/fragments/WhyHostFragment.java" />
@@ -1356,7 +1353,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/fragments/HowItWorksFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/activities/BookingDetailsActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/activities/ListYourSpaceActivity.java" />
-<<<<<<< HEAD
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/fragments/MYLLandingPageFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/codepath/petbnbcodepath/activities/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_manage_your_listing.xml" />

@@ -215,7 +215,7 @@
     <string name="wordCount"><b>%1$d</b> words left</string>
     <string name="myl_priceTitle">Price per day</string>
     <string name="currencyUnit">$</string>
-    <string name="suggestedPrice">We suggest %1$d per night based on similar listings in your area.</string>
+    <string name="suggestedPrice">We suggest $ %1$d per night based on similar listings in your area.</string>
     <string name="suggestedPriceHint">We suggest $77 per night based on similar listings in your area.</string>
     <string name="list_your_space_title">List Your Space</string>
     <string name="done_title">Done</string>
