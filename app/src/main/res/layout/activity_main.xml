@@ -35,7 +35,7 @@
 
 
         <RelativeLayout
-            android:id="@+id/left_drawer"
+            android:id="@+id/right_drawer"
             android:layout_width="220dp"
             android:layout_height="match_parent"
             android:layout_gravity="right"
@@ -44,49 +44,61 @@
             <ImageView
                 android:id="@+id/image_view"
                 android:layout_width="match_parent"
-                android:layout_height="125dp"
+                android:layout_height="150dp"
                 android:background="@color/lightestgrey"
                 android:layout_centerHorizontal="true"
-                android:scaleType="centerInside"
-                android:adjustViewBounds="true"
-                android:clickable="true" />
+                android:clickable="true"/>
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:id="@+id/ivAppIconImg"
-                android:layout_margin="20dp"
+                android:layout_margin="5dp"
                 android:layout_centerHorizontal="true"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tvLoggedInAs"
+                android:textColor="@color/petvacayteal"
+                android:background="@color/white"
+                android:textStyle="italic"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:layout_below="@+id/image_view"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="50dp"
+                android:layout_height="70dp"
                 android:orientation="horizontal"
                 android:id="@+id/llExtras"
-                android:layout_below="@+id/image_view">
+                android:paddingTop="5dp"
+                android:layout_below="@+id/tvLoggedInAs">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/borders_allfour"
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/ivMail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="30dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_centerHorizontal="true"
                         android:clickable="true" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_weight="1"
                     android:background="@drawable/borders_allfour">
                     <ImageView
                         android:id="@+id/ivFavorites"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_centerHorizontal="true"
@@ -109,7 +121,7 @@
 
             <LinearLayout
                 android:layout_width="fill_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:id="@+id/llLoginSignUp"
                 android:orientation="horizontal"
                 android:layout_gravity="bottom"
@@ -122,18 +134,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/tvLogInSignUp"
-                    android:textSize="12sp"
+                    android:textSize="15sp"
                     android:text="@string/AskToLogin"
                     android:textColor="@color/black"
                     android:layout_below="@+id/lvRight_Drawer"
                     android:paddingLeft="10dp"
-                    android:paddingRight="70dp"
+                    android:paddingRight="50dp"
+                    android:paddingBottom="10dp"
                     android:gravity="start"/>
 
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:paddingBottom="20dp"
+                    android:paddingRight="5dp"
                     android:src="@drawable/ic_login"/>
 
             </LinearLayout>

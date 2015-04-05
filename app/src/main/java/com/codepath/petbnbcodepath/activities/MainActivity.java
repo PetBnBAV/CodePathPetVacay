@@ -7,7 +7,6 @@ import android.content.IntentSender;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.location.Address;
 import android.location.Geocoder;
@@ -17,11 +16,9 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,7 +34,7 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.petbnbcodepath.R;
-import com.codepath.petbnbcodepath.adapters.FragmentPageAdapter;
+import com.codepath.petbnbcodepath.adapters.MyPagerAdapter;
 import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentNoPP;
 import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentWithPP;
 import com.codepath.petbnbcodepath.fragments.PostingsListFragment;
@@ -49,8 +46,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
-import com.makeramen.roundedimageview.RoundedTransformationBuilder;
-import com.parse.DeleteCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -61,7 +56,6 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Transformation;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -92,7 +86,9 @@ public class MainActivity extends ActionBarActivity implements
     private String[] mOptionMenu;
     private ViewPager viewPager;
 
-    private FragmentPagerAdapter adapterPager;
+    private MyPagerAdapter adapterPager;
+
+    TextView tvLoggedInAs;
 
 
     boolean loggedIn = false;
@@ -147,7 +143,7 @@ public class MainActivity extends ActionBarActivity implements
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-        adapterPager = new FragmentPageAdapter(getSupportFragmentManager(), this);
+        adapterPager = new MyPagerAdapter(getSupportFragmentManager(), this);
 
         /*viewPager.setAdapter(new FragmentPageAdapter(getSupportFragmentManager()));
 
@@ -183,6 +179,7 @@ public class MainActivity extends ActionBarActivity implements
 
         tvLogInSignUp = (TextView) findViewById(R.id.tvLogInSignUp);
         ivAppIconImg = (ImageView) findViewById(R.id.ivAppIconImg);
+        tvLoggedInAs = (TextView) findViewById(R.id.tvLoggedInAs);
 
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,R.layout.drawer_list_item, mProfileTasks));
 
@@ -209,6 +206,7 @@ public class MainActivity extends ActionBarActivity implements
 
                 } else {
                     //Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
+                    mDrawerLayout.closeDrawer(Gravity.RIGHT);
                     myLogin();
                 }
 
@@ -326,6 +324,17 @@ public class MainActivity extends ActionBarActivity implements
 
         loggedIn = true;
 
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+
+            String test = currentUser.getString("first_name");
+
+            tvLoggedInAs.setText(currentUser.getString("first_name") +  " " + currentUser.getString("last_name"));
+        }
+
+        viewPager.invalidate();
+        viewPager.setAdapter(adapterPager);
+
     }
 
 
@@ -348,18 +357,9 @@ public class MainActivity extends ActionBarActivity implements
                             userHasPP = true;
 
                             //Insert profile picture pertaining to each user
-                            Transformation transformation = new RoundedTransformationBuilder()
-                                    .borderColor(Color.LTGRAY)
-                                    .borderWidthDp(3)
-                                    .cornerRadiusDp(30)
-                                    .oval(true)
-                                    .build();
-
-
                             Picasso.with(getApplicationContext())
                                     .load(file.getUrl())
                                     .placeholder(R.drawable.ic_user)
-                                    .transform(transformation)
                                     .fit()
                                     .into(ivAppIconImg);
 
@@ -402,6 +402,11 @@ public class MainActivity extends ActionBarActivity implements
         ivAppIconImg.setScaleType(ImageView.ScaleType.FIT_CENTER);
 
         loggedIn = false;
+
+        viewPager.invalidate();
+        viewPager.setAdapter(adapterPager);
+        tvLoggedInAs.setText("");
+        tvLoggedInAs.setVisibility(View.INVISIBLE);
 
     }
 
@@ -458,6 +463,7 @@ public class MainActivity extends ActionBarActivity implements
 
         // Showing Alert Dialog
         alertDialog.show();
+
 
 
     }
@@ -805,7 +811,7 @@ public class MainActivity extends ActionBarActivity implements
                     user_info.saveInBackground(new SaveCallback() {
                         @Override
                         public void done(ParseException e) {
-                            Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(MainActivity.this, "Done updating", Toast.LENGTH_SHORT).show();
                            // getProfilePicture();
 
                         }
@@ -868,18 +874,9 @@ public class MainActivity extends ActionBarActivity implements
             userHasPP = true;
 
             //Insert profile picture pertaining to each user
-            Transformation transformation = new RoundedTransformationBuilder()
-                    .borderColor(Color.LTGRAY)
-                    .borderWidthDp(3)
-                    .cornerRadiusDp(30)
-                    .oval(true)
-                    .build();
-
-
             Picasso.with(getApplicationContext())
                     .load(selectedImageUri)
                     .fit()
-                    .transform(transformation)
                     .into(ivAppIconImg);
 
             ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -938,18 +935,9 @@ public class MainActivity extends ActionBarActivity implements
 
 
             //Insert profile picture pertaining to each user
-           Transformation transformation = new RoundedTransformationBuilder()
-                    .borderColor(Color.LTGRAY)
-                    .borderWidthDp(3)
-                    .cornerRadiusDp(30)
-                    .oval(true)
-                    .build();
-
-
-            Picasso.with(getApplicationContext())
+          Picasso.with(getApplicationContext())
                     .load(Uri.parse(path))
                     .fit()
-                    .transform(transformation)
                     .into(ivAppIconImg);
 
             ivAppIconImg.setScaleType(ImageView.ScaleType.CENTER_CROP);

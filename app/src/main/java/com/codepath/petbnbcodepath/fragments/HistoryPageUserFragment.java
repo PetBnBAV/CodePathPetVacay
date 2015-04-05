@@ -1,11 +1,13 @@
 package com.codepath.petbnbcodepath.fragments;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.BookingsHistoryAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.codepath.petbnbcodepath.models.Booking;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -27,7 +30,7 @@ import java.util.List;
 /**
  * Created by anuscorps23 on 3/12/15.
  */
-public class HistoryPageUserFragment extends Fragment {
+public class HistoryPageUserFragment extends Fragment implements FragmentCommunicator{
 
     public static final String ARG_PAGE = "ARG_PAGE";
 
@@ -38,12 +41,25 @@ public class HistoryPageUserFragment extends Fragment {
     TextView tvBStartDate;
     TextView tvBEndDate;
 
+    TextView tvYourBookings;
+    TextView tvWhenYouBook;
+    TextView btnStartExploring;
+
 
 
     private int mHistoryPageUser;
     private ArrayList<Booking> bookingArrayList;
     private ArrayAdapter<Booking> bookingArrayAdapter;
     private ListView lvBookingsHistory;
+
+    public FragmentCommunicator communicator;
+
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        communicator = (FragmentCommunicator) activity;
+    }
 
 
 
@@ -60,6 +76,8 @@ public class HistoryPageUserFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mHistoryPageUser = getArguments().getInt(ARG_PAGE);
+
+
     }
 
     // Inflate the fragment layout we defined above for this fragment
@@ -75,11 +93,16 @@ public class HistoryPageUserFragment extends Fragment {
         tvBStartDate = (TextView) view.findViewById(R.id.tvBHStartDate);
         tvBEndDate = (TextView) view.findViewById(R.id.tvBHEndDate);
         lvBookingsHistory = (ListView) view.findViewById(R.id.lvBookingsHistory);
+        tvYourBookings = (TextView) view.findViewById(R.id.tvYourBookings);
+        tvWhenYouBook = (TextView) view.findViewById(R.id.tvWhenYouBook);
+        btnStartExploring = (Button) view.findViewById(R.id.btnStartExploring);
 
 
         bookingArrayList = new ArrayList<>();
         bookingArrayAdapter = new BookingsHistoryAdapter(getActivity(), bookingArrayList);
         lvBookingsHistory.setAdapter(bookingArrayAdapter);
+
+        setUpClickListeners();
 
 
         getBookingHistory();
@@ -87,6 +110,20 @@ public class HistoryPageUserFragment extends Fragment {
 
         return view;
     }
+
+
+    public void setUpClickListeners()
+    {
+        btnStartExploring.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(getActivity(), "Start Exploring", Toast.LENGTH_SHORT).show();
+                communicator.startExploring();
+
+            }
+        });
+    }
+
 
     public void getBookingHistory()
     {
@@ -113,9 +150,42 @@ public class HistoryPageUserFragment extends Fragment {
                         Toast.makeText(getActivity(),getResources().getString(R.string.generic_error),Toast.LENGTH_SHORT).show();
                     }
 
+
+                    if(myBookings.isEmpty())
+                    {
+                        tvYourBookings.setVisibility(View.VISIBLE);
+                        tvWhenYouBook.setVisibility(View.VISIBLE);
+                        btnStartExploring.setVisibility(View.VISIBLE);
+
+                    }
+                    else
+                    {
+                        tvYourBookings.setVisibility(View.INVISIBLE);
+                        tvWhenYouBook.setVisibility(View.INVISIBLE);
+                        btnStartExploring.setVisibility(View.INVISIBLE);
+
+                    }
+
                 }
             });
+
         }
+
+    }
+
+    @Override
+    public void startExploring() {
+
+    }
+
+    @Override
+    public void login() {
+
+    }
+
+    @Override
+    public void listYourSpace() {
+
     }
 }
 

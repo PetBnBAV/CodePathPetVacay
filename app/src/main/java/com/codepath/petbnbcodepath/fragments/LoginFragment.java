@@ -177,9 +177,9 @@ public class LoginFragment extends Fragment {
                         public void done(ParseUser user, ParseException e) {
                             if (user != null) {
                                 // This should return back to the activity that started it
-                                Toast.makeText(getActivity(),
+                                /*Toast.makeText(getActivity(),
                                         "You are now logged in",
-                                        Toast.LENGTH_SHORT).show();
+                                        Toast.LENGTH_SHORT).show();*/
                                 ParseInstallation installation =
                                                        ParseInstallation.getCurrentInstallation();
                                 installation.put("user", user);
