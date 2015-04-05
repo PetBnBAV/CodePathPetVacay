@@ -774,7 +774,7 @@ public class MainActivity extends ActionBarActivity implements
         //Toast.makeText(getApplicationContext(),"Buttonlog in pressed", Toast.LENGTH_LONG).show();
 
         Intent i = new Intent(MainActivity.this, LoginSignupActivity.class);
-        viewPager.setCurrentItem(1,true);
+        viewPager.setCurrentItem(0,true);
         startActivity(i);
 
     }
