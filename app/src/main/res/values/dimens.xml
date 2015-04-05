@@ -49,5 +49,7 @@
     <dimen name="card_corner_radius">4dp</dimen>
 
     <dimen name="pet_owner_profile_image">250dp</dimen>
+    <dimen name="min_height_header">0dp</dimen>
+    <dimen name="max_height_header">70dp</dimen>
 
 </resources>

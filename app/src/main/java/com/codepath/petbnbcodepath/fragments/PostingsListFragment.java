@@ -31,6 +31,8 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
+
 /**
  * Created by gangwal on 3/21/15.
  */
@@ -48,7 +50,7 @@ public class PostingsListFragment extends Fragment {
 
     private AutoCompleteTextView etSearch;
     private TextView tvCurrLoc;
-
+    View view;
     public interface PostingsListListener {
         public void onEtQuerySubmit(String query);
         public void onCurrLoc();
@@ -80,33 +82,30 @@ public class PostingsListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle savedInstanceState) {
-        View view  = inflater.inflate(R.layout.fragment_posting_list,parent,false);
+        view  = inflater.inflate(R.layout.fragment_posting_list,parent,false);
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar1);
         animationDrawable = (AnimationDrawable)progressBar.getIndeterminateDrawable();
         showProgressBar();
+
+        lvPosting = (RecyclerView) view.findViewById(R.id.lvPost);
+
+        etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
+        etSearch.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
+        tvCurrLoc = (TextView) view.findViewById(R.id.tvCurrLoc);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             final double latitude = bundle.getDouble(Constants.LATITUDE, 0);
             final double longitude = bundle.getDouble(Constants.LONGITUDE, 0);
             posts = new ArrayList<Listing>();
-
             getNearbyListings(latitude, longitude);
         }
-        lvPosting = (RecyclerView) view.findViewById(R.id.lvPost);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        layoutManager.scrollToPosition(0);
-        lvPosting.setLayoutManager(layoutManager);
-        lvPosting.setHasFixedSize(true);
-        etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
-        etSearch.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
-        tvCurrLoc = (TextView) view.findViewById(R.id.tvCurrLoc);
-
-
         setupViewListeners();
-
-
         return view;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     private void setupViewListeners() {
@@ -194,5 +193,19 @@ public class PostingsListFragment extends Fragment {
         aPosts = new PostingArrayAdapter((android.support.v4.app.FragmentActivity) sActivity,posts);
         hideProgressBar();
         lvPosting.setAdapter(aPosts);
+        StikkyHeaderBuilder.stickTo(lvPosting)
+                .setHeader(R.id.header,(ViewGroup)view)
+                .minHeightHeaderDim(R.dimen.min_height_header)
+                .build();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        if(lvPosting.getLayoutManager()==null)
+            lvPosting.setLayoutManager(layoutManager);
+
     }
 }

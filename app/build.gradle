@@ -19,7 +19,9 @@ android {
     productFlavors {
     }
 }
-
+repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
@@ -44,5 +46,6 @@ dependencies {
     compile 'com.flaviofaria:kenburnsview:1.0.6'
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.android.support:recyclerview-v7:21.0.+'
-
+    compile 'com.github.carlonzo.stikkyheader:core:0.0.2-SNAPSHOT'
+    //    compile 'com.bartoszlipinski.recyclerviewheader:library:1.0.1'
 }

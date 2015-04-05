@@ -154,7 +154,7 @@ public class MainActivity extends ActionBarActivity implements
 
         checkIfUserLoggedIn();*/
 
-
+        ViewServer.get(this).addWindow(this);
     }
 
 
@@ -1006,6 +1006,16 @@ public class MainActivity extends ActionBarActivity implements
         return byteBuffer.toByteArray();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ViewServer.get(this).removeWindow(this);
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        ViewServer.get(this).setFocusedWindow(this);
+    }
 
 }
