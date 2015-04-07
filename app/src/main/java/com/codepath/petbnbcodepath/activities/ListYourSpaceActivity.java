@@ -169,7 +169,9 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
     }
 
     public void onPrevious(View view) {
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(this,MainActivity.class);
+        //startActivity(intent);
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.pull_out_to_left);
     }
 }
