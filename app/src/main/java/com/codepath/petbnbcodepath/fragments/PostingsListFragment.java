@@ -49,11 +49,9 @@ public class PostingsListFragment extends Fragment {
     private String TAG = PostingsListFragment.class.getSimpleName();
 
     private AutoCompleteTextView etSearch;
-    private TextView tvCurrLoc;
     View view;
     public interface PostingsListListener {
         public void onEtQuerySubmit(String query);
-        public void onCurrLoc();
     }
 
     public static PostingsListFragment getInstance(Activity activity){
@@ -91,7 +89,6 @@ public class PostingsListFragment extends Fragment {
 
         etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
         etSearch.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
-        tvCurrLoc = (TextView) view.findViewById(R.id.tvCurrLoc);
         Bundle bundle = this.getArguments();
         if (bundle != null) {
             final double latitude = bundle.getDouble(Constants.LATITUDE, 0);
@@ -138,13 +135,6 @@ public class PostingsListFragment extends Fragment {
                 String query = (String) parent.getItemAtPosition(position);
                 etSearch.setText("");
                 mCallback.onEtQuerySubmit(query);
-            }
-        });
-
-        tvCurrLoc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mCallback.onCurrLoc();
             }
         });
     }

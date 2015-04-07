@@ -54,7 +54,7 @@
 
     <string name="generic_error">:-O Something went wrong!</string>
     <string name="search">Search</string>
-    <string name="whereto">Where at?</string>
+    <string name="whereto">Enter your city here!</string>
     <string name="sitter_std_string">is a verified host!</string>
     <string name="reviews">Reviews</string>
     <string name="review">Review</string>
@@ -230,5 +230,5 @@
     <string name="pick_proper_date">Please choose a pick up date that\'s after drop off date! Please re-select!</string>
     <string name="return_to_listings">Listings View</string>
 
-    <string name="curr_loc">or Current Location</string>
+    <string name="curr_loc">Current Location</string>
 </resources>

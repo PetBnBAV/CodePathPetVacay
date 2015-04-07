@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/landing_pg_search_height"
+    android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    android:background="@color/bgWhite"
+    android:textColor="@color/dark_gray"
+    android:paddingLeft="@dimen/textview_hint_padding"
+    android:paddingStart="@dimen/textview_hint_padding"
+    android:text="abc"
+    android:paddingTop="@dimen/auto_complete_padding_top"
+    />

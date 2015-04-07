@@ -724,6 +724,11 @@ public class MainActivity extends ActionBarActivity implements
 
         Intent i = new Intent(MainActivity.this, MapActivity.class);
 
+        if (query.equals(getResources().getString(R.string.curr_loc))) {
+            i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
+            i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
+            i.putExtra(Constants.locationStrKey, getResources().getString(R.string.curr_loc));
+        } else {
             try {
                 address = coder.getFromLocationName(query, 5);
                 if (address != null) {
@@ -739,19 +744,9 @@ public class MainActivity extends ActionBarActivity implements
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            startActivity(i);
-
-        //Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-
-//        Toast.makeText(MainActivity.this, query, Toast.LENGTH_SHORT).show();
-    }
-
-    public void onCurrLoc() {
-        Intent i = new Intent(MainActivity.this, MapActivity.class);
-        i.putExtra(Constants.latitude, Constants.currLatLng.getLatitude());
-        i.putExtra(Constants.longitude, Constants.currLatLng.getLongitude());
-        i.putExtra(Constants.locationStrKey, getResources().getString(R.string.curr_loc));
+        }
         startActivity(i);
+
     }
 
     public void onlvLandingPageItemClick(double latitude, double longitude) {

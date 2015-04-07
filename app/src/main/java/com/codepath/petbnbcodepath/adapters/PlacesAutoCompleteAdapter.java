@@ -5,6 +5,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Filterable;
 import android.widget.Filter;
 
+import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.net.GoogleMapAutoCompleteClient;
 
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements F
                 if (constraint != null) {
                     // Retrieve the autocomplete results.
                     resultList = client.autocomplete(constraint.toString());
+                    resultList.add(0, getContext().getResources().getString(R.string.curr_loc));
 
                     // Assign the data to the FilterResults
                     filterResults.values = resultList;
