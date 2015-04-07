@@ -99,7 +99,7 @@
     <string name="title_activity_booking_details">Booking details</string>
     <string name="price">Price</string>
     <string name="dates">Dates</string>
-    <string name="req_to_book">Book Now!</string>
+    <string name="req_to_book">Request to Book!</string>
     <string name="only_charge">You\'ll only be charged if the host accepts your request within 24 hours.</string>
     <string name="say_hello_1">Tell your pet\'s host</string>
     <string name="say_hello_2">, "Hello"</string>
@@ -225,7 +225,7 @@
     <string name="location">Location</string>
     <string name="more_info">More Info</string>
     <string name="next_button">Next</string>
-    <string name="request_to_book">Request to Book</string>
+    <string name="request_to_book">Next</string>
     <string name="descriptionLabel">Description</string>
     <string name="pick_proper_date">Please choose a pick up date that\'s after drop off date! Please re-select!</string>
     <string name="return_to_listings">Listings View</string>
