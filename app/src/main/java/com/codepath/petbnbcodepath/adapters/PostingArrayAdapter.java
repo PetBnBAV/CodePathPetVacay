@@ -82,6 +82,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
 
     @Override
     public void onBindViewHolder(final ViewHolder viewHolder, int position) {
+
         final Listing currentListing = mlistings.get(position);
         final ViewHolder viewHolderF = viewHolder;
 

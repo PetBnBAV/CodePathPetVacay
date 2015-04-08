@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/CodePathPetBnB.iml" filepath="$PROJECT_DIR$/CodePathPetBnB.iml" />
       <module fileurl="file://$PROJECT_DIR$/CodePathPetVacay.iml" filepath="$PROJECT_DIR$/CodePathPetVacay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/quickreturnlib/quickreturnlib.iml" filepath="$PROJECT_DIR$/libraries/quickreturnlib/quickreturnlib.iml" />
     </modules>
   </component>
 </project>
