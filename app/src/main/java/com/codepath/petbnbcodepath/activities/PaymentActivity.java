@@ -409,6 +409,9 @@ public class PaymentActivity extends ActionBarActivity {
             anim.setDuration(600);
             anim.start();
         }
+        else {
+            myView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void exitReveal(View v) {
@@ -448,6 +451,9 @@ public class PaymentActivity extends ActionBarActivity {
 
             // start the animation
             anim.start();
+        }
+        else {
+            myView.setVisibility(View.INVISIBLE);
         }
     }
 
