@@ -171,8 +171,8 @@ public class MainActivity extends ActionBarActivity implements
         llLogInSignUp = (LinearLayout) findViewById(R.id.llLoginSignUp);
         ivImageView =  (ImageView) findViewById(R.id.image_view);
         ivProfile = (ImageView) findViewById(R.id.ivProfile);
-        if(Utils.isLollipopOrNewer())
-        {setMargins(ivProfile,0,32,0,0);}
+        if(!Utils.isLollipopOrNewer())
+        {setMargins(ivProfile,0,5,0,0);}
         ivMail = (ImageView) findViewById(R.id.ivMail);
         ivFavorites = (ImageView) findViewById(R.id.ivFavorites);
 
@@ -644,8 +644,8 @@ public class MainActivity extends ActionBarActivity implements
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         //NOTE : Temp fix for issue where we are icons are getting chopped off in newer version
-        if(Utils.isLollipopOrNewer()){
-            setMargins(tabsStrip,0,28,0,0);        }
+        if(!Utils.isLollipopOrNewer()){
+            setMargins(tabsStrip,0,0,0,0);        }
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
 
