@@ -475,6 +475,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                                                         booking_dropOffDate.toString());
                                                 obj.put(Constants.endDateKey,
                                                         booking_pickUpDate.toString());
+                                                obj.put("chat", false);
                                                 if (etMsgHost.getText().toString().equals("")) {
                                                     obj.put(Constants.msgKey, null);
                                                 } else {

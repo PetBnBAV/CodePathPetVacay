@@ -171,6 +171,7 @@ public class Listing {
         currListing.petType = listing.getInt(Constants.petTypeKey);
         currListing.hasPets = listing.getBoolean(Constants.hasPetsKey);
         currListing.title = listing.getString(Constants.titleKey);
+        currListing.numReviews = listing.getInt("num_reviews");
 
         /*currListing.client = new GoogleMapReverseGeoCodingClient();
         currListing.client.getCity(currListing.latLng);*/

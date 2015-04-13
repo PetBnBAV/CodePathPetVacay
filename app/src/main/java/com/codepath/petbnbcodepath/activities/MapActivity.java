@@ -337,7 +337,7 @@ public class MapActivity extends ActionBarActivity
             public void done(List<ParseObject> listingList, ParseException e) {
                 if (e == null) {
                     nearbyListings.addAll(Listing.fromParseObjectList(listingList));
-                    for (int i = 0; i < listingList.size(); i++) {
+                    /*for (int i = 0; i < listingList.size(); i++) {
                         final int pos = i;
                         ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayReviewTable);
                         query.whereEqualTo(Constants.listingIdKey, listingList.get(i));
@@ -351,7 +351,7 @@ public class MapActivity extends ActionBarActivity
                                 }
                             }
                         });
-                    }
+                    }*/
                     onNearbyListingsLoaded();
                 } else {
                     Log.e("TAG", "Error: " + e.getMessage());
