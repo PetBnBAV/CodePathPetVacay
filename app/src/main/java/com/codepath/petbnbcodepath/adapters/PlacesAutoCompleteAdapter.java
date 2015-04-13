@@ -45,6 +45,9 @@ public class PlacesAutoCompleteAdapter extends ArrayAdapter<String> implements F
                 FilterResults filterResults = new FilterResults();
                 if (constraint != null) {
                     // Retrieve the autocomplete results.
+                    if (resultList != null) {
+                        resultList.clear();
+                    }
                     resultList = client.autocomplete(constraint.toString());
                     resultList.add(0, getContext().getResources().getString(R.string.curr_loc));
 
