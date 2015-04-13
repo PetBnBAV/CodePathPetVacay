@@ -53,5 +53,15 @@
     <dimen name="max_height_header">50dp</dimen>
 
     <dimen name="auto_complete_padding_top">10dp</dimen>
+    <dimen name="pay_det_tv_height">50dp</dimen>
+    <dimen name="pay_det_padding_top">10dp</dimen>
+    <dimen name="pay_det_padding_top2">10dp</dimen>
+    <dimen name="pay_det_margin_vert">30dp</dimen>
+    <dimen name="pay_det_button_size">70dp</dimen>
+
+    <dimen name="card_logo_height">25dp</dimen>
+    <dimen name="card_logo_vert_padding">13dp</dimen>
+
+    <dimen name="card_num_padding">42dp</dimen>
 
 </resources>

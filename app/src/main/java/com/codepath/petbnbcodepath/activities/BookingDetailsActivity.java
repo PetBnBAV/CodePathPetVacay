@@ -1,12 +1,11 @@
 package com.codepath.petbnbcodepath.activities;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -50,10 +49,21 @@ import java.util.HashMap;
 import java.util.List;
 
 
+import com.stripe.android.model.Card;
+import com.stripe.exception.APIConnectionException;
+import com.stripe.exception.APIException;
+import com.stripe.exception.AuthenticationException;
+import com.stripe.exception.CardException;
+import com.stripe.exception.InvalidRequestException;
+import com.stripe.model.Customer;
+
+
 public class BookingDetailsActivity extends ActionBarActivity implements
                                                       DatePickerDialog.OnDatePickerDialogListener {
 
     private static final String TAG = "BOOKINGDETAILACTIVITY";
+
+    private static final int BOOKING_ACTIVITY_RETURN = 17;
 
     private ImageView ivCoverPicture;
 
@@ -66,6 +76,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     private Button btnSelDropDates;
     private Button btnSelPickDates;
     private Button btnBook;
+    private Button btnAddPayment;
 
     private ExpandableListView lvPrice;
 
@@ -95,6 +106,13 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     private Date booking_dropOffDate;
     private Date booking_pickUpDate;
 
+    private TextView tvCardType;
+    private ImageButton btnEditCard;
+    private ImageButton btnDeleteCard;
+    private ImageView ivCardLogo;
+    private TextView tvLast4;
+
+
     public void onDatesSelected(Date dropOffDate, Date pickUpDate) {
 
         // To be able to use Joda's days between library, we need to convert the dates from
@@ -122,9 +140,14 @@ public class BookingDetailsActivity extends ActionBarActivity implements
         booking_dropOffDate = dropOffDate;
         booking_pickUpDate = pickUpDate;
 
-        // Once the dates are selected the booking button can be enabled
-        btnBook.setEnabled(true);
-        btnBook.setAlpha(Constants.btnEnabledAlpha);
+        // Once the dates are selected
+        // and the user has entered their payment information
+        // the booking button can be enabled
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null && currentUser.getString(Constants.tokenIdKey) != null) {
+            btnBook.setEnabled(true);
+            btnBook.setAlpha(Constants.btnEnabledAlpha);
+        }
     }
 
 
@@ -178,16 +201,62 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     private void setupViews() {
 
         ivCoverPicture = (ImageView) findViewById(R.id.ivCoverPicture);
+        ivCardLogo = (ImageView) findViewById(R.id.ivCardLogo);
         tvSummary = (TextView) findViewById(R.id.tvSummary);
         tvNumReviews = (TextView) findViewById(R.id.tvNumReviews);
         tvCost = (TextView) findViewById(R.id.tvCost);
         tvSayHello = (TextView) findViewById(R.id.tvSayHello);
         tvSayHelloSub = (TextView) findViewById(R.id.tvSayHelloSub);
+        tvCardType = (TextView) findViewById(R.id.tvCardType);
+        tvLast4 = (TextView) findViewById(R.id.tvLast4);
         btnSelDropDates = (Button) findViewById(R.id.btnSelDropDates);
         btnSelPickDates = (Button) findViewById(R.id.btnSelPickDates);
         btnBook = (Button) findViewById(R.id.btnBook);
+        btnAddPayment = (Button) findViewById(R.id.btnAddPayment);
+        btnEditCard = (ImageButton) findViewById(R.id.btnEditCard);
+        btnDeleteCard = (ImageButton) findViewById(R.id.btnDeleteCard);
         lvPrice = (ExpandableListView) findViewById(R.id.lvPrice);
         etMsgHost = (EditText) findViewById(R.id.etMsgHost);
+
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser == null || currentUser.getString(Constants.tokenIdKey) == null) {
+            ivCardLogo.setVisibility(View.INVISIBLE);
+            tvCardType.setVisibility(View.INVISIBLE);
+            tvLast4.setVisibility(View.INVISIBLE);
+            btnEditCard.setVisibility(View.INVISIBLE);
+            btnEditCard.setEnabled(false);
+            btnDeleteCard.setVisibility(View.INVISIBLE);
+            btnDeleteCard.setEnabled(false);
+        } else {
+            btnAddPayment.setEnabled(false);
+            btnAddPayment.setVisibility(View.INVISIBLE);
+
+            tvLast4.setText(currentUser.getString(Constants.last4Key));
+            String cardType = currentUser.getString(Constants.cardTypeKey);
+            tvCardType.setText(cardType);
+            if (cardType.equals(Card.MASTERCARD)) {
+                Drawable cardDrawable = getResources().getDrawable(R.mipmap.mastercard);
+                int currWidth = cardDrawable.getIntrinsicWidth();
+                int currHeight = cardDrawable.getIntrinsicHeight();
+                int origAspectRatio = currWidth / currHeight;
+                int targetHeight = (int) getResources().getDimension(R.dimen.card_logo_height);
+                int targetWidth = origAspectRatio * targetHeight;
+
+                Picasso.with(this).load(R.mipmap.mastercard).resize(targetWidth, targetHeight)
+                                                              .into(ivCardLogo);
+
+            } else if (cardType.equals(Card.VISA)) {
+                Drawable cardDrawable = getResources().getDrawable(R.mipmap.visa);
+                int currWidth = cardDrawable.getIntrinsicWidth();
+                int currHeight = cardDrawable.getIntrinsicHeight();
+                int origAspectRatio = currWidth / currHeight;
+                int targetHeight = (int) getResources().getDimension(R.dimen.card_logo_height);
+                int targetWidth = origAspectRatio * targetHeight;
+
+                Picasso.with(this).load(R.mipmap.visa).resize(targetWidth, targetHeight).centerInside()
+                        .into(ivCardLogo);
+            }
+        }
 
         // Button to book is disabled till dates are selected
         btnBook.setEnabled(false);
@@ -229,6 +298,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
     }
 
     private void setupViewListeners() {
+
         lvPrice.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
@@ -277,6 +347,86 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                 }
             }
         });
+
+        btnAddPayment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                if (currentUser == null) {
+                    Intent i = new Intent(BookingDetailsActivity.this, LoginSignupActivity.class);
+                    startActivityForResult(i, BOOKING_ACTIVITY_RETURN);
+                } else {
+                    Intent i = new Intent(BookingDetailsActivity.this, PaymentActivity.class);
+                    startActivityForResult(i, BOOKING_ACTIVITY_RETURN);
+                }
+            }
+        });
+
+        btnEditCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(BookingDetailsActivity.this, PaymentActivity.class);
+                //startActivity(i);
+                startActivityForResult(i, BOOKING_ACTIVITY_RETURN);
+            }
+        });
+
+        btnDeleteCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final ParseUser currentUser = ParseUser.getCurrentUser();
+                final String cust_id = currentUser.getString(Constants.tokenIdKey);
+
+                com.stripe.Stripe.apiKey = "sk_live_jE00zEtVGdtR7ZEQj11kZwNx";
+                if (cust_id != null) {
+                    new AsyncTask<Void, Void, Void>() {
+                        Customer cust;
+
+                        @Override
+                        protected Void doInBackground(Void... params) {
+                            try {
+                                cust = Customer.retrieve(cust_id);
+                                cust.delete();
+                            } catch (AuthenticationException |
+                                    InvalidRequestException |
+                                    APIConnectionException |
+                                    CardException | APIException e) {
+                                Log.e(TAG, "Error: " + e.getMessage());
+                            }
+                            return null;
+                        }
+
+                        protected void onPostExecute(Void result) {
+                            if (cust != null) {
+                                    currentUser.remove(Constants.tokenIdKey);
+                                    currentUser.remove(Constants.expDateKey);
+                                    currentUser.remove(Constants.last4Key);
+                                    currentUser.remove(Constants.cardTypeKey);
+                                    currentUser.saveInBackground(new SaveCallback() {
+                                        @Override
+                                        public void done(ParseException e) {
+                                            if (e != null) {
+                                                Log.e(TAG, e.getMessage());
+                                            }
+                                        }
+                                    });
+                            }
+                        }
+                    }.execute();
+                }
+                ivCardLogo.setVisibility(View.INVISIBLE);
+                tvCardType.setVisibility(View.INVISIBLE);
+                tvLast4.setVisibility(View.INVISIBLE);
+                btnEditCard.setVisibility(View.INVISIBLE);
+                btnEditCard.setEnabled(false);
+                btnDeleteCard.setVisibility(View.INVISIBLE);
+                btnDeleteCard.setEnabled(false);
+
+                btnAddPayment.setVisibility(View.VISIBLE);
+                btnAddPayment.setEnabled(true);
+            }
+        });
+
 
         btnBook.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -351,7 +501,7 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                                                                     getResources().getString(R.string.booking_request_submitted),
                                                                     Toast.LENGTH_SHORT).show();
                                                         } else {
-                                                            Log.i(TAG, "Erroraaa: " + e.getMessage());
+                                                            Log.i(TAG, "Error: " + e.getMessage());
                                                         }
                                                     }
                                                 });
@@ -368,12 +518,70 @@ public class BookingDetailsActivity extends ActionBarActivity implements
                     });
                 } else {
                     Intent i = new Intent(BookingDetailsActivity.this, LoginSignupActivity.class);
-                    startActivity(i);
+                    startActivityForResult(i, BOOKING_ACTIVITY_RETURN);
                 }
 
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // REQUEST_CODE is defined above
+        if (resultCode == RESULT_OK && requestCode == BOOKING_ACTIVITY_RETURN) {
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            if (currentUser == null || currentUser.getString(Constants.tokenIdKey) == null) {
+                ivCardLogo.setVisibility(View.INVISIBLE);
+                tvCardType.setVisibility(View.INVISIBLE);
+                tvLast4.setVisibility(View.INVISIBLE);
+                btnEditCard.setVisibility(View.INVISIBLE);
+                btnEditCard.setEnabled(false);
+                btnDeleteCard.setVisibility(View.INVISIBLE);
+                btnDeleteCard.setEnabled(false);
+            } else {
+                ivCardLogo.setVisibility(View.VISIBLE);
+                tvCardType.setVisibility(View.VISIBLE);
+                tvLast4.setVisibility(View.VISIBLE);
+                btnEditCard.setVisibility(View.VISIBLE);
+                btnEditCard.setEnabled(true);
+                btnDeleteCard.setVisibility(View.VISIBLE);
+                btnDeleteCard.setEnabled(true);
+
+                btnAddPayment.setEnabled(false);
+                btnAddPayment.setVisibility(View.INVISIBLE);
+
+                tvLast4.setText(currentUser.getString(Constants.last4Key));
+                String cardType = currentUser.getString(Constants.cardTypeKey);
+                tvCardType.setText(cardType);
+                if (cardType.equals(Card.MASTERCARD)) {
+                    Drawable cardDrawable = getResources().getDrawable(R.mipmap.mastercard);
+                    int currWidth = cardDrawable.getIntrinsicWidth();
+                    int currHeight = cardDrawable.getIntrinsicHeight();
+                    int origAspectRatio = currWidth / currHeight;
+                    int targetHeight = (int) getResources().getDimension(R.dimen.card_logo_height);
+                    int targetWidth = origAspectRatio * targetHeight;
+
+                    Picasso.with(this).load(R.mipmap.mastercard).resize(targetWidth, targetHeight)
+                            .into(ivCardLogo);
+
+                } else if (cardType.equals(Card.VISA)) {
+                    Drawable cardDrawable = getResources().getDrawable(R.mipmap.visa);
+                    int currWidth = cardDrawable.getIntrinsicWidth();
+                    int currHeight = cardDrawable.getIntrinsicHeight();
+                    int origAspectRatio = currWidth / currHeight;
+                    int targetHeight = (int) getResources().getDimension(R.dimen.card_logo_height);
+                    int targetWidth = origAspectRatio * targetHeight;
+
+                    Picasso.with(this).load(R.mipmap.visa).resize(targetWidth, targetHeight).centerInside()
+                            .into(ivCardLogo);
+                }
+                if (booking_dropOffDate != null && booking_pickUpDate != null) {
+                    btnBook.setEnabled(true);
+                    btnBook.setAlpha(Constants.btnEnabledAlpha);
+                }
+            }
+        }
     }
 
 
