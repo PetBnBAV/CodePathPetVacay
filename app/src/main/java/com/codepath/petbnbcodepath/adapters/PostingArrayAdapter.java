@@ -97,7 +97,7 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         Transformation transformation = new RoundedTransformationBuilder()
                 .borderColor(mActivity.getResources().getColor(R.color.white))
                 .borderWidthDp(1)
-                .cornerRadiusDp(25)
+                .cornerRadiusDp(30)
                 .oval(false)
                 .build();
 

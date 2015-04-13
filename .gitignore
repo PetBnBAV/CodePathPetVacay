@@ -42,3 +42,5 @@ proguard/
 .idea/libraries/library_1_2_2.xml
 
 CodePathPetVacay.iml
+
+.idea/.name

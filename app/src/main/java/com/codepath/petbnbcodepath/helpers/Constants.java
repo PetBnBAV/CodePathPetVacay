@@ -63,6 +63,7 @@ public class Constants {
     public static final String bookingIdKey = "bookingId";
     public static final String costPerNightKey = "cost_per_night";
     public static final String startDateKey = "startDate";
+    public static final String createdDateKey = "createdAt";
     public static final String endDateKey = "endDate";
     public static final String pendingKey = "pending";
     public static final String msgKey = "message";
@@ -77,6 +78,7 @@ public class Constants {
     public static final String costKey = "cost";
     public static String locationStrKey = "locationStr";
     public static String listingPicturesKey = "listing_pictures";
+    public static String ratingKey = "rating";
 
     public enum PET_TYPE {
         DOG(0), CAT(1), BOTH(2);
@@ -113,5 +115,10 @@ public class Constants {
     public static final String cardTypeKey = "cardType";
     public static final String expDateKey = "expDate";
 
+    public static final String firstReviewDescription = "firstReviewDescription";
+    public static final String firstReviewer = "firstReviewer";
+    public static final String firstReviewDate = "firstReviewDate";
+    public static final String firstReviewerImage = "firstReviewerImage";
+    public static final String firstReviewRating = "firstReviewRating";
 
 }

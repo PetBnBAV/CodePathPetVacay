@@ -136,7 +136,8 @@ public class PaymentActivity extends ActionBarActivity {
 
             }
         };
-        getWindow().getEnterTransition().addListener(mEnterTransitionListener);
+        if(android.os.Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP)
+        {getWindow().getEnterTransition().addListener(mEnterTransitionListener);}
 
         setupViewListeners();
 

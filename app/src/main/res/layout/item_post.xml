@@ -96,6 +96,7 @@
             android:layout_height="wrap_content"
             android:text="Entire Home - 7 Reviews - Carnelian Bay"
             android:layout_gravity="left|top"
+            android:paddingBottom="@dimen/margin_small"
             />
 
     </RelativeLayout>

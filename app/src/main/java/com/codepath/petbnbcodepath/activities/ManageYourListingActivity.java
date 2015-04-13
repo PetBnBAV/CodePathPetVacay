@@ -470,22 +470,19 @@ public class ManageYourListingActivity extends ActionBarActivity implements MYLL
             ImageView image = (ImageView) findViewById(R.id.coverImage);
 
             //Picture directly from camera
-            if(selectedImageUri.contains("content://")){
-                Picasso.with(getApplicationContext())
-                        .load(selectedImageUri)
-                        .placeholder(R.drawable.default_photo_bg)
-                        .into(image);
-            }
-            else {
-                Uri uri = null;
-                if (selectedImageUri != null) {
-                    uri = Uri.parse(selectedImageUri);
-
+            if(selectedImageUri!=null) {
+                if (selectedImageUri.contains("content://")) {
+                    Picasso.with(getApplicationContext())
+                            .load(selectedImageUri)
+                            .placeholder(R.drawable.default_photo_bg)
+                            .into(image);
+                } else {
+                    Uri uri = Uri.parse(selectedImageUri);
+                    Picasso.with(getApplicationContext())
+                            .load(new File(selectedImageUri))
+                            .placeholder(R.drawable.default_photo_bg)
+                            .into(image);
                 }
-                Picasso.with(getApplicationContext())
-                        .load(new File(selectedImageUri))
-                        .placeholder(R.drawable.default_photo_bg)
-                        .into(image);
             }
             cbPhoto.setChecked(true);
             updateProgress(--stepsLeft);

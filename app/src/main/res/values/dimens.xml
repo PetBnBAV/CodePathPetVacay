@@ -64,4 +64,12 @@
 
     <dimen name="card_num_padding">42dp</dimen>
 
+    <dimen name="detailsPageCalenderHeight">350dp</dimen>
+    <dimen name="margin_medium">20dp</dimen>
+    <dimen name="margin_small">10dp</dimen>
+    <dimen name="margin_large">40dp</dimen>
+
+    <dimen name="default_text_size">16dp</dimen>
+    <dimen name="default_header_size">18dp</dimen>
+
 </resources>

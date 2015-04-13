@@ -1,11 +1,17 @@
 package com.codepath.petbnbcodepath.models;
 
+import android.util.Log;
+
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.net.GoogleMapReverseGeoCodingClient;
+import com.parse.CountCallback;
+import com.parse.GetCallback;
 import com.parse.ParseFile;
 import com.parse.ParseGeoPoint;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +59,10 @@ public class Listing {
 
     public int getHomeType() {
         return homeType;
+    }
+
+    public void setFirstReview(Review firstReview) {
+        this.firstReview = firstReview;
     }
 
     public int getPetType() {
@@ -149,20 +159,33 @@ public class Listing {
         return nearbyListings;
     }
 
-    public static Listing fromParseObject(ParseObject listing) {
+    public static Listing fromParseObject(final ParseObject listing) {
         final Listing currListing = new Listing();
 
-        /*ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayReviewTable);
-        query.whereEqualTo(Constants.listingIdKey, listing);
-        query.countInBackground(new CountCallback() {
-            public void done(int count, ParseException e) {
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.petVacayReviewTable);
+//        query.whereEqualTo(Constants.listingIdKey, listing);
+//        query.countInBackground(new CountCallback() {
+//            @Override
+//            public void done(int count, com.parse.ParseException e) {
+//                if (e == null) {
+//                    currListing.numReviews = count;
+//                } else {
+//                    Log.i(TAG, "Error: " + e.getMessage());
+//                }
+//            }
+//        });
+        ParseQuery<ParseObject> query1 = ParseQuery.getQuery(Constants.petVacayReviewTable);
+        query1.whereEqualTo(Constants.listingIdKey, listing);
+        query1.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject review, com.parse.ParseException e) {
                 if (e == null) {
-                    currListing.numReviews = count;
+                    currListing.firstReview = Review.fromParseObject(review);
                 } else {
                     Log.i(TAG, "Error: " + e.getMessage());
                 }
             }
-        });*/
+        });
 
         currListing.latLng = listing.getParseGeoPoint(Constants.listingLatlngKey);
         currListing.description = listing.getString(Constants.descriptionKey);
@@ -179,13 +202,13 @@ public class Listing {
 
         // listener pattern because the reverse geocoding call that returns the city is an
         // asynchronous call. So we set the city only when a value is returned
-        /*currListing.client.setCityListener(new GoogleMapReverseGeoCodingClient.GeoCodingListener() {
-            @Override
-            public void onCityLoaded(String city) {
-                currListing.cityState = city;
-
-            }
-        });*/
+//        currListing.client.setCityListener(new GoogleMapReverseGeoCodingClient.GeoCodingListener() {
+//            @Override
+//            public void onCityLoaded(String city) {
+//                currListing.cityState = city;
+//
+//            }
+//        });
 
         ParseObject sitter = listing.getParseObject(Constants.sitterIdKey);
         currListing.first_name = sitter.getString(Constants.firstNameKey);

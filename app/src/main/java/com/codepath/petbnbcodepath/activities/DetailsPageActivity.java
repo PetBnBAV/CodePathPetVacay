@@ -1,45 +1,88 @@
 package com.codepath.petbnbcodepath.activities;
 
+import android.content.ComponentCallbacks;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.LightingColorFilter;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.ImagePagerAdapter;
+import com.codepath.petbnbcodepath.fragments.CaldroidMonthFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
+import com.roomorama.caldroid.CaldroidFragment;
+import com.roomorama.caldroid.CaldroidListener;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
-public class DetailsPageActivity extends ActionBarActivity {
+public class DetailsPageActivity extends FragmentActivity {
     WrapContentHeightViewPager viewPager;
+    ImageView ivPetType;
     ImageView ivSitterImage;
     ImageView ivReviewerImage;
     TextView tvSitterName;
     TextView tvReviewCountDetail;
+    TextView tvReviewerName;
+    TextView tvReviewDate;
+    TextView tvReview;
+    LinearLayout llReview;
     Button btNext;
     TextView tvPrice;
     TextView tvDescription;
     TextView tvPostTitle;
+    ImageView ivStaticMap;
     String mFirstName;
     String mLastName;
     String mCoverPicture = null;
+
+
+    private CaldroidFragment caldroidFragment;
+
+    private void setCustomResourceForDates() {
+        //TODO Once we have enough real booked dates, we will show those instead of fake dates.
+        ArrayList<Date> disableDateList = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DATE, 4);
+        disableDateList.add(cal.getTime());
+        cal.add(Calendar.DATE, 1);
+        disableDateList.add(cal.getTime());
+        cal.add(Calendar.DATE, 3);
+        disableDateList.add(cal.getTime());
+        cal.add(Calendar.DATE, 4);
+        disableDateList.add(cal.getTime());
+        cal.set(Calendar.DAY_OF_MONTH, 28);
+        Date toDate1 = cal.getTime();
+        disableDateList.add(toDate1);
+        caldroidFragment.setDisableDates(disableDateList);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details_page);
+        caldroidFragment = new CaldroidMonthFragment();
+
         final String firstName;
         final String lastName;
         final String coverPicture;
@@ -54,6 +97,13 @@ public class DetailsPageActivity extends ActionBarActivity {
         final int petType =  getIntent().getIntExtra(Constants.petTypeKey,0);
         final boolean hasPet = getIntent().getBooleanExtra(Constants.hasPetsKey,false);
         final ArrayList<String> imageUrlList = getIntent().getStringArrayListExtra(Constants.IMAGE_URL_LIST);
+        double latitude = getIntent().getDoubleExtra(Constants.latitude,Constants.defaultLatitude);
+        double longitude = getIntent().getDoubleExtra(Constants.longitude,Constants.defaultLongitude);
+        String reviewDescription = getIntent().getStringExtra(Constants.firstReviewDescription);
+        String firstReviewerName = getIntent().getStringExtra(Constants.firstReviewer);
+        String firstReviewDate = getIntent().getStringExtra(Constants.firstReviewDate);
+        String firstReviewerImage = getIntent().getStringExtra(Constants.firstReviewerImage);
+        int firstReviewRating = getIntent().getIntExtra(Constants.firstReviewRating,5);
 
         final boolean isPreview = getIntent().getBooleanExtra(Constants.IS_PREVIEW,false);
         int visibilityRequestBtn =  (isPreview? View.GONE:View.VISIBLE);
@@ -85,14 +135,44 @@ public class DetailsPageActivity extends ActionBarActivity {
         //TODO Need pass Images to adapter
         adapter.tempCoverPicture = coverPicture;
         viewPager.setAdapter(adapter);
+        ivPetType = (ImageView) findViewById(R.id.ivPetType);
         tvSitterName =(TextView)findViewById(R.id.tvSitterName);
         tvSitterName.setText("Hosted by " + firstName + " " + lastName);
         tvReviewCountDetail = (TextView)findViewById(R.id.tvReviewCountDetail);
+        llReview = (LinearLayout) findViewById(R.id.llReview);
+        llReview.setVisibility(visibilityRequestBtn);
         try{
             if(reviewCount > 0)
                 tvReviewCountDetail.setText(reviewCount + " "
                         + getResources().getString(R.string.reviews));
         }catch (NumberFormatException e){}
+
+
+        Transformation transformation = new RoundedTransformationBuilder()
+                .borderColor(getResources().getColor(R.color.white))
+                .borderWidthDp(5)
+                .cornerRadiusDp(45)
+                .oval(false)
+                .build();
+
+
+        tvReviewerName = (TextView) findViewById(R.id.tvReviewerName);
+        tvReview = (TextView)findViewById(R.id.tvReview);
+        tvReviewDate = (TextView) findViewById(R.id.tvReviewDate);
+        ivReviewerImage = (ImageView)findViewById(R.id.ivReviewerImage);
+        if(!isPreview) {
+            if (firstReviewerName != null)
+                tvReviewerName.setText(firstReviewerName);
+            if (reviewDescription != null)
+                tvReview.setText(reviewDescription);
+            if (reviewDescription != null)
+                Picasso.with(this)
+                    .load(firstReviewerImage)
+                    .placeholder(R.drawable.icon_ro_profile)
+                    .fit()
+                    .transform(transformation)
+                    .into(ivReviewerImage);
+        }
         tvPrice = (TextView)findViewById(R.id.tvPrice);
         tvPrice.setText("$ "+cost);
         btNext = (Button)findViewById(R.id.btNext);
@@ -112,13 +192,7 @@ public class DetailsPageActivity extends ActionBarActivity {
 
         });
         ivSitterImage = (ImageView)findViewById(R.id.ivSitterImage);
-        ivReviewerImage = (ImageView)findViewById(R.id.ivReviewerImage);
         ivSitterImage.setImageResource(0);
-        Transformation transformation = new RoundedTransformationBuilder()
-                .borderColor(getResources().getColor(R.color.white))
-                .cornerRadiusDp(30)
-                .oval(false)
-                .build();
 
         Picasso.with(this)
                 .load(coverPicture)
@@ -126,15 +200,59 @@ public class DetailsPageActivity extends ActionBarActivity {
                 .transform(transformation)
                 .into(ivSitterImage);
 
-        Picasso.with(this)
-                .load(R.drawable.icon_ro_profile)
-                .fit()
-                .transform(transformation)
-                .into(ivReviewerImage);
+
         tvPostTitle = (TextView) findViewById(R.id.tvPostTitle);
         tvPostTitle.setText(title);
         tvDescription = (TextView) findViewById(R.id.tvDescription);
         tvDescription.setText(description);
+        ivStaticMap = (ImageView)findViewById(R.id.ivStaticMap);
+        //TODO Need to update the lat long with city, if lat long is null
+        String staticMapUrl = "https://maps.googleapis.com/maps/api/staticmap?size=600x600&zoom=15&markers=" +
+                "icon:http://chart.apis.google.com/chart?chst=d_map_pin_icon%26chld=cafe%257C996600%7C" +
+                latitude + "," + longitude;
+        Picasso.with(this).load(staticMapUrl)
+                .into(ivStaticMap);
+
+        if (savedInstanceState != null) {
+            caldroidFragment.restoreStatesFromKey(savedInstanceState,
+                    "CALDROID_SAVED_STATE");
+        }
+        else {
+            Bundle args = new Bundle();
+            Calendar cal = Calendar.getInstance();
+            args.putInt(CaldroidFragment.MONTH, cal.get(Calendar.MONTH) + 1);
+            args.putInt(CaldroidFragment.YEAR, cal.get(Calendar.YEAR));
+            args.putBoolean(CaldroidFragment.ENABLE_SWIPE, true);
+            args.putBoolean(CaldroidFragment.SIX_WEEKS_IN_CALENDAR, false);
+            args.putBoolean(CaldroidFragment.SQUARE_TEXT_VIEW_CELL, true);
+            args.putBoolean(CaldroidFragment.ENABLE_CLICK_ON_DISABLED_DATES, false);
+            caldroidFragment.setArguments(args);
+        }
+        // Attach to the activity
+        FragmentTransaction t = getSupportFragmentManager().beginTransaction();
+        t.replace(R.id.calendar1, caldroidFragment);
+        t.commit();
+        if(!isPreview)
+        {setCustomResourceForDates();}
+        setUpListner();
+
+    }
+
+    private void setUpListner() {
+        final CaldroidListener listener = new CaldroidListener() {
+            @Override
+            public void onSelectDate(Date date, View view) {}
+
+            @Override
+            public void onCaldroidViewCreated() {
+                if (caldroidFragment.getLeftArrowButton() != null) {
+                    TextView monthTitle = caldroidFragment.getMonthTitleTextView();
+                    monthTitle.setTextColor(getResources().getColor(R.color.gg_text_dark_gray));
+                }
+            }
+
+        };
+        caldroidFragment.setCaldroidListener(listener);
     }
 
     @Override

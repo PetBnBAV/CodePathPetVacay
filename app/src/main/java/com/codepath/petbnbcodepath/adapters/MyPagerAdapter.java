@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.petbnbcodepath.R;
@@ -21,11 +22,12 @@ public class MyPagerAdapter extends SmartFragmentStatePagerAdapter implements Pa
     final int PAGE_COUNT = 2;
     private int tabIcons[] = {R.drawable.ic_petvacay, R.drawable.ic_history};
     private Activity mActivity;
-
+    PostingsListFragment postingsListFragment;
     public MyPagerAdapter(FragmentManager fm, Activity mActivity) {
 
         super(fm);
         this.mActivity = mActivity;
+
     }
 
     @Override
@@ -35,38 +37,44 @@ public class MyPagerAdapter extends SmartFragmentStatePagerAdapter implements Pa
 
     @Override
     public Fragment getItem(int position) {
-
-        if (position == 0) {
-            Bundle bundle = new Bundle();
-            bundle.putDouble(Constants.LATITUDE, Constants.currLatLng.getLatitude());
-            bundle.putDouble(Constants.LONGITUDE, Constants.currLatLng.getLongitude());
-            PostingsListFragment postingsListFragment = PostingsListFragment.getInstance(mActivity);
-            postingsListFragment.setArguments(bundle);
-            /*return LandingPageFragment.newInstance(Constants.currLatLng.getLatitude(),
-                                                   Constants.currLatLng.getLongitude());*/
-            return postingsListFragment;
-        } else if (position == 1) {
-
+        Fragment currentFragment = postingsListFragment;
+        if(position==1){
             ParseUser currentUser = ParseUser.getCurrentUser();
             if (currentUser != null) {
-                return HistoryPageUserFragment.newInstance(position + 1);
+                currentFragment = HistoryPageUserFragment.newInstance(position + 1);
             }
             else {
-                return HistoryPageFragment.newInstance(position + 1);
+                currentFragment = HistoryPageFragment.newInstance(position + 1);
 
             }
         }
+        else if(position ==0){
+            if(postingsListFragment == null)
+            {
+                Bundle bundle = new Bundle();
+                bundle.putDouble(Constants.LATITUDE, Constants.currLatLng.getLatitude());
+                bundle.putDouble(Constants.LONGITUDE, Constants.currLatLng.getLongitude());
+                postingsListFragment = PostingsListFragment.getInstance(mActivity);
+                postingsListFragment.setArguments(bundle);
+                currentFragment = postingsListFragment;
+            }
+        }
+        else {
+            Log.i("MyPager"," " + position);
+        }
 
-        Bundle bundle = new Bundle();
-        bundle.putDouble(Constants.LATITUDE, Constants.currLatLng.getLatitude());
-        bundle.putDouble(Constants.LONGITUDE, Constants.currLatLng.getLongitude());
-        PostingsListFragment postingsListFragment = PostingsListFragment.getInstance(mActivity);
-        postingsListFragment.setArguments(bundle);
 
-        /*return LandingPageFragment.newInstance(Constants.currLatLng.getLatitude(),
-                                               Constants.currLatLng.getLongitude());*/
-        return postingsListFragment;
-
+//        }
+//        Bundle bundle = new Bundle();
+//        bundle.putDouble(Constants.LATITUDE, Constants.currLatLng.getLatitude());
+//        bundle.putDouble(Constants.LONGITUDE, Constants.currLatLng.getLongitude());
+//        PostingsListFragment postingsListFragment = PostingsListFragment.getInstance(mActivity);
+//        postingsListFragment.setArguments(bundle);
+//
+//        /*return LandingPageFragment.newInstance(Constants.currLatLng.getLatitude(),
+//                                               Constants.currLatLng.getLongitude());*/
+//        return postingsListFragment;
+    return currentFragment;
     }
 
     @Override

@@ -175,6 +175,18 @@ public class Utils {
         intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
         intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
         intent.putExtra(Constants.IS_PREVIEW, isPreview);
+        if(currentListing.getLatLng()!=null) {
+            intent.putExtra(Constants.latitude, currentListing.getLatLng().getLatitude());
+            intent.putExtra(Constants.longitude, currentListing.getLatLng().getLongitude());
+        }
+        //TODO in future review needs to be called only on details page
+        if(currentListing.getFirstReview()!=null) {
+            intent.putExtra(Constants.firstReviewDescription, currentListing.getFirstReview().getReview_description());
+            intent.putExtra(Constants.firstReviewer, currentListing.getFirstReview().getReviewer_first_name());
+            intent.putExtra(Constants.firstReviewDate, currentListing.getFirstReview().getReviewDate().toString());
+              intent.putExtra(Constants.firstReviewerImage,currentListing.getFirstReview().getReviewer_cover_picture());
+            intent.putExtra(Constants.firstReviewRating, currentListing.getFirstReview().getReview_rating());
+        }
         intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
         intent.putStringArrayListExtra(Constants.IMAGE_URL_LIST,currentListing.getImageUrlList());
 
@@ -182,6 +194,7 @@ public class Utils {
         context.startActivity(intent);
     }
 
+    //TODO Need to merge this method with method above
     public static void gotoDetailsPage(Context context, Listing currentListing, boolean isPreview,ImageView ivProfile) {
         Intent intent = new Intent(context, DetailsPageActivity.class);
         intent.putExtra(Constants.firstNameKey, currentListing.getFirst_name());
@@ -196,6 +209,19 @@ public class Utils {
         intent.putExtra(Constants.houseTypeKey, currentListing.getHomeType());
         intent.putExtra(Constants.petTypeKey, currentListing.getPetType());
         intent.putExtra(Constants.IS_PREVIEW, isPreview);
+        if(currentListing.getLatLng()!=null) {
+            intent.putExtra(Constants.latitude, currentListing.getLatLng().getLatitude());
+            intent.putExtra(Constants.longitude, currentListing.getLatLng().getLongitude());
+        }
+        //TODO in future review needs to be called only on details page
+        if(currentListing.getFirstReview()!=null) {
+            intent.putExtra(Constants.firstReviewDescription, currentListing.getFirstReview().getReview_description());
+            intent.putExtra(Constants.firstReviewer, currentListing.getFirstReview().getReviewer_first_name());
+            intent.putExtra(Constants.firstReviewDate, currentListing.getFirstReview().getReviewDate().toString());
+                    intent.putExtra(Constants.firstReviewerImage,currentListing.getFirstReview().getReviewer_cover_picture());
+            intent.putExtra(Constants.firstReviewRating, currentListing.getFirstReview().getReview_rating());
+        }
+
         intent.putExtra(Constants.objectIdKey, currentListing.getObjectId());
         intent.putStringArrayListExtra(Constants.IMAGE_URL_LIST,currentListing.getImageUrlList());
 
