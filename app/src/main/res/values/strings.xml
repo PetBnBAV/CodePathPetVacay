@@ -99,7 +99,8 @@
     <string name="title_activity_booking_details">Booking details</string>
     <string name="price">Price</string>
     <string name="dates">Dates</string>
-    <string name="req_to_book">Request to Book!</string>
+    <string name="confirm_and_pay">Confirm Details &amp; Request</string>
+    <string name="add_payment">Add payment method</string>
     <string name="only_charge">You\'ll only be charged if the host accepts your request within 24 hours.</string>
     <string name="say_hello_1">Tell your pet\'s host</string>
     <string name="say_hello_2">, "Hello"</string>
@@ -225,10 +226,22 @@
     <string name="location">Location</string>
     <string name="more_info">More Info</string>
     <string name="next_button">Next</string>
-    <string name="request_to_book">Next</string>
+    <string name="request_to_book">Request to Book</string>
     <string name="descriptionLabel">Description</string>
     <string name="pick_proper_date">Please choose a pick up date that\'s after drop off date! Please re-select!</string>
     <string name="return_to_listings">Listings View</string>
 
     <string name="curr_loc">Current Location</string>
+    <string name="title_activity_payment">Add new credit card</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="cc_number">Number</string>
+    <string name="cc_number_hint">1234 1234 1234 1234</string>
+    <string name="cc_expiry">Expiry</string>
+    <string name="cc_expiry_hint">mm / yy</string>
+    <string name="scan_card">Scan your card using the camera!</string>
+    <string name="enter_manually">Enter your card details:</string>
+    <string name="validationErrors">Validation Errors</string>
+    <string name="unable_save_card">Unable to save payment method!</string>
+    <string name="saved_card">Your payment method has been saved successfully!</string>
+    <string name="payment">Payment</string>
 </resources>

@@ -19,6 +19,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -446,6 +447,14 @@ public class MainActivity extends ActionBarActivity implements
                 //Log out
                 ParseInstallation installation = ParseInstallation.getCurrentInstallation();
                 installation.remove(Constants.userKey);
+                installation.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e != null) {
+                            Log.e(TAG, e.getMessage());
+                        }
+                    }
+                });
                 ParseUser.logOut();
                 userIsLoggedOut();
             }

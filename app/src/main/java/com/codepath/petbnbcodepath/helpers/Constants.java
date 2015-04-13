@@ -1,6 +1,7 @@
 package com.codepath.petbnbcodepath.helpers;
 
 import com.parse.ParseGeoPoint;
+import com.stripe.Stripe;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -100,6 +101,17 @@ public class Constants {
     public static final String TEAL_COLOR = "#008080";
     public static final String IS_PREVIEW="is_preview";
     public static final String COVER_PICTURES_URL = "cover_pictures_url";
-    public static final String []listingPictureItemKeys = {"lst_picOne","lst_picTwo","lst_picThree","lst_picFour","lst_picFive"};
+    public static final String []listingPictureItemKeys = {"lst_picOne","lst_picTwo","lst_picThree",
+                                                           "lst_picFour","lst_picFive"};
     public static final String IMAGE_URL_LIST = "image_url_list";
+
+    public static final String tokenIdKey = "token_id";
+    public static final String STRIPE_PUBLISHABLE_KEY = "pk_live_D14pNbNqVtJyU2wlZoLJlov9";
+    public static final String STRIPE_SECRET_KEY = "sk_live_jE00zEtVGdtR7ZEQj11kZwNx";
+
+    public static final String last4Key = "last4";
+    public static final String cardTypeKey = "cardType";
+    public static final String expDateKey = "expDate";
+
+
 }

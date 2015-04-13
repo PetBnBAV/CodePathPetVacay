@@ -10,6 +10,12 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Camera features - recommended -->
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
 
     <permission
         android:name="com.codepath.petbnbcodepath.permission.C2D_MESSAGE"
@@ -69,7 +75,8 @@
         </activity>
         <activity
             android:name=".activities.MapActivity"
-            android:label="@string/title_activity_map" android:parentActivityName=".activities.MainActivity" >
+            android:label="@string/title_activity_map"
+            android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.MainActivity" />
@@ -86,6 +93,7 @@
             android:name=".activities.BookingDetailsActivity"
             android:label="@string/title_activity_booking_details"
             android:parentActivityName=".activities.DetailsPageActivity" >
+
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -167,6 +175,10 @@
         <activity
             android:name=".activities.ManageYourListingActivity"
             android:label="@string/title_activity_manage_your_listing" >
+        </activity>
+        <activity
+            android:name=".activities.PaymentActivity"
+            android:label="@string/title_activity_payment" >
         </activity>
     </application>
 
