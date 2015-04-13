@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -22,6 +23,8 @@ import com.codepath.petbnbcodepath.adapters.PlacesAutoCompleteAdapter;
 import com.codepath.petbnbcodepath.adapters.PostingArrayAdapter;
 import com.codepath.petbnbcodepath.helpers.Constants;
 import com.codepath.petbnbcodepath.models.Listing;
+import com.etiennelawlor.quickreturn.library.enums.QuickReturnViewType;
+import com.etiennelawlor.quickreturn.library.listeners.QuickReturnRecyclerViewOnScrollListener;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseGeoPoint;
@@ -31,7 +34,6 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.carlom.stikkyheader.core.StikkyHeaderBuilder;
 
 /**
  * Created by gangwal on 3/21/15.
@@ -49,6 +51,9 @@ public class PostingsListFragment extends Fragment {
     private String TAG = PostingsListFragment.class.getSimpleName();
 
     private AutoCompleteTextView etSearch;
+
+    private TextView tvCurrLoc;
+    private FrameLayout flHeader;
     View view;
     public interface PostingsListListener {
         public void onEtQuerySubmit(String query);
@@ -59,7 +64,6 @@ public class PostingsListFragment extends Fragment {
         sActivity = activity;
         return frag;
     }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -88,6 +92,7 @@ public class PostingsListFragment extends Fragment {
         lvPosting = (RecyclerView) view.findViewById(R.id.lvPost);
 
         etSearch = (AutoCompleteTextView) view.findViewById(R.id.etSearch);
+        flHeader = (FrameLayout) view.findViewById(R.id.header);
         etSearch.setAdapter(new PlacesAutoCompleteAdapter(getActivity(), R.layout.list_item));
         Bundle bundle = this.getArguments();
         if (bundle != null) {
@@ -97,6 +102,8 @@ public class PostingsListFragment extends Fragment {
             getNearbyListings(latitude, longitude);
         }
         setupViewListeners();
+
+
         return view;
     }
 
@@ -104,7 +111,23 @@ public class PostingsListFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
     }
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        if(lvPosting.getLayoutManager()==null)
+            lvPosting.setLayoutManager(layoutManager);
+
+        QuickReturnRecyclerViewOnScrollListener scrollListener;
+        int headerHeight  = 190;
+        scrollListener= new QuickReturnRecyclerViewOnScrollListener.Builder(QuickReturnViewType.HEADER)
+                .header(flHeader)
+                .minHeaderTranslation(-headerHeight)
+                .build();
+        lvPosting.setOnScrollListener(scrollListener);
+    }
     private void setupViewListeners() {
 
         etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -137,6 +160,7 @@ public class PostingsListFragment extends Fragment {
                 mCallback.onEtQuerySubmit(query);
             }
         });
+
     }
 
     private AnimationDrawable animationDrawable;
@@ -183,19 +207,16 @@ public class PostingsListFragment extends Fragment {
         aPosts = new PostingArrayAdapter((android.support.v4.app.FragmentActivity) sActivity,posts);
         hideProgressBar();
         lvPosting.setAdapter(aPosts);
-        StikkyHeaderBuilder.stickTo(lvPosting)
-                .setHeader(R.id.header,(ViewGroup)view)
-                .minHeightHeaderDim(R.dimen.min_height_header)
-                .build();
+//        StikkyHeaderBuilder.stickTo(lvPosting)
+//                .setHeader(R.id.header,(ViewGroup)view)
+//                .minHeightHeaderDim(R.dimen.min_height_header)
+//                .build();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        if(lvPosting.getLayoutManager()==null)
-            lvPosting.setLayoutManager(layoutManager);
+
 
     }
 }

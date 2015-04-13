@@ -28,6 +28,7 @@ dependencies {
     // library to send network requests
     // libraries for Google maps and location services
     compile files('libs/joda-time-2.7.jar')
+    compile project(':libraries:quickreturnlib')
     // libraries for Google maps and location services
     compile 'com.google.android.gms:play-services:6.5.+'
     compile 'com.google.maps.android:android-maps-utils:0.3+'
