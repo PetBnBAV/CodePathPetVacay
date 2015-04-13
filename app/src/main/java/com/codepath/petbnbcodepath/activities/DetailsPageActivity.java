@@ -21,6 +21,7 @@ import com.codepath.petbnbcodepath.R;
 import com.codepath.petbnbcodepath.adapters.ImagePagerAdapter;
 import com.codepath.petbnbcodepath.fragments.CaldroidMonthFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.viewpagers.WrapContentHeightViewPager;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.parse.ParseFile;
@@ -38,6 +39,7 @@ import java.util.Locale;
 
 public class DetailsPageActivity extends FragmentActivity {
     WrapContentHeightViewPager viewPager;
+    TextView tvHouseType;
     ImageView ivPetType;
     ImageView ivSitterImage;
     ImageView ivReviewerImage;
@@ -136,7 +138,9 @@ public class DetailsPageActivity extends FragmentActivity {
         adapter.tempCoverPicture = coverPicture;
         viewPager.setAdapter(adapter);
         ivPetType = (ImageView) findViewById(R.id.ivPetType);
+        tvHouseType = (TextView) findViewById(R.id.tvHouseType);
         tvSitterName =(TextView)findViewById(R.id.tvSitterName);
+        tvHouseType.setText(Utils.getHomeTypeString(houseType));
         tvSitterName.setText("Hosted by " + firstName + " " + lastName);
         tvReviewCountDetail = (TextView)findViewById(R.id.tvReviewCountDetail);
         llReview = (LinearLayout) findViewById(R.id.llReview);

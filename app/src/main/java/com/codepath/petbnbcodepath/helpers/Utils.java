@@ -263,4 +263,15 @@ public class Utils {
     public static boolean isLollipopOrNewer(){
         return android.os.Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP;
     }
+
+    public static String getHomeTypeString(int homeType){
+
+        String homeTypeStringArray [] = {"Studio","Apartment","Entire Home"};
+        try{
+            return homeTypeStringArray[homeType];
+        }catch (ArrayIndexOutOfBoundsException e){
+            //Deal with Manual data entry
+            return homeTypeStringArray[homeTypeStringArray.length-1];
+        }
+    }
 }

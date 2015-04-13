@@ -57,12 +57,12 @@
             android:layout_height="wrap_content"
             android:id="@+id/ivWishlist"
             android:src="@drawable/wishlist_heart_unselected"
-            android:alpha="0.9"
+            android:alpha="0.95"
             android:layout_marginTop="41dp"
             android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginRight="45dp"
+            android:layout_marginRight="20dp"
             android:layout_marginEnd="45dp" />
         <LinearLayout
             android:orientation="vertical"
@@ -140,7 +140,10 @@
                     android:layout_height="wrap_content"
                     android:text="Entire Home"
                     android:id="@+id/tvHouseType"
-                    android:layout_gravity="center_horizontal" />
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/default_text_size"
+                    android:textColor="@color/gg_text_light_gray" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -148,7 +151,9 @@
                     android:text="Hosted by David"
                     android:id="@+id/tvSitterName"
                     android:layout_gravity="center_horizontal"
-                    android:textColor="@color/dark_gray" />
+                    android:textStyle="bold"
+                    android:textSize="@dimen/default_text_size"
+                    android:textColor="@color/gg_text_light_gray" />
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
@@ -223,7 +228,7 @@
                 android:layout_below="@+id/view_pager"
                 android:layout_centerHorizontal="true"
                 android:gravity="center_horizontal"
-                android:background="@color/gray"
+                android:background="@color/gg_background_gray"
                 android:padding="10dp"
                 >
                 <TextView

@@ -102,6 +102,7 @@ public class ListYourSpaceActivity extends ActionBarActivity implements LYSPetTy
 
         //Toast.makeText(getApplicationContext(),
                // "House Type " + houseTypeTitleList[houseType], Toast.LENGTH_SHORT).show();
+        this.houseType = houseType;
         LYSCityFragment lysCityFragment = LYSCityFragment.getInstance(this);
         ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.flLSY,lysCityFragment);

@@ -91,7 +91,8 @@ public class PostingArrayAdapter extends RecyclerView.Adapter<PostingArrayAdapte
         String city = (currentListing.getCityState()==null)?"San Francisco":currentListing.getCityState();
         viewHolder.tvPostTitle.setText(currentListing.getTitle());
 //        viewHolder.tvPostSubTitle.setText("Entire Home - "+currentListing.getNumReviews() +" Reviews - " +city);
-        viewHolder.tvPostSubTitle.setText("Entire Home - "+randInt() +" Reviews - " +city);
+
+        viewHolder.tvPostSubTitle.setText(Utils.getHomeTypeString(currentListing.getHomeType())+" - "+currentListing.getNumReviews() +" Reviews - " +city);
 
         viewHolder.ivSitterImage.setImageResource(0);
         Transformation transformation = new RoundedTransformationBuilder()
