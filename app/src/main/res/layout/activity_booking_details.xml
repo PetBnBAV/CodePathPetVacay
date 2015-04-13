@@ -198,7 +198,7 @@
                     android:id="@+id/btnAddPayment"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/pay_det_tv_height"
-                    android:background="@drawable/button_background"
+                    android:background="@drawable/ripple_button_background"
                     android:textColor="@color/vl_white"
                     android:text="@string/add_payment"
                     android:textAllCaps="false"
@@ -220,10 +220,10 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:src="@mipmap/deletecc"
-                    android:background="@color/bgWhite"
+                    android:background="@drawable/generalripple"
                     android:layout_alignTop="@+id/tvLast4"
                     android:layout_alignBottom="@+id/tvLast4"
-                    android:foreground="?android:attr/selectableItemBackground"/>
+                    />
                 <ImageButton
                     android:id="@+id/btnEditCard"
                     android:layout_width="wrap_content"
@@ -234,7 +234,6 @@
                     android:background="@color/bgWhite"
                     android:layout_alignTop="@+id/tvLast4"
                     android:layout_alignBottom="@+id/tvLast4"
-                    android:foreground="?android:attr/selectableItemBackground"
                     />
                 <ImageView
                     android:id="@+id/ivCardLogo"
@@ -302,7 +301,7 @@
         android:id="@+id/btnBook"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/theme_teal"
+        android:background="@drawable/ripple_button_background"
         android:textColor="@color/vl_white"
         android:text="@string/confirm_and_pay"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"/>

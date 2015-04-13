@@ -297,7 +297,7 @@ public class PaymentActivity extends ActionBarActivity {
                                                     InvalidRequestException |
                                                     APIConnectionException |
                                                     CardException | APIException e) {
-                                                Log.e(TAG, "Erroraaa: " + e.getMessage());
+                                                Log.e(TAG, "Error: " + e.getMessage());
                                             }
                                             return null;
                                         }
