@@ -29,6 +29,7 @@ import android.support.v4.app.DialogFragment;
 import android.widget.Toast;
 
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 import com.stripe.android.Stripe;
@@ -136,7 +137,7 @@ public class PaymentActivity extends ActionBarActivity {
 
             }
         };
-        if(android.os.Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP)
+        if(Utils.isLollipopOrNewer())
         {getWindow().getEnterTransition().addListener(mEnterTransitionListener);}
 
         setupViewListeners();
@@ -375,36 +376,39 @@ public class PaymentActivity extends ActionBarActivity {
 
         // get the final radius for the clipping circle
         int finalRadius = Math.max(myView.getWidth(), myView.getHeight()) / 2;
+        if (Utils.isLollipopOrNewer()) {
+            // create the animator for this view (the start radius is zero)
+            Animator anim =
+                    ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
 
-        // create the animator for this view (the start radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+            // make the view visible and start the animation
+            myView.setVisibility(View.VISIBLE);
+            anim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
 
-        // make the view visible and start the animation
-        myView.setVisibility(View.VISIBLE);
-        anim.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
+                }
 
-            }
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    if (Utils.isLollipopOrNewer()) {
+                        getWindow().getEnterTransition().removeListener(mEnterTransitionListener);
+                    }
+                }
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                getWindow().getEnterTransition().removeListener(mEnterTransitionListener);
-            }
+                @Override
+                public void onAnimationCancel(Animator animation) {
 
-            @Override
-            public void onAnimationCancel(Animator animation) {
+                }
 
-            }
+                @Override
+                public void onAnimationRepeat(Animator animation) {
 
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
-        anim.setDuration(600);
-        anim.start();
+                }
+            });
+            anim.setDuration(600);
+            anim.start();
+        }
     }
 
     private void exitReveal(View v) {
@@ -417,33 +421,34 @@ public class PaymentActivity extends ActionBarActivity {
 
         // get the initial radius for the clipping circle
         int initialRadius = myView.getWidth() / 2;
+        if (Utils.isLollipopOrNewer()) {
+            // create the animation (the final radius is zero)
+            Animator anim =
+                    ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
 
-        // create the animation (the final radius is zero)
-        Animator anim =
-                ViewAnimationUtils.createCircularReveal(myView, cx, cy, initialRadius, 0);
+            // make the view invisible when the animation is done
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    myView.setVisibility(View.INVISIBLE);
+                }
+            });
 
-        // make the view invisible when the animation is done
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                myView.setVisibility(View.INVISIBLE);
-            }
-        });
+            anim.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
+                    myView.setVisibility(View.INVISIBLE);
 
-        anim.addListener(new AnimatorListenerAdapter() {
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                super.onAnimationEnd(animation);
-                myView.setVisibility(View.INVISIBLE);
+                    // Finish the activity after the exit transition completes.
+                    supportFinishAfterTransition();
+                }
+            });
 
-                // Finish the activity after the exit transition completes.
-                supportFinishAfterTransition();
-            }
-        });
-
-        // start the animation
-        anim.start();
+            // start the animation
+            anim.start();
+        }
     }
 
     public void onScanPress(View v) {

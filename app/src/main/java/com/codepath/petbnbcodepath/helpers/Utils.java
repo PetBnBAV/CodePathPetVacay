@@ -9,6 +9,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -257,5 +258,9 @@ public class Utils {
 
         // and then we can return your byte array.
         return byteBuffer.toByteArray();
+    }
+
+    public static boolean isLollipopOrNewer(){
+        return android.os.Build.VERSION.SDK_INT>= Build.VERSION_CODES.LOLLIPOP;
     }
 }
