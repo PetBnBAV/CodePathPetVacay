@@ -3,6 +3,7 @@ package com.codepath.petbnbcodepath.activities;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.AsyncTask;
@@ -19,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewAnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
@@ -234,6 +236,9 @@ public class PaymentActivity extends ActionBarActivity {
                         }
                     } else if (s.length() == 7) {
                         if (etCCNumber.getText().toString().length() == 19) {
+                            InputMethodManager imm = (InputMethodManager)getSystemService(
+                                    Context.INPUT_METHOD_SERVICE);
+                            imm.hideSoftInputFromWindow(etCCNumber.getWindowToken(), 0);
                             enterReveal(btnSaveCC);
                         }
                     }
@@ -397,6 +402,7 @@ public class PaymentActivity extends ActionBarActivity {
 
             }
         });
+        anim.setDuration(600);
         anim.start();
     }
 

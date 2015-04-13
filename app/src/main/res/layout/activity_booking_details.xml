@@ -222,7 +222,8 @@
                     android:src="@mipmap/deletecc"
                     android:background="@color/bgWhite"
                     android:layout_alignTop="@+id/tvLast4"
-                    android:layout_alignBottom="@+id/tvLast4"/>
+                    android:layout_alignBottom="@+id/tvLast4"
+                    android:foreground="?android:attr/selectableItemBackground"/>
                 <ImageButton
                     android:id="@+id/btnEditCard"
                     android:layout_width="wrap_content"
@@ -232,7 +233,9 @@
                     android:src="@mipmap/editcc"
                     android:background="@color/bgWhite"
                     android:layout_alignTop="@+id/tvLast4"
-                    android:layout_alignBottom="@+id/tvLast4"/>
+                    android:layout_alignBottom="@+id/tvLast4"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    />
                 <ImageView
                     android:id="@+id/ivCardLogo"
                     android:layout_width="wrap_content"
