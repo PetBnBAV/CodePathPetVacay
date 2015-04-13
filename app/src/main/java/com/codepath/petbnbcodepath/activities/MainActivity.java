@@ -24,6 +24,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -40,6 +41,7 @@ import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentNoPP;
 import com.codepath.petbnbcodepath.fragments.ChangeProfilePictureFragmentWithPP;
 import com.codepath.petbnbcodepath.fragments.PostingsListFragment;
 import com.codepath.petbnbcodepath.helpers.Constants;
+import com.codepath.petbnbcodepath.helpers.Utils;
 import com.codepath.petbnbcodepath.interfaces.FragmentCameraCommunicator;
 import com.codepath.petbnbcodepath.interfaces.FragmentCommunicator;
 import com.google.android.gms.common.ConnectionResult;
@@ -169,6 +171,8 @@ public class MainActivity extends ActionBarActivity implements
         llLogInSignUp = (LinearLayout) findViewById(R.id.llLoginSignUp);
         ivImageView =  (ImageView) findViewById(R.id.image_view);
         ivProfile = (ImageView) findViewById(R.id.ivProfile);
+        if(Utils.isLollipopOrNewer())
+        {setMargins(ivProfile,0,32,0,0);}
         ivMail = (ImageView) findViewById(R.id.ivMail);
         ivFavorites = (ImageView) findViewById(R.id.ivFavorites);
 
@@ -639,6 +643,9 @@ public class MainActivity extends ActionBarActivity implements
 
         // Give the PagerSlidingTabStrip the ViewPager
         PagerSlidingTabStrip tabsStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        //NOTE : Temp fix for issue where we are icons are getting chopped off in newer version
+        if(Utils.isLollipopOrNewer()){
+            setMargins(tabsStrip,0,28,0,0);        }
         // Attach the view pager to the tab strip
         tabsStrip.setViewPager(viewPager);
 
@@ -1022,4 +1029,12 @@ public class MainActivity extends ActionBarActivity implements
         ViewServer.get(this).setFocusedWindow(this);
     }
 
+
+    public static void setMargins (View v, int l, int t, int r, int b) {
+        if (v.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
+            ViewGroup.MarginLayoutParams p = (ViewGroup.MarginLayoutParams) v.getLayoutParams();
+            p.setMargins(l, t, r, b);
+            v.requestLayout();
+        }
+    }
 }
