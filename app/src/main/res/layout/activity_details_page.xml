@@ -170,7 +170,7 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:layout_gravity="center_horizontal"
-                    android:src="@drawable/dog_clipart1"
+                    android:src="@drawable/dog_clipart1new"
                     android:layout_weight="1"/>
                 <ImageView
                     android:id="@+id/ivRoomCount"
