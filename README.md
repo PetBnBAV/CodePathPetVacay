@@ -15,10 +15,15 @@ Pet Sitters:
 - Accept or decline booking  requests
 - Hassle free online payment options
 
-![Video Walkthrough](PetVacayAVParent2.gif)
-
 ![Video Walkthrough](PetVacayAVParent.gif)
 
+
+![Video Walkthrough](PetVacayAVParent2.gif)
+
+
+
 ![Video Walkthrough](PetVacayAVHost.gif)
+
+
 
 ![Video Walkthrough](PetVacayAVListSpace.gif)
