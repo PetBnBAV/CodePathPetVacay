@@ -14,8 +14,8 @@ Pet Sitters:
 - List your space/availability and manage your listing directly from your phone
 - Accept or decline booking  requests
 - Hassle free online payment options
-- 
- ![Video Walkthrough](PetVacayAVHost.gif.gif)  
- ![Video Walkthrough](PetVacayAVListSpace.gif)  
- ![Video Walkthrough](PetVacayAVParent.gif)  
+
+![Video Walkthrough](PetVacayAVHost.gif.gif)  
+![Video Walkthrough](PetVacayAVListSpace.gif)  
+![Video Walkthrough](PetVacayAVParent.gif)  
 ![Video Walkthrough](PetVacayAVParent2.gif.gif)
